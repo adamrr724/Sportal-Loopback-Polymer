@@ -1,0 +1,177 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../src/elements.html">
+
+<dom-module id="sportal-home">
+
+    <template>
+
+        <style>
+
+            :host {
+                display: block;
+            }
+
+            #main-image {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                width:100%;
+                background-image: url("../images/main-image.jpeg");
+                height: 400px;
+            }
+
+            .home-header-text {
+                font-weight: bold;
+                text-shadow: 2px 2px 4px black;
+                margin: 0;
+                font-size: 2.5em;
+            }
+
+            .home-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .highlight-header-card{
+                width: 100%;
+                justify-content: center;
+            }
+
+            .highlight-header {
+                text-align: center;
+            }
+
+            .highlight-link{
+                display: inherit;
+                color: inherit;
+                text-decoration: inherit;
+                font-weight: inherit;
+            }
+
+            #highlight-text {
+                text-shadow: 1px 1px 1px grey;
+            }
+
+            .highlight-title {
+                font-size: 20px;
+            }
+
+            .highlight-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .highlight-card {
+                display: flex;
+                flex-direction: column;
+                margin: 15px;
+                width: 46%;
+                text-shadow: 1px 1px 1px grey;
+                font-weight: 200;
+                color: white;
+                background-color: #39393B;
+            }
+
+            /*.green {*/
+                /*background-color: var(--sportal-green);*/
+            /*}*/
+
+            /*.blue {*/
+                /*background-color: var(--sportal-blue);*/
+            /*}*/
+
+            .highlight {
+                padding: 15px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            #highlight-text {
+                color: var(--dark-sportal-blue);
+            }
+
+            .thumbnail-logo {
+                height:75px;
+                margin:0;
+                padding:0;
+            }
+
+        </style>
+
+        <div>
+            <div id="main-image">
+
+            </div>
+        </div>
+
+        <div class="home-container">
+
+            <div class="highlight-header-card">
+                <div class="highlight-header">
+                    <h1 id="highlight-text">Find the right sporting events for you. </h1>
+                </div>
+            </div>
+
+
+            <div class="highlight-container">
+                <paper-card elevation="3" class="highlight-card green">
+                    <a class="highlight-link" href="/find">
+                        <div class="highlight">
+                            <p class="highlight-title">Pickup</p>
+                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
+                            <p>Want to play a sport without the cost and commitment of playing in a league? Check out all of
+                                the pickup style sporting events.</p>
+                        </div>
+                    </a>
+                </paper-card>
+
+                <paper-card elevation="3" class="highlight-card blue">
+                    <a class="highlight-link" href="/find">
+                        <div class="highlight">
+                            <p class="highlight-title">Leagues</p>
+                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
+                            <p>Missing the old days when Saturdays and Sundays of every week meant hitting the court or field? Check out some leagues to get back into a routine playing your favorites!</p>
+                        </div>
+                    </a>
+                </paper-card>
+
+                <paper-card elevation="3" class="highlight-card blue">
+                    <a class="highlight-link" href="/find">
+                        <div class="highlight">
+                            <p class="highlight-title">Runs and Races</p>
+                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
+                            <p>Having that itch to race again? Or just want have a consistent running group? Check out the runs and races.</p>
+                        </div>
+                    </a>
+                </paper-card>
+
+                <paper-card elevation="3" class="highlight-card green">
+                    <a class="highlight-link" href="/find">
+                        <div class="highlight">
+                            <p class="highlight-title">Places to Play</p>
+                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
+                            <p>Are you just needing to find a place nearby to practice? Check out all of our places to play, and pick the perfect one for you.</p>
+                        </div>
+                    </a>
+                </paper-card>
+
+            </div>
+        </div>
+
+
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'sportal-home'
+
+        });
+
+    </script>
+
+</dom-module>

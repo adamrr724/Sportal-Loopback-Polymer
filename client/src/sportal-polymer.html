@@ -1,0 +1,424 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="elements.html">
+
+<dom-module id="sportal-polymer">
+
+  <template>
+
+    <style>
+
+      :root {
+
+        font-family: 'Open Sans', sans-serif;
+
+        --sportal-blue: #00A6D0;
+        --sportal-green: #84AE00;
+        --light-sportal-blue: #ade3f0;
+        --light-sportal-green: #d3e2a6;
+        --dark-sportal-blue: #2d6876;
+        --material-blue: #BBDEFB;
+        --material-green: #C8E6C9;
+        --background-color: #fafafa;
+      }
+
+      :host {
+        display: block;
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+        background-color: var(--background-color);
+      }
+
+
+      iron-pages {
+        padding: 0;
+        margin: 0;
+      }
+
+      app-header {
+        background-color: var(--app-primary-color);
+        color: #fff;
+      }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      #main-logo {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5px;
+      }
+
+      .menu-drawer {
+        box-shadow: 1px 0 8px 0 lightgrey;
+        position: flex;
+      }
+
+      #sign-in-buttons {
+        display: flex;
+        flex-direction: column;
+        align-self: flex-end;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        line-height: 40px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+      }
+      .drawer-list a.iron-selected {
+        color: var(--dark-sportal-blue);
+        font-weight: bold;
+      }
+      .drawer-list a.subroute {
+        padding-left: 32px;
+      }
+
+      .close-icon {
+        height: 30px;
+        width: 30px;
+      }
+
+      .close-button {
+        margin: 0;
+        padding: 0;
+        min-width: 50px;
+        min-height: 50px;
+      }
+
+      .close-div {
+        float: right;
+        display: inline;
+        margin: 0;
+        padding: 0;
+      }
+
+      .text-close {
+        border: .5px solid #12377e;
+        border-radius: 0;
+        margin: 5px;
+      }
+
+      .sign-in-modal {
+        padding: 25px;
+        max-height: 400px;
+        max-width: 600px;
+      }
+
+      paper-dialog {
+        min-height: 100px;
+      }
+
+      #facebook-button {
+        color: white;
+        background-color: #3B5998;
+        margin-bottom: 5px;
+      }
+
+      #google-button {
+        color: white;
+        background-color: #dd4b39;
+      }
+
+      .media-icon {
+        height: 25px;
+        margin-right: 5px;
+      }
+
+      #facebook-sign-in {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .sign-ins {
+        text-align: center;
+        width: 300px;
+      }
+
+      .profileImage {
+        border-radius: 50px;
+        height: 60px;
+        box-shadow: 1px 0 8px 0 grey;
+        margin: 10px;
+        position:absolute;
+        top: 5px;
+        right:5px;
+        z-index: 10;
+
+      }
+
+      #sign-in-container {
+        position: absolute;
+        bottom: 20px;
+        left:5px;
+      }
+
+      .gmail-header{
+        display: flex;
+        font-size: 25px;
+        max-width: 500px;
+        white-space: normal;
+      }
+
+
+
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed>
+
+      <!-- Drawer content -->
+      <app-drawer class="menu-drawer">
+        <app-toolbar><a id="main-logo" href="/"><img src="../images/sportal-logo-small.png"></a></app-toolbar>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <a name="home" href="/home">Home</a>
+          <a name="find" onClick="window.location.reload()" href="/find">Find</a>
+          <a name="create" href="/create">Create</a>
+          <template is="dom-if" if="{{signedIn}}">
+            <a name="events" href="/events">My Events</a>
+          </template>
+        </iron-selector>
+
+
+      </app-drawer>
+
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <!--<app-header condenses reveals effects="waterfall">-->
+          <!--<app-toolbar>-->
+            <!--<h3>Sportal</h3>-->
+          <!--</app-toolbar>-->
+        <!--</app-header>-->
+            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+
+        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+          <sportal-home name="home"></sportal-home>
+          <sportal-find name="find"></sportal-find>
+          <sportal-create name="create"></sportal-create>
+          <sportal-events name="events"></sportal-events>
+        </iron-pages>
+
+      </app-header-layout>
+
+    </app-drawer-layout>
+
+    <paper-dialog class="sign-in-modal" autoFitOnAttach="true" opened={{modalOpen}} modal="true">
+            <div class="sign-ins">
+              <div id="google-sign-in">
+                <google-signin raised signed-in="{{signedIn}}" scope="email profile" client-id="77548032317-66dme6ebkcddsfj1q8ripa1og28usm79.apps.googleusercontent.com" brand="google" height="tall"></google-signin>
+
+                <google-signin-aware
+                        scopes="{{scope}}"
+                        signed-in="{{googleSignedIn}}"
+                        is-authorized="{{isAuthorized}}"
+                        need-additional-auth="{{needAdditionalAuth}}"
+                        on-google-signin-aware-success="_signInSuccess"
+                        on-google-signin-aware-signed-out="_handleSignOut"></google-signin-aware>
+              </div>
+
+            </div>
+      <div class="buttons">
+        <paper-button class="text-close" on-Click="_modalClose" autofocus><strong>Close</strong></paper-button>
+      </div>
+    </paper-dialog>
+
+    <div id="sign-in-container">
+      <template is="dom-if" if="{{pageReady}}">
+        <template is="dom-if" if="{{!signedIn}}">
+          <div id="sign-in-buttons">
+            <paper-button id="google-button" raised on-click="_modalOpen" ><img class="media-icon" src="../images/google-white.png">Sign In With Google</paper-button>
+          </div>
+        </template>
+
+        <template is="dom-if" if="{{signedIn}}">
+          <div id="sign-in-buttons">
+            <paper-button id="google-button" raised on-click="_modalOpen" ><img class="media-icon" src="../images/google-white.png">Sign Out</paper-button>
+          </div>
+        </template>
+      </template>
+      </div>
+
+    <template is="dom-if" if="{{signedIn}}">
+      <img class="profileImage" src="{{userImage}}">
+    </template>
+
+
+    <iron-ajax id="userGet"
+               url="{{getUserUrl}}"
+               handle-as="json"
+               on-error="_onError"
+               on-response="_onResponse"
+               content-type="application/json"
+               debounce-duration="300"
+               method="GET"
+               withCredentials
+    ></iron-ajax>
+
+    <iron-ajax id="userPost"
+               url="http://localhost:3000/api/Users"
+               handle-as="json"
+               body="[[userObject]]"
+               on-error="_onError"
+               content-type="application/json"
+               method="POST"
+    ></iron-ajax>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+            is: 'sportal-polymer',
+
+            properties: {
+
+              page: {
+                type: String,
+                reflectToAttribute: true,
+                observer: '_pageChanged'
+              },
+
+              modalOpen: {
+                type: Boolean,
+                value: ""
+              },
+
+              signedIn: {
+                type: Boolean,
+                notify: true
+              },
+              googleSignedIn: {
+                type: Boolean,
+                notify: true
+              },
+              pageReady: {
+                type: Boolean
+              },
+
+              userName: {
+                type: String,
+                value: ""
+              },
+
+              userEmail: {
+                type: String,
+                value: ""
+              },
+
+              userImage: {
+                type: String,
+                value: ""
+              },
+              getUserUrl: {
+                type: String,
+                value: ""
+              },
+              userObject: {
+                type: Object,
+                value: ""
+              },
+              signedInUser: {
+                type: Object,
+                value: ""
+              }
+
+            },
+
+            observers: [
+              '_routePageChanged(routeData.page)'
+            ],
+
+
+      _modalClose: function () {
+        this.modalOpen = false;
+      },
+
+      ready: function () {
+        this.pageReady = true;
+      },
+
+      _signInSuccess: function () {
+
+        this.userName = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName();
+        this.userEmail = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getEmail();
+
+        if (gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getImageUrl()) {
+          this.userImage = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getImageUrl();
+        } else {
+          this.userImage = "/images/sportal-thumbnail.png";
+        }
+        this.userId = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getId();
+
+        this.userObject = {
+          "password": this.userId,
+          "username": this.userName,
+          "email": this.userEmail,
+          "image" : this.userImage
+        };
+
+        this.getUserUrl = "http://localhost:3000/api/Users?filter[where][email]=" + this.userEmail;
+
+        this.$.userGet.generateRequest();
+
+        this._modalClose();
+
+      },
+
+      _handleSignOut: function () {
+        this._modalClose();
+        this.signedIn = false;
+      },
+
+      _modalOpen: function () {
+        this.modalOpen = true;
+      },
+
+      _onResponse: function(e) {
+
+        if (e.detail.response.length === 0) {
+          this.$.userPost.generateRequest();
+          this.$.userGet.generateRequest();
+        }
+
+        this.signedInUser = e.detail.response[0];
+        console.log(this.signedInUser);
+      },
+
+      _onError: function(e) {
+        console.log(e);
+      },
+
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+      },
+
+      _pageChanged: function(page) {
+        // load page import on demand.
+        this.importHref(
+          this.resolveUrl('sportal-' + page + '.html'), null, null, true);
+      }
+
+    });
+
+  </script>
+
+</dom-module>

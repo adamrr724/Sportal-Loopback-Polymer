@@ -1,0 +1,86 @@
+{
+  "name": "Event",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "sportaldb": {
+      "schema": "LOOPBACK",
+      "table": "Events"
+    }
+  },
+  "properties": {
+    "eventType": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "sport": {
+      "type": "string",
+      "required": true
+    },
+    "otherSport": {
+      "type": "string",
+      "required": false
+    },
+    "recurring": {
+      "type": "boolean",
+      "required": false
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "recurringDate": {
+      "type": "string",
+      "required": false
+    },
+    "notes": {
+      "type": "string",
+      "required": false
+    },
+    "age": {
+      "type": "string",
+      "required": true
+    },
+    "fees": {
+      "type": "boolean",
+      "required": false
+    },
+    "skillLevel": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "string",
+      "required": false
+    },
+    "addressGeo": {
+      "type": "geopoint",
+      "required": true
+    },
+    "addressName": {
+      "type": "string",
+      "required": true
+    },
+    "organization": {
+      "type": "string",
+      "required": false
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "website": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

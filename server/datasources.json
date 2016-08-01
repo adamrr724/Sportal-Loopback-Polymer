@@ -1,0 +1,17 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory",
+    "file": "db.json"
+  },
+  "sportaldb": {
+    "host": "localhost",
+    "port": 8889,
+    "database": "sportal-db",
+    "password": "S16!ARR724",
+    "name": "sportaldb",
+    "debug": true,
+    "user": "admin",
+    "connector": "mysql"
+  }
+}
