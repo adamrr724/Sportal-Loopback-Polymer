@@ -85,9 +85,9 @@
                             <paper-listbox attr-for-selected="name"
                                            class="dropdown-content"
                                            selected={{eventType}}>
-                                <paper-item name="pickup">Pickup Game</paper-item>
-                                <paper-item name="league">League</paper-item>
-                                <paper-item name="race">Run or Race</paper-item>
+                                <paper-item name="Pickup">Pickup Game</paper-item>
+                                <paper-item name="League">League</paper-item>
+                                <paper-item name="Run or Race">Run or Race</paper-item>
                             </paper-listbox>
                         </paper-dropdown-menu>
 
@@ -177,7 +177,7 @@
                                             <p class="marker-info">Skill Level: [[item.skillLevel]]</p>
                                             <p class="marker-info">Age: [[item.age]]</p>
                                             <p class="marker-info">Address: [[item.addressName]]</p>
-                                            <paper-button style="margin:3px; padding:8px; float: right;" raised on-click="/[[item.id]]">More Info</paper-button>
+                                            <paper-button style="margin:3px; padding:8px; float: right;" raised on-click="_infoModal">More Info</paper-button>
                                         </paper-card>
 
                                     </div>
@@ -187,6 +187,8 @@
                     </div>
                 </paper-card>
             </template>
+
+            <sportal-info-modal modal-opened="{{infoModalOpened}}"></sportal-info-modal>
 
 
         <!--<iron-ajax id="eventGet"-->
@@ -266,6 +268,14 @@
                 },
                 locationData: {
                     type: Object
+                },
+                infoModalOpened: {
+                    type:Boolean,
+                    notify: true,
+                    value: false
+                },
+                eventInfo: {
+                    type: Object
                 }
 
             },
@@ -295,6 +305,13 @@
 
             _submitForm: function() {
 //                console.log(this.locationData);
+            },
+
+            _infoModal: function(e) {
+
+
+                this.infoModalOpened = true;
+                console.log(this.infoModalOpened);
             },
 
 

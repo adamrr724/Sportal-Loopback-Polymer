@@ -1,0 +1,67 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="sportal-info-modal">
+
+    <template>
+
+        <style>
+            :host {
+                display: block;
+            }
+
+            .info-modal {
+                padding: 25px;
+                min-height: 600px;
+                min-width: 900px;
+                z-index: 10;
+            }
+
+        </style>
+
+        <paper-dialog on-iron-overlay-opened="patchOverlay" class="info-modal" autoFitOnAttach="true" opened={{modalOpened}} modal="true">
+            HELLO
+            <div class="buttons">
+                <paper-button class="text-close" on-Click="_modalClose" autofocus><strong>Close</strong></paper-button>
+            </div>
+        </paper-dialog>
+
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'sportal-info-modal',
+
+      properties: {
+
+        modalOpened: {
+          type: Boolean,
+          notify: true
+        }
+
+      },
+
+        _modalClose: function() {
+            this.modalOpened = false;
+        },
+
+        patchOverlay: function (e) {
+            if (e.target.withBackdrop) {
+                e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
+            }
+        }
+
+//
+//      _onResponse: function (e) {
+//        this.ajaxResponse = e.detail.response;
+//
+//        console.log(this.ajaxResponse);
+//      }
+
+        });
+
+    </script>
+
+</dom-module>
