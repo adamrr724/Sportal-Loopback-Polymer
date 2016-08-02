@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6381cfdd-e7c7-41ec-92d2-db7ece782ecd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/sportal-info-modal.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/elements.html" afterPath="$PROJECT_DIR$/client/src/elements.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/sportal-info-modal.html" afterPath="$PROJECT_DIR$/client/src/sportal-info-modal.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/sportal-map.html" afterPath="$PROJECT_DIR$/client/src/sportal-map.html" />
     </list>
     <ignored path="sportal-loopback-polymer.iws" />
@@ -77,11 +76,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sportal-map.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="sportal-map.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/sportal-map.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-48">
-              <caret line="179" column="133" selection-start-line="179" selection-start-column="133" selection-end-line="179" selection-end-column="133" />
+            <state relative-caret-position="3465">
+              <caret line="315" column="49" selection-start-line="315" selection-start-column="49" selection-end-line="315" selection-end-column="49" />
               <folding>
                 <element signature="n#style#0;n#h3#0;n#paper-card#0;n#div#0;n#google-map-marker#0;n#template#0;n#google-map#0;n#div#1;n#paper-card#0;n#template#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#paper-card#0;n#div#0;n#google-map-marker#0;n#template#0;n#google-map#0;n#div#1;n#paper-card#0;n#template#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -91,11 +90,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sportal-info-modal.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sportal-info-modal.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/sportal-info-modal.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="46" column="18" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
+            <state relative-caret-position="285">
+              <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -134,8 +133,8 @@
         <option value="$PROJECT_DIR$/client/src/sportal-polymer.html" />
         <option value="$PROJECT_DIR$/client/src/sportal-create.html" />
         <option value="$PROJECT_DIR$/client/src/elements.html" />
-        <option value="$PROJECT_DIR$/client/src/sportal-info-modal.html" />
         <option value="$PROJECT_DIR$/client/src/sportal-map.html" />
+        <option value="$PROJECT_DIR$/client/src/sportal-info-modal.html" />
       </list>
     </option>
   </component>
@@ -287,12 +286,12 @@
       <option name="presentableId" value="Default" />
       <updated>1470082997750</updated>
       <workItem from="1470083004034" duration="6107000" />
-      <workItem from="1470091897583" duration="6471000" />
+      <workItem from="1470091897583" duration="9040000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12578000" />
+    <option name="totallyTimeSpent" value="15147000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="823" extended-state="6" />
@@ -508,23 +507,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/sportal-info-modal.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="46" column="18" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/sportal-map.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-48">
-          <caret line="179" column="133" selection-start-line="179" selection-start-column="133" selection-end-line="179" selection-end-column="133" />
+        <state relative-caret-position="3465">
+          <caret line="315" column="49" selection-start-line="315" selection-start-column="49" selection-end-line="315" selection-end-column="49" />
           <folding>
             <element signature="n#style#0;n#h3#0;n#paper-card#0;n#div#0;n#google-map-marker#0;n#template#0;n#google-map#0;n#div#1;n#paper-card#0;n#template#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#p#0;n#paper-card#0;n#div#0;n#google-map-marker#0;n#template#0;n#google-map#0;n#div#1;n#paper-card#0;n#template#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#paper-button#0;n#paper-card#0;n#div#0;n#google-map-marker#0;n#template#0;n#google-map#0;n#div#1;n#paper-card#0;n#template#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/sportal-info-modal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>

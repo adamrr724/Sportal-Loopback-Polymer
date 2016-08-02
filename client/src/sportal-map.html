@@ -56,6 +56,11 @@
                 font-size: 16px;
             }
 
+            .info-modal {
+                margin-right: auto;
+                margin-left:auto;
+            }
+
 
         </style>
 
@@ -182,13 +187,13 @@
 
                                     </div>
                                 </google-map-marker>
+                                <sportal-info-modal class="info-modal" info="{{eventInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal>
                             </template>
                         </google-map>
                     </div>
                 </paper-card>
             </template>
 
-            <sportal-info-modal modal-opened="{{infoModalOpened}}"></sportal-info-modal>
 
 
         <!--<iron-ajax id="eventGet"-->
@@ -308,7 +313,8 @@
             },
 
             _infoModal: function(e) {
-
+                console.log(e.model.__data__.item);
+                this.eventInfo = e.model.__data__.item;
 
                 this.infoModalOpened = true;
                 console.log(this.infoModalOpened);
