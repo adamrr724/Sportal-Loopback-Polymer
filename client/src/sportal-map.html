@@ -51,6 +51,12 @@
                 width: 90%;
             }
 
+            .event-type {
+                color: var(--sportal-green);
+                font-size: 16px;
+            }
+
+
         </style>
 
         <iron-ajax id="eventGet"
@@ -162,10 +168,18 @@
                                 <google-map-marker map="{{map}}"
                                                    latitude=[[item.addressGeo.lat]]
                                                    longitude=[[item.addressGeo.lng]]>
-                                    <div>
-                                        <h4>[[item.name]]</h4>
-                                        <h5>[[item.sport]]</h5>
-                                        <h5>[[item.skillLevel]]</h5>
+                                    <div class="marker-container">
+                                        <paper-card class="marker-card" elevation="1">
+                                            <h3 class="marker-headers" style="color:#2d6876;">[[item.name]]</h3>
+                                                <hr>
+                                            <p style="color:#84AE00;" class="event-type">Type: [[item.eventType]]</p>
+                                            <p class="marker-info">Sport: [[item.sport]]</p>
+                                            <p class="marker-info">Skill Level: [[item.skillLevel]]</p>
+                                            <p class="marker-info">Age: [[item.age]]</p>
+                                            <p class="marker-info">Address: [[item.addressName]]</p>
+                                            <paper-button style="margin:3px; padding:8px; float: right;" raised on-click="/[[item.id]]">More Info</paper-button>
+                                        </paper-card>
+
                                     </div>
                                 </google-map-marker>
                             </template>

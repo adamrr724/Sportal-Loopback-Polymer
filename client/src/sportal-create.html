@@ -91,9 +91,9 @@
               <paper-listbox attr-for-selected="name"
                              class="dropdown-content"
                              selected={{eventType}}>
-                <paper-item name="pickup">Pickup Game</paper-item>
-                <paper-item name="league">League</paper-item>
-                <paper-item name="race">Run or Race</paper-item>
+                <paper-item name="Pickup">Pickup Game</paper-item>
+                <paper-item name="League">League</paper-item>
+                <paper-item name="Run or Race">Run or Race</paper-item>
               </paper-listbox>
             </paper-dropdown-menu>
           </div>
@@ -480,8 +480,9 @@
         };
 
       if(!this.$.form.validate()) {
-          console.log(this.$.form.validate());
+          console.log(this.ajaxBody);
           alert("You have errors, please try again.");
+
         } else {
           console.log(this.ajaxBody);
           alert("stop");
@@ -498,17 +499,17 @@
 
       _selectValue: function() {
 
-        if (this.eventType === "pickup") {
+        if (this.eventType === "Pickup") {
           this.valueSelected = true;
           this.isPickup = true;
           this.isLeague = false;
           this.isRace = false;
-        } else if (this.eventType === "league") {
+        } else if (this.eventType === "League") {
           this.valueSelected = true;
           this.isLeague = true;
           this.isRace = false;
           this.isPickup = false;
-        } else if (this.eventType === "race") {
+        } else if (this.eventType === "Run or Race") {
           this.valueSelected = true;
           this.isRace = true;
           this.isPickup = false;
