@@ -232,13 +232,16 @@
 
           console.log(response);
 
-          if (response) {
+          if (response.length > 0) {
 
               response.forEach(function(event) {
                   if(event.userId === self.signedIn.id) {
                       self.following = true;
+                      return;
                   }
               })
+          } else {
+              self.following = false;
           }
 
       },
