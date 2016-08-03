@@ -20,7 +20,7 @@
             "required": false
         },
         "events": {
-            "type": "array",
+            "type": "string",
             "required": false
         },
         "emailVerified": "boolean",

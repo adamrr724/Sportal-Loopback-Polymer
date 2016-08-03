@@ -211,9 +211,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
           <sportal-home name="home"></sportal-home>
-          <sportal-find name="find"></sportal-find>
-          <sportal-create name="create"></sportal-create>
-          <sportal-events name="events"></sportal-events>
+          <sportal-find signed-in="{{signedInUser}}" name="find"></sportal-find>
+          <sportal-create signed-in="{{signedInUser}}" name="create"></sportal-create>
+          <sportal-events signed-in="{{signedInUser}}" name="events"></sportal-events>
         </iron-pages>
 
       </app-header-layout>
@@ -400,7 +400,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         this.signedInUser = e.detail.response[0];
-        console.log(this.signedInUser);
+//        console.log(this.signedInUser);
       },
 
       _onError: function(e) {

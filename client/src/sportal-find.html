@@ -12,7 +12,7 @@
 
     </style>
 
-    <sportal-map location-data="{{locationData}}"></sportal-map>
+    <sportal-map signed-in="{{signedIn}}" location-data="{{locationData}}"></sportal-map>
 
 
   </template>
@@ -21,18 +21,16 @@
 
     Polymer({
 
-      is: 'sportal-find'
+      is: 'sportal-find',
 
-//      properties: {
-//
-//        route: Object,
-//
-//        ajaxResponse: {
-//          type: Object,
-//          value: null
-//        }
-//
-//      },
+      properties: {
+
+        signedIn: {
+          type: Object,
+          notify: true
+        }
+
+      }
 //
 //      _onResponse: function (e) {
 //        this.ajaxResponse = e.detail.response;
