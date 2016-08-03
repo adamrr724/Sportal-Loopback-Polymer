@@ -40,11 +40,13 @@
             <div class="buttons">
                 <paper-button class="text-close" on-Click="_modalClose" autofocus><strong>Close</strong></paper-button>
 
-                <template is="dom-if" if="{{notFollowing}}">
-                    <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Events</strong></paper-button>
-                </template>
-                <template is="dom-if" if="{{following}}">
-                    <paper-button raised class="follow" on-Click="_unfollow" autofocus><strong>Unfollow</strong></paper-button>
+                <template is="dom-if" if="{{signedIn}}">
+                    <template is="dom-if" if="{{notFollowing}}">
+                        <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Events</strong></paper-button>
+                    </template>
+                    <template is="dom-if" if="{{following}}">
+                        <paper-button raised class="follow" on-Click="_unfollow" autofocus><strong>Unfollow</strong></paper-button>
+                    </template>
                 </template>
             </div>
         </paper-dialog>

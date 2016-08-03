@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6381cfdd-e7c7-41ec-92d2-db7ece782ecd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/sportal-find.html" afterPath="$PROJECT_DIR$/client/src/sportal-find.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/sportal-info-modal.html" afterPath="$PROJECT_DIR$/client/src/sportal-info-modal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/sportal-map.html" afterPath="$PROJECT_DIR$/client/src/sportal-map.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/sportal-polymer.html" afterPath="$PROJECT_DIR$/client/src/sportal-polymer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/models/user.json" afterPath="$PROJECT_DIR$/common/models/user.json" />
     </list>
     <ignored path="sportal-loopback-polymer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -116,8 +111,8 @@
       <file leaf-file-name="sportal-info-modal.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/sportal-info-modal.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="215" column="13" selection-start-line="215" selection-start-column="13" selection-end-line="215" selection-end-column="13" />
+            <state relative-caret-position="510">
+              <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -329,12 +324,12 @@
       <option name="presentableId" value="Default" />
       <updated>1470082997750</updated>
       <workItem from="1470083004034" duration="6107000" />
-      <workItem from="1470091897583" duration="21421000" />
+      <workItem from="1470091897583" duration="21677000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27528000" />
+    <option name="totallyTimeSpent" value="27784000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1440" height="823" extended-state="6" />
@@ -566,8 +561,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/sportal-info-modal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="215" column="13" selection-start-line="215" selection-start-column="13" selection-end-line="215" selection-end-column="13" />
+        <state relative-caret-position="510">
+          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
           <folding />
         </state>
       </provider>
