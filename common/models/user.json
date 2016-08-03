@@ -93,6 +93,7 @@
         }
     ],
     "relations": {
+
         "accessTokens": {
             "type": "hasMany",
             "model": "AccessToken",
@@ -100,6 +101,10 @@
             "options": {
                 "disableInclude": true
             }
-        }
+        },
+        "events": {
+            "type": "hasAndBelongsToMany",
+            "model": "Event"
+            }
     }
 }

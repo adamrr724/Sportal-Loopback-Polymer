@@ -38,39 +38,40 @@
                     <img class="info-image" src="[[info.image]]">
             </template>
             <div class="buttons">
-                <paper-button class="text-close" on-Click="_modalClose" autofocus><strong>Close</strong></paper-button>
 
                 <template is="dom-if" if="{{signedIn}}">
-                    <template is="dom-if" if="{{notFollowing}}">
+                    <template is="dom-if" if="{{!following}}">
                         <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Events</strong></paper-button>
                     </template>
                     <template is="dom-if" if="{{following}}">
                         <paper-button raised class="follow" on-Click="_unfollow" autofocus><strong>Unfollow</strong></paper-button>
                     </template>
                 </template>
+                <paper-button class="text-close" on-Click="_modalClose" autofocus><strong>Close</strong></paper-button>
             </div>
         </paper-dialog>
 
-        <!--<iron-ajax id="eventGet"-->
-                   <!--url="{{getUserById}}"-->
-                   <!--handle-as="json"-->
-                   <!--on-error="_onError"-->
-                   <!--on-response="_onResponse"-->
-                   <!--content-type="application/json"-->
-                   <!--debounce-duration="300"-->
-                   <!--method="GET"-->
-                   <!--withCredentials-->
-        <!--&gt;</iron-ajax>    -->
-
-        <iron-ajax id="userPut"
-                   url="{{putUserById}}"
+        <iron-ajax id="userEventGet"
+                   auto
+                   url="{{getUserEventById}}"
                    handle-as="json"
-                   body="[[userInfo]]"
                    on-error="_onError"
                    on-response="_onResponse"
                    content-type="application/json"
                    debounce-duration="300"
-                   method="PUT"
+                   method="GET"
+                   withCredentials
+        ></iron-ajax>
+
+        <iron-ajax id="userEventPost"
+                   url="http://localhost:3000/api/userEvents/"
+                   handle-as="json"
+                   body="[[joinObject]]"
+                   on-error="_onError"
+                   on-response="_onResponse"
+                   content-type="application/json"
+                   debounce-duration="300"
+                   method="POST"
                    withCredentials
         ></iron-ajax>
 
@@ -82,6 +83,14 @@
         Polymer({
 
             is: 'sportal-info-modal',
+
+//        behaviors: [
+//            Polymer.IronOverlayBehavior
+//        ],
+//
+//        listeners: {
+//            "iron-overlay-opened" : "_windowOpen"
+//        },
 
       properties: {
 
@@ -97,16 +106,17 @@
 
         following: {
           type: Boolean,
-          computed: 'computeFollowing(info, signedIn)'
+          value: false
         },
 
-        notFollowing: {
-          type: Boolean,
-          computed: 'computeNotFollowing(info, signedIn)'
-        },
+//        notFollowing: {
+//          type: Boolean,
+//          computed: 'computeNotFollowing(info, signedIn)'
+//        },
 
-          putUserById: {
-              type: String
+          getUserEventById: {
+              type: String,
+              computed: 'computeId(info)'
           },
 
           ajaxResponse: {
@@ -117,11 +127,19 @@
               type: Object,
               notify: true
           },
-          userInfo: {
+          joinObject: {
               type: Object
           }
 
       },
+
+        computeId:function(info) {
+            return "http://localhost:3000/api/userEvents?filter[where][eventId]=" + info.id;
+        },
+//        _windowOpen: function() {
+//            this.getUserEventById = "http://localhost:3000/api/userEvents?filter[where][eventId]=" + this.info.id;
+//            this.$.userEventget.generateRequest();
+//        },
 
         _modalClose: function () {
             this.modalOpened = false;
@@ -135,33 +153,12 @@
 
         _follow: function (e) {
 
-            console.log(this.signedIn);
+            this.joinObject = {
+                "eventId": this.info.id,
+                "userId": this.signedIn.id
+            };
 
-            var eventsArray = [];
-
-            if(this.signedIn.events) {
-                if(this.signedIn.events.length > 1) {
-                    eventsArray = this.signedIn.events.split(",");
-    //                console.log(eventsArray);
-                    eventsArray.push(parseInt(this.info.id));
-                    var eventsString = eventsArray.join(",");
-                    this.signedIn.events = eventsString;
-    //                console.log(this.signedIn.events);
-                } else {
-                    eventsArray.push(parseInt(this.info.id));
-                    eventsArray.push(parseInt(this.signedIn.events));
-                    var singleEventString = eventsArray.join(",");
-                    this.signedIn.events = singleEventString;
-                }
-            } else {
-                this.signedIn.events = parseInt(this.info.id);
-            }
-
-            this.userInfo = this.signedIn;
-
-            this.putUserById = "http://localhost:3000/api/Users/" + this.signedIn.id;
-
-            this.$.userPut.generateRequest();
+            this.$.userEventPost.generateRequest();
 
 //            this._updateFollow();
         },
@@ -171,59 +168,84 @@
 //            computeNotFollowing(this.info, this.signedIn);
 //        },
 
-        computeFollowing: function (info, signedIn) {
-            var valid = "";
+//        computeFollowing: function (info, signedIn) {
+//
+//            this.getUserEventById = "http://localhost:3000/api/userEvents?filter[where][eventId]=" + this.info.id;
+//
+//            var valid = "";
+//
+//            if (signedIn.events) {
+//                if (signedIn.events.length > 1) {
+//                    var followedEvents = signedIn.events.split(",");
+//                    followedEvents.forEach(function(event) {
+//                        parseInt(event);
+//                    });
+//                    valid = followedEvents.includes(String(info.id));
+//                    console.log(String(info.id));
+//                } else if (parseInt(signedIn.events) === parseInt(info.id)) {
+//                    valid = true;
+//                } else {
+//                    console.log("single false");
+//                    valid = false;
+//                }
+//            } else {
+//                    console.log("empty false");
+//                valid = false;
+//            }
+//            return valid;
+//        },
 
-            if (signedIn.events) {
-                if (signedIn.events.length > 1) {
-                    var followedEvents = signedIn.events.split(",");
-                    followedEvents.forEach(function(event) {
-                        parseInt(event);
-                    });
-                    valid = followedEvents.includes(String(info.id));
-                    console.log(String(info.id));
-                } else if (parseInt(signedIn.events) === parseInt(info.id)) {
-                    valid = true;
-                } else {
-                    console.log("single false");
-                    valid = false;
-                }
-            } else {
-                    console.log("empty false");
-                valid = false;
-            }
-            return valid;
-        },
-
-        computeNotFollowing: function (info, signedIn) {
-            var valid = "";
-
-            if (signedIn.events) {
-                if (signedIn.events.length > 1) {
-                    var followedEvents = signedIn.events.split(",");
-                    followedEvents.forEach(function(event) {
-                        parseInt(event);
-                    });
-                    valid = (!followedEvents.includes(String(info.id)));
-                    console.log(String(info.id));
-                } else if (parseInt(signedIn.events) === parseInt(info.id)){
-                    valid = false;
-                } else {
-                    console.log("single true");
-                    valid = true;
-                }
-            } else {
-                console.log("empty true");
-                valid = true;
-            }
-            return valid;
-        },
+//        computeNotFollowing: function (info, signedIn) {
+//
+//            this.getUserEventById = "http://localhost:3000/api/userEvents?filter[where][eventId]=" + this.info.id;
+//
+//
+//            this.$.userEventGet.generateRequest();
+//
+//            var valid = "";
+//
+//            if (signedIn.events) {
+//                if (signedIn.events.length > 1) {
+//                    var followedEvents = signedIn.events.split(",");
+//                    followedEvents.forEach(function(event) {
+//                        parseInt(event);
+//                    });
+//                    valid = (!followedEvents.includes(String(info.id)));
+//                    console.log(String(info.id));
+//                } else if (parseInt(signedIn.events) === parseInt(info.id)){
+//                    valid = false;
+//                } else {
+//                    console.log("single true");
+//                    valid = true;
+//                }
+//            } else {
+//                console.log("empty true");
+//                valid = true;
+//            }
+//            return valid;
+//        },
 
       _onResponse: function (e) {
-        this.ajaxResponse = e.detail.response;
 
-        console.log(this.ajaxResponse);
-      }
+          var self = this;
+          var response = e.detail.response;
+
+          console.log(response);
+
+          if (response) {
+
+              response.forEach(function(event) {
+                  if(event.userId === self.signedIn.id) {
+                      self.following = true;
+                  }
+              })
+          }
+
+      },
+
+        _onError: function (e) {
+            console.log(e);
+        }
 
         });
 

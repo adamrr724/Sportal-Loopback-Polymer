@@ -1,0 +1,26 @@
+{
+  "name": "userEvents",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true,
+    "sportaldb": {
+      "schema": "LOOPBACK",
+      "table": "userEvents"
+    }
+  },
+  "properties": {
+    "userId": {
+      "type": "number",
+      "required": true
+    },
+    "eventId": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

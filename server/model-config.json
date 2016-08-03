@@ -20,5 +20,9 @@
     "User": {
         "dataSource": "sportaldb",
         "public": true
+    },
+    "userEvents": {
+        "dataSource": "sportaldb",
+        "public": true
     }
 }
