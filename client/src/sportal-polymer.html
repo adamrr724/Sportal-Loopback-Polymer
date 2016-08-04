@@ -190,7 +190,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="home" href="/home">Home</a>
           <a name="find" onClick="window.location.reload()" href="/find">Find</a>
+          <template is="dom-if" if="{{signedIn}}">
           <a name="create" href="/create">Create</a>
+          </template>
+          <a name="about" href="/about">About</a>
           <template is="dom-if" if="{{signedIn}}">
             <a name="events" href="/events">My Events</a>
           </template>
@@ -213,6 +216,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <sportal-home name="home"></sportal-home>
           <sportal-find signed-in="{{signedInUser}}" name="find"></sportal-find>
           <sportal-create signed-in="{{signedInUser}}" name="create"></sportal-create>
+          <sportal-about signed-in="{{signedInUser}}" name="about"></sportal-about>
           <sportal-events signed-in="{{signedInUser}}" name="events"></sportal-events>
         </iron-pages>
 
@@ -386,6 +390,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _handleSignOut: function () {
         this._modalClose();
         this.signedIn = false;
+        this.signedInUser = "";
       },
 
       _modalOpen: function () {

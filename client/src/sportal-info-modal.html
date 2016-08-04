@@ -22,58 +22,69 @@
 
         </style>
 
-        <paper-dialog on-iron-overlay-opened="patchOverlay" class="info-modal" autoFitOnAttach="true" opened={{modalOpened}} modal="true">
-            <template is="dom-if" if="{{info}}">
-                    <h2>Event Name: [[info.name]]</h2>
-                    <p class="event-info">Event Type: [[info.eventType]]</p>
-                    <p class="event-info">Sport: [[info.sport]]</p>
-                    <p class="event-info">Skill Level: [[info.skillLevel]]</p>
-                    <p class="event-info">Age: [[info.age]]</p>
-                    <p class="event-info">Date: [[info.date]]</p>
-                    <p class="event-info">Fees?: [[info.fees]]</p>
-                    <p class="event-info">Affiliated Organization: [[info.organization]]</p>
-                    <p class="event-info" >Website: <a href="http://[[info.website]]">[[info.website]]</a></p>
-                    <p class="event-info">Notes: [[info.notes]]</p>
-                    <p class="event-info">Contact Email: [[info.email]]</p>
-                    <img class="info-image" src="[[info.image]]">
-            </template>
-            <div class="buttons">
-
-                <template is="dom-if" if="{{signedIn}}">
-                    <template is="dom-if" if="{{!following}}">
-                        <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Events</strong></paper-button>
-                    </template>
-                    <template is="dom-if" if="{{following}}">
-                        <paper-button raised class="follow" on-Click="_unfollow" autofocus><strong>Unfollow</strong></paper-button>
-                    </template>
+            <paper-dialog on-iron-overlay-opened="patchOverlay" class="info-modal" autoFitOnAttach="true" opened={{modalOpened}} modal="true">
+                <template is="dom-if" if="{{info}}">
+                        <h2>Event Name: [[info.name]]</h2>
+                        <p class="event-info">Event Type: [[info.eventType]]</p>
+                        <p class="event-info">Sport: [[info.sport]]</p>
+                        <p class="event-info">Skill Level: [[info.skillLevel]]</p>
+                        <p class="event-info">Age: [[info.age]]</p>
+                        <p class="event-info">Date: [[info.date]]</p>
+                        <p class="event-info">Fees?: [[info.fees]]</p>
+                        <p class="event-info">Affiliated Organization: [[info.organization]]</p>
+                        <p class="event-info" >Website: <a href="http://[[info.website]]">[[info.website]]</a></p>
+                        <p class="event-info">Notes: [[info.notes]]</p>
+                        <p class="event-info">Contact Email: [[info.email]]</p>
+                        <img class="info-image" src="[[info.image]]">
                 </template>
-                <paper-button class="text-close" on-Click="_modalClose" autofocus><strong>Close</strong></paper-button>
-            </div>
-        </paper-dialog>
+                <div class="buttons">
 
-        <iron-ajax id="userEventGet"
-                   auto
-                   url="{{getUserEventById}}"
-                   handle-as="json"
-                   on-error="_onError"
-                   on-response="_onResponse"
-                   content-type="application/json"
-                   debounce-duration="300"
-                   method="GET"
-                   withCredentials
-        ></iron-ajax>
+                    <template is="dom-if" if="{{signedIn}}">
+                        <template is="dom-if" if="{{!following}}">
+                            <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Events</strong></paper-button>
+                        </template>
+                        <template is="dom-if" if="{{following}}">
+                            <paper-button raised class="follow" on-Click="_unfollow" autofocus><strong>Unfollow</strong></paper-button>
+                        </template>
+                    </template>
+                    <paper-button class="text-close" on-Click="_modalClose" autofocus><strong>Close</strong></paper-button>
+                </div>
+            </paper-dialog>
 
-        <iron-ajax id="userEventPost"
-                   url="http://localhost:3000/api/userEvents/"
-                   handle-as="json"
-                   body="[[joinObject]]"
-                   on-error="_onError"
-                   on-response="_onResponse"
-                   content-type="application/json"
-                   debounce-duration="300"
-                   method="POST"
-                   withCredentials
-        ></iron-ajax>
+            <iron-ajax id="userEventGet"
+                       auto
+                       url="{{getUserEventById}}"
+                       handle-as="json"
+                       on-error="_onError"
+                       on-response="_onResponse"
+                       content-type="application/json"
+                       debounce-duration="300"
+                       method="GET"
+                       withCredentials
+            ></iron-ajax>
+
+            <iron-ajax id="userEventPost"
+                       url="http://localhost:3000/api/userEvents/"
+                       handle-as="json"
+                       body="[[joinObject]]"
+                       on-error="_onError"
+                       on-response="_onResponseGet"
+                       content-type="application/json"
+                       debounce-duration="300"
+                       method="POST"
+                       withCredentials
+            ></iron-ajax>
+
+            <iron-ajax id="userEventDelete"
+                       url="{{userEventDeleteUrl}}"
+                       handle-as="json"
+                       on-error="_onError"
+                       on-response="_onResponseGet"
+                       content-type="application/json"
+                       debounce-duration="300"
+                       method="DELETE"
+                       withCredentials
+            ></iron-ajax>
 
 
     </template>
@@ -105,14 +116,8 @@
         },
 
         following: {
-          type: Boolean,
-          value: false
+          type: Boolean
         },
-
-//        notFollowing: {
-//          type: Boolean,
-//          computed: 'computeNotFollowing(info, signedIn)'
-//        },
 
           getUserEventById: {
               type: String,
@@ -129,6 +134,12 @@
           },
           joinObject: {
               type: Object
+          },
+          userEventObject: {
+              type:Object
+          },
+          userEventDeleteUrl: {
+              type: String
           }
 
       },
@@ -136,10 +147,6 @@
         computeId:function(info) {
             return "http://localhost:3000/api/userEvents?filter[where][eventId]=" + info.id;
         },
-//        _windowOpen: function() {
-//            this.getUserEventById = "http://localhost:3000/api/userEvents?filter[where][eventId]=" + this.info.id;
-//            this.$.userEventget.generateRequest();
-//        },
 
         _modalClose: function () {
             this.modalOpened = false;
@@ -158,9 +165,19 @@
                 "userId": this.signedIn.id
             };
 
+
             this.$.userEventPost.generateRequest();
 
-//            this._updateFollow();
+            this.following = true;
+        },
+
+        _unfollow: function (e) {
+
+            this.userEventDeleteUrl = "http://localhost:3000/api/userEvents/" + this.userEventObject.id;
+
+            this.$.userEventDelete.generateRequest();
+
+            this.following = false;
         },
 
 //        _updateFollow: function() {
@@ -237,6 +254,7 @@
               response.forEach(function(event) {
                   if(event.userId === self.signedIn.id) {
                       self.following = true;
+                      self.userEventObject = event;
                       return;
                   }
               })
@@ -245,6 +263,10 @@
           }
 
       },
+
+        _onResponseGet: function (e) {
+            this.$.userEventGet.generateRequest();
+        },
 
         _onError: function (e) {
             console.log(e);

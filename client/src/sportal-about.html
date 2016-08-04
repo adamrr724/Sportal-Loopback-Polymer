@@ -1,7 +1,7 @@
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<dom-module id="sportal-events">
+<dom-module id="sportal-about">
 
     <template>
 
@@ -14,13 +14,19 @@
         </style>
 
         <div>
-            <h1>My Events</h1>
+            <h1>About</h1>
             <paper-card elevation="1">
                 <div>
-                    Here will be links to all of the users links.
-                    <template is="dom-repeat" items="{{userEvents}}">
-                        <h3>Your Event #1!</h3>
-                    </template>
+                    <h1>Story and Mission</h1>
+                </div>
+                <div>
+                    <h1>API</h1>
+                </div>
+                <div>
+                    <h1>Founder</h1>
+                </div>
+                <div>
+                    <h1>Policies and Disclaimer</h1>
                 </div>
             </paper-card>
         </div>
@@ -31,7 +37,7 @@
 
         Polymer({
 
-            is: 'sportal-events'
+            is: 'sportal-about'
 
         });
 
