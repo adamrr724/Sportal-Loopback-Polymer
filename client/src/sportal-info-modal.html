@@ -63,16 +63,11 @@
                        withCredentials
             ></iron-ajax>
 
-            <iron-ajax id="userEventPost"
-                       url="http://localhost:3000/api/userEvents/"
-                       handle-as="json"
-                       body="[[joinObject]]"
+            <iron-ajax id="userEventPut"
+                       url="{{userEventPutUrl}}"
                        on-error="_onError"
                        on-response="_onResponseGet"
-                       content-type="application/json"
-                       debounce-duration="300"
-                       method="POST"
-                       withCredentials
+                       method="PUT"
             ></iron-ajax>
 
             <iron-ajax id="userEventDelete"
@@ -140,12 +135,15 @@
           },
           userEventDeleteUrl: {
               type: String
+          },
+          userEventPutUrl: {
+              type: String
           }
 
       },
 
         computeId:function(info) {
-            return "http://localhost:3000/api/userEvents?filter[where][eventId]=" + info.id;
+            return "http://localhost:3000/api/Events/" + this.info.id + "/users/" + this.signedIn.id;
         },
 
         _modalClose: function () {
@@ -160,20 +158,16 @@
 
         _follow: function (e) {
 
-//            this.joinObject = {
-//                "eventId": this.info.id,
-//                "userId": this.signedIn.id
-//            };
+            this.userEventPutUrl = "http://localhost:3000/api/Events/" + this.info.id + "/users/rel/" + this.signedIn.id;
 
-
-            this.$.userEventPost.generateRequest();
+            this.$.userEventPut.generateRequest();
 
             this.following = true;
         },
 
         _unfollow: function (e) {
 
-            this.userEventDeleteUrl = "http://localhost:3000/api/userEvents/" + this.userEventObject.id;
+            this.userEventDeleteUrl = "http://localhost:3000/api/Events/" + this.info.id + "/users/rel/" + this.signedIn.id;
 
             this.$.userEventDelete.generateRequest();
 
@@ -243,24 +237,28 @@
 //        },
 
       _onResponse: function (e) {
+          this.following = true;
 
-          var self = this;
-          var response = e.detail.response;
+//          if (e) {
 
-          console.log(response);
-
-          if (response.length > 0) {
-
-              response.forEach(function(event) {
-                  if(event.userId === self.signedIn.id) {
-                      self.following = true;
-                      self.userEventObject = event;
-                      return;
-                  }
-              })
-          } else {
-              self.following = false;
-          }
+//          }
+//          var self = this;
+//          var response = e.detail.response;
+//
+//          console.log(response);
+//
+//          if (response.length > 0) {
+//
+//              response.forEach(function(event) {
+//                  if(event.userId === self.signedIn.id) {
+//                      self.following = true;
+//                      self.userEventObject = event;
+//                      return;
+//                  }
+//              })
+//          } else {
+//              self.following = false;
+//          }
 
       },
 
@@ -270,6 +268,9 @@
 
         _onError: function (e) {
             console.log(e);
+            if(e.detail.request.__data__.response.error.status === 404) {
+                this.following = false;
+            }
         }
 
         });

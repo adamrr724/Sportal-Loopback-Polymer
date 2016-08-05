@@ -3,7 +3,6 @@
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true,
     "sportaldb": {
       "schema": "LOOPBACK",
       "table": "Event"

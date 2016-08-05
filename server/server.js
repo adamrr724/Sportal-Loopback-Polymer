@@ -11,9 +11,9 @@ app.start = function () {
     });
 };
 
-// User.Events.link({id:userId, fk: eventId}, userEvent,  function(value, header) {
-//     //success
-// });
+User.Event.link({id:userId, fk: eventId}, userEvent,  function(value, header) {
+    //success
+});
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.

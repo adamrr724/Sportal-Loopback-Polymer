@@ -1,12 +1,11 @@
 {
-  "name": "userEvents",
+  "name": "userEvent",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
-    "validateUpsert": true,
     "sportaldb": {
       "schema": "LOOPBACK",
-      "table": "userEvents"
+      "table": "userEvent"
     }
   },
   "properties": {
