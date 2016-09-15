@@ -156,6 +156,11 @@ describe('Memory connector', function() {
         city: String,
         state: String,
         zipCode: String,
+        tags: [
+          {
+            tag: String,
+          },
+        ],
       },
       friends: [
         {
@@ -523,6 +528,16 @@ describe('Memory connector', function() {
       });
     });
 
+    it('should support multi-level nested array property in query', function(done) {
+      User.find({ where: { 'address.tags.tag': 'business' }}, function(err, users) {
+        should.not.exist(err);
+        users.length.should.be.equal(1);
+        users[0].address.tags[0].tag.should.be.equal('business');
+        users[0].address.tags[1].tag.should.be.equal('rent');
+        done();
+      });
+    });
+
     function seed(done) {
       var beatles = [
         {
@@ -537,6 +552,10 @@ describe('Memory connector', function() {
             city: 'San Jose',
             state: 'CA',
             zipCode: '95131',
+            tags: [
+                { tag: 'business' },
+                { tag: 'rent' },
+            ],
           },
           friends: [
             { name: 'Paul McCartney' },
@@ -850,26 +869,21 @@ describe('Memory connector', function() {
 describe('Optimized connector', function() {
   var ds = new DataSource({ connector: Memory });
 
-  // optimized methods
-  ds.connector.findOrCreate = function(model, query, data, callback) {
-    this.all(model, query, {}, function(err, list) {
-      if (err || (list && list[0])) return callback(err, list && list[0], false);
-      this.create(model, data, {}, function(err) {
-        callback(err, data, true);
-      });
-    }.bind(this));
-  };
-
-  require('./persistence-hooks.suite')(ds, should, { replaceOrCreateReportsNewInstance: true });
+  require('./persistence-hooks.suite')(ds, should, {
+    replaceOrCreateReportsNewInstance: true,
+  });
 });
 
 describe('Unoptimized connector', function() {
   var ds = new DataSource({ connector: Memory });
+
   // disable optimized methods
   ds.connector.updateOrCreate = false;
   ds.connector.findOrCreate = false;
 
-  require('./persistence-hooks.suite')(ds, should, { replaceOrCreateReportsNewInstance: true });
+  require('./persistence-hooks.suite')(ds, should, {
+    replaceOrCreateReportsNewInstance: true,
+  });
 });
 
 describe('Memory connector with options', function() {

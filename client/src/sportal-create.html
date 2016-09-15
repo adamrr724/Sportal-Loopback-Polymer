@@ -33,7 +33,7 @@
       .header-text {
         font-size: 25px;;
       }
-      
+
       .create-container {
         display: flex;
         flex-wrap: wrap;
@@ -61,7 +61,7 @@
       #reg-date {
       display:none;
       }
-      
+
       .other-input {
         display: none;
       }
@@ -334,16 +334,16 @@
 
       </div>
 
-        <iron-ajax id="eventPost"
-                   url="http://localhost:3000/api/Events"
-                   handle-as="json"
-                   body="[[ajaxBody]]"
-                   on-error="_onError"
-                   content-type="application/json"
-                   method="POST"
-                  ></iron-ajax>
-
     </template>
+
+    <iron-ajax id="eventPost"
+               url="http://localhost:3000/api/Events"
+               handle-as="json"
+               body="[[ajaxBody]]"
+               on-error="_onError"
+               content-type="application/json"
+               method="POST"
+              ></iron-ajax>
   </template>
 
   <script>
@@ -454,6 +454,7 @@
       },
 
       _submitForm: function() {
+        var self = this;
 
         this.latitude = this.locationData.geometry.location.lat();
         this.longitude = this.locationData.geometry.location.lng();
@@ -488,13 +489,19 @@
           "website": this.website
         };
 
-      if(!this.$.form.validate()) {
+      var form = Polymer.dom(event).localTarget.parentElement;
+      console.log(form);
+
+      if(!form.validate()) {
           console.log(this.ajaxBody);
           alert("You have errors, please try again.");
 
         } else {
           console.log(this.ajaxBody);
           alert("stop");
+
+        //   THE COMMAND BELOW IS NOT GENERATING, THE ID CANNOT BE FOUND
+          console.log(this.$);
           this.$.eventPost.generateRequest();
 
           alert("Your pickup game has been created!");
