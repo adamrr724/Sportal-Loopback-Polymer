@@ -30,7 +30,26 @@
             .events-container {
                 width: 90%;
                 display: flex;
+            }
 
+            .events-header {
+                font-size: 40px;
+                font-weight: 400;
+            }
+
+            .events-subheader {
+                font-size: 16px;
+                font-weight: 100;
+            }
+
+            .event-name {
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+            .event-info {
+                font-size: 14px;
+                font-weight: 100;
             }
 
             .info {
@@ -57,16 +76,16 @@
             ></iron-ajax>
 
             <paper-card id="main-container" elevation="1">
-                <h1>My Events</h1>
+                <h1 class="events-header">My Events</h1>
                 <div>
-                    <h3>Find all of your pickup games, leagues, and races here!</h3>
+                    <h3 class="events-subheader">Find all of your pickup games, leagues, and races here!</h3>
                     <div class="events-container">
                         <template is="dom-repeat" items="{{userEvents}}">
                             <paper-card image="{{item.image}}" class="my-events" elevation="2">
                                 <div class="info">
-                                    <h4>{{item.name}}</h4>
-                                    <h5>{{item.sport}}</h5>
-                                    <h5>{{item.eventType}}</h5>
+                                    <h4 class="event-name">{{item.name}}</h4>
+                                    <h5 class="event-info">{{item.sport}}</h5>
+                                    <h5 class="event-info">{{item.eventType}}</h5>
                                 </div>
                                 <paper-button style="margin:5px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
                             </paper-card>
@@ -78,7 +97,7 @@
         </template>
 
         <template is="dom-if" if="{{!signedIn}}">
-            <h3>Please sign in to see your events!</h3>
+            <h3 class="event-header">Please sign in to see your events!</h3>
         </template>
 
     </template>
