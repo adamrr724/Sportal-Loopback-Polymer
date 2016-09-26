@@ -27,7 +27,14 @@
 
 
       .header-text {
-        font-size: 25px;;
+          font-size: 30px;
+          font-weight: 400;
+          margin-bottom: 10px;
+      }
+
+      .header-subtext {
+          font-size: 16px;
+          font-weight: 100;
       }
 
       .create-container {
@@ -51,9 +58,8 @@
         padding: 25px;
         min-width: 60%;
         text-align: center;
-        color: whitesmoke;
-        text-shadow: 1px 1px 2px #191919;
-        background-color: var(--sportal-blue);
+        color: var(--header-text);
+        background-color: var(--background-color);
       }
 
       #rec-date {
@@ -84,7 +90,7 @@
       <div class="create-container">
         <paper-card elevation="3" class="create-header">
           <p class="header-text">Create an Event</p>
-          <p>Add your game, league, run, race, or place to play to the Sportal Library!</p>
+          <p class="header-subtext">Add your game, league, run, race, or place to play to the Sportal Library!</p>
         </paper-card>
 
         <paper-card elevation="3" class="create-form">

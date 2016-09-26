@@ -262,7 +262,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
 
     <template is="dom-if" if="{{signedIn}}">
-      <img class="profileImage" src="{{userImage}}">
+
+        <template is="dom-if" if="{{userImage}}">
+            <img class="profileImage" src="{{userImage}}">
+        </template>
+        <template is="dom-if" if="{{!userImage}}">
+            <img class="profileImage" src="../images/Profile-Placeholder.png">
+        </template>
     </template>
 
 
