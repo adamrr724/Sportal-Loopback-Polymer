@@ -10,10 +10,6 @@
       :host {
         display: block;
         padding: 10px;
-        background-image: url("../images/football.jpg");
-        background-attachment: fixed;
-        background-size: cover;
-        min-height: 100vh;
       }
 
       paper-input {
@@ -35,6 +31,7 @@
       }
 
       .create-container {
+        margin-top: 10%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -43,6 +40,11 @@
       .create-form {
         margin: 20px 25% 20px 25%;
         padding: 40px;
+      }
+
+      .main-image {
+          position: fixed;
+          max-height: 100vh;
       }
 
       .create-header {
@@ -69,12 +71,16 @@
     </style>
 
     <template is="dom-if" if="{{!signedIn}}">
-      <paper-card class="create-header">
-        <h3>Please sign in to create events!</h3>
-      </paper-card>
+        <img src="../images/football.jpg" class="main-image" alt="" />
+        <div class="create-container">
+          <paper-card class="create-header">
+            <h3>Please sign in to create events!</h3>
+          </paper-card>
+        </div>
     </template>
 
     <template is="dom-if" if="{{signedIn}}">
+      <img src="../images/football.jpg" class="main-image" alt="" />
       <div class="create-container">
         <paper-card elevation="3" class="create-header">
           <p class="header-text">Create an Event</p>

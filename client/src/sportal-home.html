@@ -10,6 +10,7 @@
 
             :host {
                 display: block;
+                padding: 10px;
             }
 
             #main-image {
@@ -43,18 +44,17 @@
             }
 
             .highlight-link{
-                display: inherit;
                 color: inherit;
                 text-decoration: inherit;
                 font-weight: inherit;
             }
 
-            #highlight-text {
-                text-shadow: 1px 1px 1px grey;
-            }
-
             .highlight-title {
                 font-size: 20px;
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                font-weight: 400;
             }
 
             .highlight-container {
@@ -68,10 +68,8 @@
                 flex-direction: column;
                 margin: 15px;
                 width: 46%;
-                text-shadow: 1px 1px 1px grey;
-                font-weight: 200;
+                height: 300px;
                 color: white;
-                background-color: #39393B;
             }
 
             /*.green {*/
@@ -83,13 +81,39 @@
             /*}*/
 
             .highlight {
-                padding: 15px;
                 text-align: center;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .highlight-find {
+                background-image: url("../images/swim.jpg");
+                background-position: center;
+                background-size: cover;
+                min-height: 100%;
+                justify-content: center;
+            }
+
+            .highlight-create {
+                background-image: url("../images/typewriter.jpg");
+                background-position: center;
+                background-size: cover;
+                min-height: 100%;
                 justify-content: center;
             }
 
             #highlight-text {
-                color: var(--dark-sportal-blue);
+                font-size: 40px;
+                font-weight: 400;
+                color: var(--header-text);
+                margin-bottom: 5px;
+                margin-top: 15px;
+            }
+
+            .highlight-subtext {
+                font-size: 16px;
+                font-weight: 100;
+                margin-top: 0;
             }
 
             .thumbnail-logo {
@@ -100,64 +124,55 @@
 
         </style>
 
-        <div>
-            <div id="main-image">
-
-            </div>
-        </div>
-
         <div class="home-container">
-
-            <div class="highlight-header-card">
+            <paper-card elevation="1">
+                <div>
+            <paper-card image="../images/main-image.jpeg" elevation="1" class="highlight-header-card">
                 <div class="highlight-header">
-                    <h1 id="highlight-text">Find the right sporting events for you. </h1>
+                    <p id="highlight-text">Find the right sporting events for you. </p>
+                    <p class="highlight-subtext">Find pickup games, leagues, and runs and races in your area!.</p>
                 </div>
+
+
+                <div class="highlight-container">
+                    <paper-card elevation="3" class="highlight-card highlight-find">
+                        <a class="highlight-link" href="/find">
+                            <div class="highlight">
+                                <p class="highlight-title">Find</p>
+                            </div>
+                        </a>
+                    </paper-card>
+
+                    <paper-card elevation="3" class="highlight-card highlight-create">
+                        <a class="highlight-link" href="/create">
+                            <div class="highlight">
+                                <p class="highlight-title">Create</p>
+                            </div>
+                        </a>
+                    </paper-card>
+
+                    <paper-card elevation="3" class="highlight-card blue">
+                        <a class="highlight-link" href="/find">
+                            <div class="highlight">
+                                <p class="highlight-title">Runs and Races</p>
+                                <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
+                                <p>Having that itch to race again? Or just want have a consistent running group? Check out the runs and races.</p>
+                            </div>
+                        </a>
+                    </paper-card>
+
+                    <paper-card elevation="3" class="highlight-card green">
+                        <a class="highlight-link" href="/find">
+                            <div class="highlight">
+                                <p class="highlight-title">Places to Play</p>
+                                <p>Are you just needing to find a place nearby to practice? Check out all of our places to play, and pick the perfect one for you.</p>
+                            </div>
+                        </a>
+                    </paper-card>
+                </div>
+            </paper-card>
             </div>
-
-
-            <div class="highlight-container">
-                <paper-card elevation="3" class="highlight-card green">
-                    <a class="highlight-link" href="/find">
-                        <div class="highlight">
-                            <p class="highlight-title">Pickup</p>
-                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
-                            <p>Want to play a sport without the cost and commitment of playing in a league? Check out all of
-                                the pickup style sporting events.</p>
-                        </div>
-                    </a>
-                </paper-card>
-
-                <paper-card elevation="3" class="highlight-card blue">
-                    <a class="highlight-link" href="/find">
-                        <div class="highlight">
-                            <p class="highlight-title">Leagues</p>
-                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
-                            <p>Missing the old days when Saturdays and Sundays of every week meant hitting the court or field? Check out some leagues to get back into a routine playing your favorites!</p>
-                        </div>
-                    </a>
-                </paper-card>
-
-                <paper-card elevation="3" class="highlight-card blue">
-                    <a class="highlight-link" href="/find">
-                        <div class="highlight">
-                            <p class="highlight-title">Runs and Races</p>
-                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
-                            <p>Having that itch to race again? Or just want have a consistent running group? Check out the runs and races.</p>
-                        </div>
-                    </a>
-                </paper-card>
-
-                <paper-card elevation="3" class="highlight-card green">
-                    <a class="highlight-link" href="/find">
-                        <div class="highlight">
-                            <p class="highlight-title">Places to Play</p>
-                            <img class="thumbnail-logo" src="../images/grey-thumbnail.png">
-                            <p>Are you just needing to find a place nearby to practice? Check out all of our places to play, and pick the perfect one for you.</p>
-                        </div>
-                    </a>
-                </paper-card>
-
-            </div>
+            <paper-card elevation="1">
         </div>
 
 
