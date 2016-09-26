@@ -84,7 +84,7 @@
 
             <template is="dom-if" if="{{ajaxResponse}}">
                 <paper-card id="map-container">
-                    <div elevation="1" id="filter-container">
+                    <div id="filter-container">
                         <div class="filters">
                         <h4>Filters:</h4>
                         <paper-dropdown-menu label="Event Type">
@@ -156,7 +156,7 @@
                         <!--</template>-->
                     </div>
                     <div id="map-area">
-                        <paper-card elevation="1" id="search-bar">
+                        <paper-card elevation="0" id="search-bar">
                             <iron-form is="iron-form" id="form">
                                 <sportal-gmap-autocomplete location="{{locationData}}"></sportal-gmap-autocomplete>
                                 <paper-button raised on-click="_selectedFilter">Submit</paper-button>
@@ -301,7 +301,7 @@
             _onResponse: function (e) {
                 this.ajaxResponse = e.detail.response;
 
-//                console.log(this.ajaxResponse);
+               console.log("the response is" + this.ajaxResponse);
 
 //
 //                map.addEventListener('dom-change', function() {
@@ -408,11 +408,8 @@
                     this.requestUrl = baseUrl;
                 }
 
-
-                console.log(this.requestUrl);
-
                 this.$.eventGet.generateRequest();
-            }
+            },
 //
 //            _lastResponse: function (data) {
 //                this.ajax = data.detail.response;
@@ -421,9 +418,9 @@
 //
 //            },
 //
-//            _onError: function (e) {
-//
-//            }
+           _onError: function (e) {
+                console.log("the location selection is" + this.locationSelection);
+           }
         });
 
 
