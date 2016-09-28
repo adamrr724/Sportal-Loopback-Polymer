@@ -53,8 +53,9 @@
             }
 
             .event-type {
-                color: var(--sportal-green);
                 font-size: 16px;
+                font-weight: bold;
+                float: right;
             }
 
             .info-modal {
@@ -175,9 +176,9 @@
                                                    longitude=[[item.addressGeo.lng]]>
                                     <div class="marker-container">
                                         <paper-card class="marker-card" elevation="1">
-                                            <h3 class="marker-headers" style="color:#2d6876;">[[item.name]]</h3>
+                                            <h3 style="text-align:center;color:#2d6876;" class="marker-headers">[[item.name]]</h3>
+                                            <p style="text-align:center;" class="event-type"><strong>[[item.eventType]]</strong></p>
                                                 <hr>
-                                            <p style="color:#84AE00;" class="event-type">Type: [[item.eventType]]</p>
                                             <p class="marker-info">Sport: [[item.sport]]</p>
                                             <p class="marker-info">Skill Level: [[item.skillLevel]]</p>
                                             <p class="marker-info">Age: [[item.age]]</p>
@@ -343,7 +344,7 @@
                 var withFilter = "";
 
                 var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
-                    
+
                 if (this.locationData) {
                     baseUrl = "http://localhost:3000/api/Events";
                     withFilter = baseUrl + "?";
