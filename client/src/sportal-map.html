@@ -72,7 +72,6 @@
                    on-error="_onError"
                    on-response="_onResponse"
                    content-type="application/json"
-                   debounce-duration="300"
                    method="GET"
                    withCredentials
         ></iron-ajax>
@@ -291,6 +290,7 @@
             },
 
             ready: function() {
+
 //                this.currentLocation = new GeoPoint({lat: this.latitude, lng: this.longitude});
             },
 //
@@ -301,9 +301,8 @@
             _onResponse: function (e) {
                 this.ajaxResponse = e.detail.response;
 
-               console.log("the response is" + this.ajaxResponse);
+                console.log(this.ajaxResponse);
 
-//
 //                map.addEventListener('dom-change', function() {
 //                    console.log("dom has changed");
 //                });
@@ -344,7 +343,7 @@
                 var withFilter = "";
 
                 var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
-
+                    
                 if (this.locationData) {
                     baseUrl = "http://localhost:3000/api/Events";
                     withFilter = baseUrl + "?";
@@ -407,6 +406,8 @@
                 } else {
                     this.requestUrl = baseUrl;
                 }
+
+                console.log(this.requestUrl);
 
                 this.$.eventGet.generateRequest();
             },

@@ -81,14 +81,26 @@
                     <h3 class="events-subheader">Find all of your pickup games, leagues, and races here!</h3>
                     <div class="events-container">
                         <template is="dom-repeat" items="{{userEvents}}">
-                            <paper-card image="{{item.image}}" class="my-events" elevation="2">
-                                <div class="info">
-                                    <h4 class="event-name">{{item.name}}</h4>
-                                    <h5 class="event-info">{{item.sport}}</h5>
-                                    <h5 class="event-info">{{item.eventType}}</h5>
-                                </div>
-                                <paper-button style="margin:5px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
-                            </paper-card>
+                            <template is="dom-if" if="{{item.image}}">
+                                <paper-card image="{{item.image}}" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.sport}}</h5>
+                                        <h5 class="event-info">{{item.eventType}}</h5>
+                                    </div>
+                                    <paper-button style="margin:5px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
+                            <template is="dom-if" if="{{!item.image}}">
+                                <paper-card image="../images/grey-thumbnail2.jpg" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.sport}}</h5>
+                                        <h5 class="event-info">{{item.eventType}}</h5>
+                                    </div>
+                                    <paper-button style="margin:5px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
                             <sportal-info-modal signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal>
                         </template>
                     </div>
