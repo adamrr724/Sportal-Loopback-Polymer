@@ -29,13 +29,31 @@
                         <p class="event-info">Sport: [[info.sport]]</p>
                         <p class="event-info">Skill Level: [[info.skillLevel]]</p>
                         <p class="event-info">Age: [[info.age]]</p>
-                        <p class="event-info">Date: [[info.date]]</p>
-                        <p class="event-info">Fees?: [[info.fees]]</p>
-                        <p class="event-info">Affiliated Organization: [[info.organization]]</p>
-                        <p class="event-info" >Website: <a href="http://[[info.website]]">[[info.website]]</a></p>
-                        <p class="event-info">Notes: [[info.notes]]</p>
+                        <template is="dom-if" if="[[info.date]]">
+                            <p class="event-info">Date: [[info.date]]</p>
+                        </template>
+                        <template is="dom-if" if="[[info.fees]]">
+                            <p class="event-info">Fees?: Yes</p>
+                        </template>
+                        <template is="dom-if" if="[[!info.fees]]">
+                            <p class="event-info">Fees?: No</p>
+                        </template>
+                        <template is="dom-if" if="[[info.addressName]]">
+                            <p class="event-info">Address: [[info.addressName]]</p>
+                        </template>
+                        <template is="dom-if" if="[[info.organization]]">
+                            <p class="event-info">Affiliated Organization: [[info.organization]]</p>
+                        </template>
+                        <template is="dom-if" if="[[info.website]]">
+                            <p class="event-info" >Website: <a href="http://[[info.website]]">[[info.website]]</a></p>
+                        </template>
+                        <template is="dom-if" if="[[info.notes]]">
+                            <p class="event-info">Notes: [[info.notes]]</p>
+                        </template>
                         <p class="event-info">Contact Email: [[info.email]]</p>
-                        <img class="info-image" src="[[info.image]]">
+                        <template is="dom-if" if="[[info.image]]">
+                            <img class="info-image" src="[[info.image]]">
+                        </template>
                 </template>
                 <div class="buttons">
 
