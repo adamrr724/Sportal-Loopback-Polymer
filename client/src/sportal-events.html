@@ -11,6 +11,10 @@
                 /*padding: 10px;*/
             }
 
+            paper-card {
+            --paper-card-header-image:{ max-height:175px; min-height: 150px;};
+            }
+
             #main-container {
                 width:100%;
                 min-height:100vh;
@@ -96,7 +100,7 @@
                                         <h5 class="event-info">{{item.sport}}</h5>
                                         <h5 class="event-info">{{item.eventType}}</h5>
                                     </div>
-                                    <paper-button style="margin:5px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
+                                    <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
                                 </paper-card>
                             </template>
                             <template is="dom-if" if="{{!item.image}}">

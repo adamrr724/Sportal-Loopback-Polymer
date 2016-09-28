@@ -24,6 +24,10 @@
                 /*z-index: 1000;*/
             }
 
+            .modal-header {
+                font-weight: 400;
+            }
+
             #scrollable-area {
               overflow: auto;
             }
@@ -35,7 +39,7 @@
 
             .info-image {
                 height: 200px;
-                box-shadow: 1px 1px 1px grey;
+                box-shadow: 1px 1px 1px 1px grey;
                 margin-top: 10px;
             }
 
@@ -45,7 +49,7 @@
                 <paper-dialog-scrollable id="scrollable-area">
                     <div id="info-area">
                         <template is="dom-if" if="{{info}}">
-                                <h2>Event Name: [[info.name]]</h2>
+                                <h1 class="modal-header">[[info.name]]</h1>
                                 <template is="dom-if" if="[[info.image]]">
                                     <img class="info-image" src="[[info.image]]">
                                 </template>
@@ -64,9 +68,10 @@
                                 </template>
                                 <template is="dom-if" if="[[info.recurringDate]]">
                                     <p class="event-info">Date of the Week: [[info.recurringDate]]</p>
+                                    <p class="event-info">Starting Date: {{date}}</p>
                                 </template>
-                                <template is="dom-if" if="[[info.date]]">
-                                    <p class="event-info">Date: [[info.date]]</p>
+                                <template is="dom-if" if="[[!info.recurringDate]]">
+                                    <p class="event-info">Date: {{date}}</p>
                                 </template>
                                 <template is="dom-if" if="[[info.fees]]">
                                     <p class="event-info">Fees?: Yes</p>
@@ -196,8 +201,17 @@
           },
           userEventPutUrl: {
               type: String
+          },
+          date: {
+              type: String,
+              computed: 'dateFormat(info)'
           }
 
+      },
+
+      dateFormat: function(info) {
+            console.log(info.date);
+            return moment(info.date).format('MMMM Do YYYY, h:mm a');
       },
 
         computeId:function(info) {
