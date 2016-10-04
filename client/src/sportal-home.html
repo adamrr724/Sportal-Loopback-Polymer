@@ -73,6 +73,17 @@
                 text-shadow: .5px .5px black;
             }
 
+            .highlight-card-places {
+                display: flex;
+                flex-direction: column;
+                margin: 15px;
+                margin-bottom: 40px;
+                width: 46%;
+                height: 350px;
+                color: white;
+                text-shadow: .5px .5px black;
+            }
+
             /*.green {*/
                 /*background-color: var(--sportal-green);*/
             /*}*/
@@ -96,7 +107,7 @@
             }
 
             .highlight-create {
-                background-image: url("../images/typewriter.jpg");
+                background-image: url("../images/soccer.jpg");
                 background-position: center;
                 background-size: cover;
                 min-height: 100%;
@@ -104,7 +115,7 @@
             }
 
             .highlight-connect {
-                background-image: url("../images/connect.jpg");
+                background-image: url("../images/biking.jpg");
                 background-position: center;
                 background-size: cover;
                 min-height: 100%;
@@ -112,10 +123,19 @@
             }
 
             .highlight-play {
-                background-image: url("../images/rugby.jpg");
+                background-image: url("../images/tennis.jpg");
                 background-position: center;
                 background-size: cover;
                 min-height: 100%;
+                justify-content: center;
+            }
+
+            .highlight-places {
+                background-image: url("../images/map.png");
+                background-position: center;
+                background-size: cover;
+                min-height: 100%;
+                min-width: 60%;
                 justify-content: center;
             }
 
@@ -145,7 +165,8 @@
             <paper-card image="../images/main-image.jpeg" elevation="1" class="highlight-header-card">
                 <div class="highlight-header">
                     <p id="highlight-text">Find the right sporting events for you. </p>
-                    <p class="highlight-subtext">Find pickup games, leagues, and runs and races in your area!</p>
+                    <p class="highlight-subtext">Find pickup games, leagues, and runs and races in your area.<br>
+                    Don't have what you're looking for? <a href="/create">Create one!</a></p>
                 </div>
 
 
@@ -189,6 +210,18 @@
                         </a>
                     </paper-card>
                 </div>
+
+                <div class="highlight-header">
+                    <p id="highlight-text">Find a Place to Play. </p>
+                    <p class="highlight-subtext">Search the area you live in to find the perfect field, hike, gym, studio, court, or trail.</p>
+                </div>
+
+                <a href="/places">
+                    <div class="highlight-container">
+                        <paper-card elevation="3" class="highlight-card-places highlight-places">
+                        </paper-card>
+                    </div>
+                </a>
             </paper-card>
         </div>
 
