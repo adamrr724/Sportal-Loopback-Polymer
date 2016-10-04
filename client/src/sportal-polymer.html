@@ -195,6 +195,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="create" href="/create">Create</a>
           </template>
           <a name="about" href="/about">About</a>
+          <a name="places" onClick="window.location.reload()" href="/places">Places to Play</a>
           <template is="dom-if" if="{{signedIn}}">
             <a name="events" href="/events">My Events</a>
           </template>
@@ -218,6 +219,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <sportal-find signed-in="{{signedInUser}}" name="find"></sportal-find>
           <sportal-create signed-in="{{signedInUser}}" name="create"></sportal-create>
           <sportal-about signed-in="{{signedInUser}}" name="about"></sportal-about>
+          <sportal-places signed-in="{{signedInUser}}" name="places"></sportal-places>
           <sportal-events signed-in="{{signedInUser}}" name="events"></sportal-events>
         </iron-pages>
 
