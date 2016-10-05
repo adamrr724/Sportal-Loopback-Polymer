@@ -15,7 +15,7 @@ User.Event.link({id:userId, fk: eventId}, userEvent,  function(value, header) {
     //success
 });
 
-User.Place.link({id:userId, fk: placeId}, placeEvent,  function(value, header) {
+User.Place.link({id:userId, fk: placeId}, userPlace,  function(value, header) {
     //success
 });
 

@@ -80,12 +80,24 @@
                        url="{{getUserEventById}}"
                        handle-as="json"
                        on-error="_onError"
-                       on-response="_onResponse"
+                       on-response="_onResponseEvent"
                        content-type="application/json"
                        debounce-duration="300"
                        method="GET"
                        withCredentials
             ></iron-ajax>
+
+            <iron-ajax id="userPlaceGet"
+                       auto
+                       url="{{getUserPlaceById}}"
+                       handle-as="json"
+                       on-error="_onError"
+                       on-response="_onResponsePlace"
+                       content-type="application/json"
+                       debounce-duration="300"
+                       method="GET"
+                       withCredentials
+                ></iron-ajax>
 
             <paper-card id="main-container" elevation="1">
                 <h1 class="events-header">My Sports</h1>
@@ -100,7 +112,7 @@
                                         <h5 class="event-info">{{item.sport}}</h5>
                                         <h5 class="event-info">{{item.eventType}}</h5>
                                     </div>
-                                    <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
+                                    <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_eventInfoModal">More Info</paper-button>
                                 </paper-card>
                             </template>
                             <template is="dom-if" if="{{!item.image}}">
@@ -110,16 +122,39 @@
                                         <h5 class="event-info">{{item.sport}}</h5>
                                         <h5 class="event-info">{{item.eventType}}</h5>
                                     </div>
-                                    <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
+                                    <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_eventInfoModal">More Info</paper-button>
                                 </paper-card>
                             </template>
-                            <sportal-info-modal signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal>
+                            <sportal-info-modal signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{eventInfoModalOpened}}"></sportal-info-modal>
                         </template>
                     </div>
                 </div>
                 <h1 class="events-header">My Saved Places</h1>
                 <div class="events-container">
                     <h3 class="events-subheader">All of your favorite saved Places to Play.</h3>
+                    <div class="events-container">
+                        <template is="dom-repeat" items="{{userPlaces}}">
+                            <template is="dom-if" if="{{item.image}}">
+                                <paper-card image="{{item.image}}" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.addressName}}</h5>
+                                    </div>
+                                    <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_placeInfoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
+                            <template is="dom-if" if="{{!item.image}}">
+                                <paper-card image="../images/grey-thumbnail2.jpg" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.addressName}}</h5>
+                                    </div>
+                                    <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_placeInfoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
+                            <sportal-info-modal-places signed-in="{{signedIn}}" class="info-modal" info="{{placeInfo}}" modal-opened="{{placeInfoModalOpened}}"></sportal-info-modal-places>
+                        </template>
+                    </div>
                 </div>
             </paper-card>
         </template>
@@ -151,6 +186,10 @@
                 type: String,
                 computed: 'computeEvents(signedIn)'
             },
+            getUserPlaceById: {
+                type: String,
+                computed: 'computePlaces(signedIn)'
+            },
 
             userEvents: {
                 type: Object
@@ -158,7 +197,18 @@
             eventInfo: {
                 type: Object
             },
-            infoModalOpened: {
+            userPlaces: {
+                type: Object
+            },
+            placeInfo: {
+                type: Object
+            },
+            placeInfoModalOpened: {
+                type:Boolean,
+                notify: true,
+                value: false
+            },
+            eventInfoModalOpened: {
                 type:Boolean,
                 notify: true,
                 value: false
@@ -170,19 +220,34 @@
                 return "http://localhost:3000/api/Users/" + user.id + "/events";
             },
 
-            _onResponse: function(e) {
-                console.log(e.detail.response);
-                this.userEvents= e.detail.response;
-                console.log(this.userEvents);
+            computePlaces: function(user) {
+                return "http://localhost:3000/api/Users/" + user.id + "/places";
             },
 
-            _infoModal: function(e) {
+            _onResponseEvent: function(e) {
+                console.log(e.detail.response);
+                this.userEvents= e.detail.response;
+            },
+
+            _onResponsePlace: function(e) {
+                console.log(e.detail.response);
+                this.userPlaces= e.detail.response;
+            },
+
+            _placeInfoModal: function(e) {
+
+                this.placeInfo = e.model.__data__.item;
+
+                this.placeInfoModalOpened = true;
+
+            },
+            _eventInfoModal: function(e) {
 
                 this.eventInfo = e.model.__data__.item;
 
-                this.infoModalOpened = true;
+                this.eventInfoModalOpened = true;
 
-            },
+            }
 
         });
 

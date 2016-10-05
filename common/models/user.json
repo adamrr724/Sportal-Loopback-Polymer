@@ -108,7 +108,7 @@
         },
         "places": {
             "type": "hasAndBelongsToMany",
-            "model": "Places"
+            "model": "Place"
             }
     }
 }
