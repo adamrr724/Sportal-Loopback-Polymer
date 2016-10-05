@@ -88,9 +88,9 @@
             ></iron-ajax>
 
             <paper-card id="main-container" elevation="1">
-                <h1 class="events-header">My Events</h1>
+                <h1 class="events-header">My Sports</h1>
                 <div>
-                    <h3 class="events-subheader">Find all of your pickup games, leagues, and races here!</h3>
+                    <h3 class="events-subheader">Find all of the pickup games, leagues, and races that you saved.</h3>
                     <div class="events-container">
                         <template is="dom-repeat" items="{{userEvents}}">
                             <template is="dom-if" if="{{item.image}}">
@@ -116,6 +116,10 @@
                             <sportal-info-modal signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal>
                         </template>
                     </div>
+                </div>
+                <h1 class="events-header">My Saved Places</h1>
+                <div class="events-container">
+                    <h3 class="events-subheader">All of your favorite saved Places to Play.</h3>
                 </div>
             </paper-card>
         </template>

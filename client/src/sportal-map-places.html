@@ -180,11 +180,8 @@
                                     <div class="marker-container">
                                         <paper-card class="marker-card" elevation="1">
                                             <h3 style="text-align:center;color:#2d6876;" class="marker-headers">[[item.name]]</h3>
-                                            <p style="text-align:center;" class="event-type"><strong>[[item.eventType]]</strong></p>
+                                            <p style="text-align:center;" class="event-type"><strong>[[item.facilityType]]</strong></p>
                                                 <hr>
-                                            <p class="marker-info">Sport: [[item.sport]]</p>
-                                            <p class="marker-info">Skill Level: [[item.skillLevel]]</p>
-                                            <p class="marker-info">Age: [[item.age]]</p>
                                             <p class="marker-info">Address: [[item.addressName]]</p>
                                             <paper-button style="margin:3px; padding:8px; float: right;" raised on-click="_infoModal">More Info</paper-button>
                                         </paper-card>
@@ -248,7 +245,7 @@
                 },
                 requestUrl: {
                     type: String,
-                    value: "http://localhost:3000/api/Events"
+                    value: "http://localhost:3000/api/Places"
                 },
                 eventType: {
                     value: ""
@@ -349,13 +346,13 @@
                 var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
 
                 if (this.locationData) {
-                    baseUrl = "http://localhost:3000/api/Events";
+                    baseUrl = "http://localhost:3000/api/Places";
                     withFilter = baseUrl + "?";
                     this.latitude = this.locationData.geometry.location.lat();
                     this.longitude = this.locationData.geometry.location.lng();
                     this.locationSelection = this.latitude + "," + this.longitude;
                 } else {
-                    baseUrl = "http://localhost:3000/api/Events" + currentLocationQuery;
+                    baseUrl = "http://localhost:3000/api/Places" + currentLocationQuery;
                     withFilter = baseUrl + "&";
                 }
 

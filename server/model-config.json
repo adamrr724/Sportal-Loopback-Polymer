@@ -20,5 +20,9 @@
     "User": {
         "dataSource": "sportaldb",
         "public": true
+    },
+    "Place": {
+        "dataSource": "sportaldb",
+        "public": true
     }
 }

@@ -105,6 +105,10 @@
         "events": {
             "type": "hasAndBelongsToMany",
             "model": "Event"
+        },
+        "places": {
+            "type": "hasAndBelongsToMany",
+            "model": "Places"
             }
     }
 }

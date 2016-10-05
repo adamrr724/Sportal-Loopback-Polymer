@@ -1,0 +1,25 @@
+{
+  "name": "userPlace",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "sportaldb": {
+      "schema": "LOOPBACK",
+      "table": "userPlace"
+    }
+  },
+  "properties": {
+    "userId": {
+      "type": "number",
+      "required": true
+    },
+    "placeId": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
