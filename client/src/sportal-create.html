@@ -27,6 +27,12 @@
         margin: 10px;
       }
 
+      paper-button.places {
+        background-color: var(--sportal-green);
+        color: black;
+        margin: 10px;
+      }
+
       paper-button:hover {
         background-color: grey;
       }
@@ -350,6 +356,13 @@
           </form>
         </paper-card>
 
+        <div class="create-container" style="margin-bottom: 20px;">
+            <paper-card elevation="3" class="create-header">
+                <p class="header-subtext">Looking to add a place to play?</p>
+                <paper-button class="places" style="margin:10px; padding:8px;" raised on-click="_openCreateModal">Click here</paper-button>
+            </paper-card>
+            <sportal-create-places-modal signed-in="{{signedIn}}" modal-opened="{{modalOpened}}"></sportal-create-places-modal>
+        </div>
       </div>
 
     </template>
@@ -465,6 +478,11 @@
 
         locationData: {
           type: Object
+        },
+        modalOpened: {
+            type:Boolean,
+            notify: true,
+            value: false
         }
       },
 
@@ -529,6 +547,10 @@
       },
 
       _onError: function(error) {
+      },
+
+      _openCreateModal: function() {
+          this.modalOpened = true;
       },
 
       _selectValue: function() {

@@ -1,0 +1,125 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="sportal-create-places-modal">
+
+    <template>
+
+        <style>
+            :host {
+                display: flex;
+            }
+
+            paper-button {
+              background-color: var(--sportal-blue);
+              margin: 10px;
+              padding:10px;
+            }
+
+            google-map {
+                height: 300px;
+                width: 300px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            paper-dialog {
+                padding: 25px;
+                min-height: 300px;
+                max-width: 600px;
+                text-align: center;
+                /*z-index: 1000;*/
+            }
+
+            #scrollable-area {
+              overflow: auto;
+            }
+
+            #create-area {
+                min-height:350px;
+                width:450px;
+            }
+
+            .info-image {
+                height: 200px;
+                box-shadow: 1px 1px 1px 1px grey;
+                margin-top: 10px;
+            }
+
+        </style>
+
+            <paper-dialog on-iron-overlay-opened="patchOverlay" autoFitOnAttach="true" opened={{modalOpened}} modal="true">
+                <paper-dialog-scrollable id="scrollable-area">
+                    <div id="create-area">
+                        <h3>Please fill out the following information about the Place to Play.</h3>
+                        <form is="iron-form" id="form" method="post">
+                              <paper-input required auto-validate="true" error-message="Please enter a name for this place!" value="{{placeName}}" name="name" label="Place Name"></paper-input>
+                              <p>Please choose from the following facility types to describe this place to play.</p>
+                              <paper-checkbox>Multipurpose Fields</paper-checkbox>
+                              <paper-checkbox>Soccer Field</paper-checkbox>
+                              <paper-checkbox>Basketball Court</paper-checkbox>
+                              <paper-checkbox>Baseball Diamond</paper-checkbox>
+                              <paper-checkbox>Football Field</paper-checkbox>
+                              <paper-checkbox>Track</paper-checkbox>
+                              <paper-checkbox>Tennis Court</paper-checkbox>
+                              <paper-checkbox>Volleyball Court</paper-checkbox>
+                              <paper-checkbox>Ice Rink</paper-checkbox>
+                              <paper-checkbox>Squash Court</paper-checkbox>
+                              <paper-checkbox>Yoga Gym</paper-checkbox>
+                              <paper-checkbox>Pool</paper-checkbox>
+                              <paper-checkbox>Fitness Center</paper-checkbox>
+                              <paper-checkbox>Walking/Running Trails</paper-checkbox>
+                              <paper-checkbox>Hiking Trails</paper-checkbox>
+
+                              <sportal-gmap-autocomplete-create location="{{locationData}}"></sportal-gmap-autocomplete-create>
+                              <paper-input name="image" value="{{image}}" label="Image Link"></paper-input>
+                              <paper-textarea name="notes" value="{{notes}}" label="Notes"></paper-textarea>
+                              <paper-input name="organization" value="{{organization}}" label="Organization Name"></paper-input>
+                              <paper-input name="website" value="{{website}}" label="Website Link URL"></paper-input>
+
+                          <paper-button raised on-click="_submitForm">Submit</paper-button>
+                        </form>
+                         <paper-button raised style="background-color:white; float:right;" class="text-close" on-Click="_modalClose"autofocus><strong>Close</strong></paper-button>
+                    </div>
+                </paper-dialog-scrollable>
+            </paper-dialog>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'sportal-create-places-modal',
+
+//        behaviors: [
+//            Polymer.IronOverlayBehavior
+//        ],
+//
+//        listeners: {
+//            "iron-overlay-opened" : "_windowOpen"
+//        },
+
+      properties: {
+
+        modalOpened: {
+          type: Boolean,
+          notify: true
+        },
+
+      },
+
+      _modalClose: function () {
+          this.modalOpened = false;
+      },
+
+      patchOverlay: function (e) {
+          if (e.target.withBackdrop) {
+              e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
+          }
+      }
+
+        });
+
+    </script>
+
+</dom-module>
