@@ -15,13 +15,6 @@
               padding:10px;
             }
 
-            google-map {
-                height: 300px;
-                width: 300px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
             paper-dialog {
                 padding: 25px;
                 min-height: 300px;
@@ -39,12 +32,6 @@
                 width:450px;
             }
 
-            .info-image {
-                height: 200px;
-                box-shadow: 1px 1px 1px 1px grey;
-                margin-top: 10px;
-            }
-
         </style>
 
             <paper-dialog on-iron-overlay-opened="patchOverlay" autoFitOnAttach="true" opened={{modalOpened}} modal="true">
@@ -54,7 +41,7 @@
                         <form is="iron-form" id="form" method="post">
                               <paper-input required auto-validate="true" error-message="Please enter a name for this place!" value="{{placeName}}" name="name" label="Place Name"></paper-input>
                               <p>Please choose from the following facility types to describe this place to play.</p>
-                              <paper-checkbox>Multipurpose Fields</paper-checkbox>
+                              <paper-checkbox name="facilityType" value="Multipurpose Field" >Multipurpose Fields</paper-checkbox>
                               <paper-checkbox>Soccer Field</paper-checkbox>
                               <paper-checkbox>Basketball Court</paper-checkbox>
                               <paper-checkbox>Baseball Diamond</paper-checkbox>
@@ -83,6 +70,14 @@
                 </paper-dialog-scrollable>
             </paper-dialog>
 
+            <iron-ajax id="placePost"
+                       url="http://localhost:3000/api/Places"
+                       handle-as="json"
+                       body="[[ajaxBody]]"
+                       on-error="_onError"
+                       content-type="application/json"
+                       method="POST"
+            ></iron-ajax>
     </template>
 
     <script>
@@ -106,6 +101,40 @@
           notify: true
         },
 
+        locationData: {
+            type: Object
+        },
+        latitude: {
+          value: ""
+        },
+        longitude: {
+          value: ""
+        },
+        addressName: {
+          value: ""
+        },
+        placeName: {
+          value: ""
+        },
+        facilityType: {
+          value: ""
+        },
+        notes: {
+          value: ""
+        },
+        image: {
+          value: ""
+        },
+        addressGeo: {
+          value: ""
+        },
+        organization: {
+          value: ""
+        },
+        website: {
+          value: ""
+        }
+
       },
 
       _modalClose: function () {
@@ -116,6 +145,52 @@
           if (e.target.withBackdrop) {
               e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
           }
+      },
+
+      _submitForm: function() {
+        var self = this;
+
+        this.latitude = this.locationData.geometry.location.lat();
+        this.longitude = this.locationData.geometry.location.lng();
+        this.addressName =  this.locationData.formatted_address;
+
+        this.ajaxBody =  {
+          "name": this.placeName,
+          "facilityType": "soccer field",
+          "notes": this.notes,
+          "image": this.image,
+          "addressGeo": {
+            "lat": this.latitude,
+            "lng": this.longitude
+          },
+          "addressName": this.addressName,
+          "organization": this.organization,
+          "website": this.website
+        };
+
+      var form = Polymer.dom(event).localTarget.parentElement;
+      console.log(form);
+
+      if(!form.validate()) {
+          console.log(this.ajaxBody);
+          alert("You have errors, please try again.");
+
+        } else {
+          console.log(this.ajaxBody);
+          alert("stop");
+
+        //   THE COMMAND BELOW IS NOT GENERATING, THE ID CANNOT BE FOUND
+        //   console.log(this.$);
+          this.$.placePost.generateRequest();
+
+          alert("Your place to play has been created!");
+        //   window.location.reload();
+        }
+
+      },
+
+      _onError: function(error) {
+          console.log(error);
       }
 
         });
