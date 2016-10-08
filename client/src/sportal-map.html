@@ -67,7 +67,7 @@
         </style>
 
         <iron-ajax id="eventGet"
-                   auto
+                    auto
                    url="{{requestUrl}}"
                    handle-as="json"
                    on-error="_onError"
@@ -168,8 +168,8 @@
                                     api-key="AIzaSyD0Oog2e-DQ167WD0Az9gfwaXxYvgrjdNg"
                                     single-info-window="true"
                                     zoom="10"
-                                    latitude="{{latitude}}"
-                                    longitude="{{longitude}}">
+                                    latitude="[[latitude]]"
+                                    longitude="[[longitude]]">
                             <template is="dom-repeat" items=[[ajaxResponse]]>
                                 <google-map-marker map="{{map}}"
                                                    latitude=[[item.addressGeo.lat]]
@@ -245,7 +245,7 @@
                 },
                 requestUrl: {
                     type: String,
-                    value: "http://localhost:3000/api/Events"
+                    value: "//localhost:3000/api/Events"
                 },
                 eventType: {
                     value: ""
@@ -292,7 +292,7 @@
 
             ready: function() {
 
-//                this.currentLocation = new GeoPoint({lat: this.latitude, lng: this.longitude});
+            //    this.currentLocation = new GeoPoint({lat: this.latitude, lng: this.longitude});
             },
 //
             attached: function () {
@@ -346,15 +346,19 @@
                 var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
 
                 if (this.locationData) {
-                    baseUrl = "http://localhost:3000/api/Events";
-                    withFilter = baseUrl + "?";
                     this.latitude = this.locationData.geometry.location.lat();
                     this.longitude = this.locationData.geometry.location.lng();
-                    this.locationSelection = this.latitude + "," + this.longitude;
+                    // this.locationSelection = this.latitude + "," + this.longitude;
+
+                    baseUrl = "//localhost:3000/api/Events??filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
+                    withFilter = baseUrl + "&";
+
                 } else {
-                    baseUrl = "http://localhost:3000/api/Events" + currentLocationQuery;
+                    baseUrl = "//localhost:3000/api/Events?" + currentLocationQuery;
                     withFilter = baseUrl + "&";
                 }
+
+
 
                 var count = "";
 
@@ -362,7 +366,7 @@
                 var sportFilter = "filter[where][sport]=" + this.sport;
                 var skillLevelFilter = "filter[where][skillLevel]=" + this.skillLevel;
                 var ageFilter = "filter[where][age]=" + this.age;
-                var locationSelectFilter = "filter[where][addressGeo][near]=" + this.locationSelection + "&filter[limit]=50";
+                // var locationSelectFilter = "filter[where][addressGeo][near]=" + this.locationSelection + "&filter[limit]=50";
 
 
                 if (this.eventType) {
@@ -394,23 +398,26 @@
                     count += 1;
                     this.selectionMade = true;
                 }
-                if (this.locationSelection) {
-                    if (count > 0) {
-                        withFilter += "&";
-                    }
-                    withFilter += locationSelectFilter;
-                    this.selectionMade = true;
-                }
+                // if (this.locationSelection) {
+                //     if (count > 0) {
+                //         withFilter += "&";
+                //     }
+                //     withFilter += locationSelectFilter;
+                //     this.selectionMade = true;
+                // }
 
-                if (this.eventType || this.sport || this.skillLevel || this.age || this.locationSelection) {
+                if (this.eventType || this.sport || this.skillLevel || this.age) {
                     this.requestUrl = withFilter;
                 } else {
                     this.requestUrl = baseUrl;
                 }
 
-                console.log(this.requestUrl);
+                // this.requestUrl = "//localhost:3000/api/Events?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50"
 
-                this.$.eventGet.generateRequest();
+                console.log(this.requestUrl);
+                this.async(function() {
+                  this.$.eventGet.generateRequest();
+              }, 2000);
             },
 //
 //            _lastResponse: function (data) {
