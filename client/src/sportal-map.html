@@ -343,6 +343,9 @@
                 var baseUrl = "";
                 var withFilter = "";
 
+
+
+// ONLY REASON THAT FILTER QUERY IS WORKING AT THE MOMENT IS BECAUSE OF DOUBLE ??S IN THE URL-> NO LOCATION SEARCH HAPPENING YET. LOOK INTO THIS
                 var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
 
                 if (this.locationData) {
