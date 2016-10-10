@@ -346,14 +346,14 @@
 
 
 // ONLY REASON THAT FILTER QUERY IS WORKING AT THE MOMENT IS BECAUSE OF DOUBLE ??S IN THE URL-> NO LOCATION SEARCH HAPPENING YET. LOOK INTO THIS
-                var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
+                var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500";
 
                 if (this.locationData) {
                     this.latitude = this.locationData.geometry.location.lat();
                     this.longitude = this.locationData.geometry.location.lng();
                     // this.locationSelection = this.latitude + "," + this.longitude;
 
-                    baseUrl = "//localhost:3000/api/Events??filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
+                    baseUrl = "//localhost:3000/api/Events??filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500";
                     withFilter = baseUrl + "&";
 
                 } else {

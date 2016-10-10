@@ -56,6 +56,8 @@
                               <paper-checkbox>Fitness Center</paper-checkbox>
                               <paper-checkbox>Walking/Running Trails</paper-checkbox>
                               <paper-checkbox>Hiking Trails</paper-checkbox>
+                              <paper-checkbox>Mountain Bike Trails</paper-checkbox>
+                              <paper-checkbox>Skatepark</paper-checkbox>
 
                               <sportal-gmap-autocomplete-create location="{{locationData}}"></sportal-gmap-autocomplete-create>
                               <paper-input name="image" value="{{image}}" label="Image Link"></paper-input>
@@ -184,7 +186,7 @@
           this.$.placePost.generateRequest();
 
           alert("Your place to play has been created!");
-        //   window.location.reload();
+          window.location.reload();
         }
 
       },

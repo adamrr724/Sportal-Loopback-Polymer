@@ -70,7 +70,7 @@
 
         </style>
 
-        <iron-ajax id="eventGet"
+        <iron-ajax id="placeGet"
                    auto
                    url="{{requestUrl}}"
                    handle-as="json"
@@ -134,29 +134,24 @@
                                 <paper-listbox attr-for-selected="value"
                                                class="dropdown-content"
                                                fallback-selection=""
-                                               selected="{{sport}}">
-                                    <paper-item value="Baseball">Baseball</paper-item>
-                                    <paper-item value="Basketball">Basketball</paper-item>
-                                    <paper-item value="Field Hockey">Field Hockey</paper-item>
-                                    <paper-item value="Football">Football</paper-item>
-                                    <paper-item value="Futsal">Futsal</paper-item>
-                                    <paper-item value="Ice Hockey">Ice Hockey</paper-item>
-                                    <paper-item value="Kickball">Kickball</paper-item>
-                                    <paper-item value="Lacrosse">Lacrosse</paper-item>
-                                    <paper-item value="Soccer">Soccer</paper-item>
-                                    <paper-item value="Softball">Softball</paper-item>
-                                    <paper-item value="Ultimate Frisbee">Ultimate Frisbee</paper-item>
-                                    <paper-item value="Tennis">Tennis</paper-item>
-                                    <paper-item value="Volleyball">Volleyball</paper-item>
-                                    <paper-item value="Road Bike Race">Road Bike Race</paper-item>
-                                    <paper-item value="Mountain Bike Race">Mountain Bike Race</paper-item>
-                                    <paper-item value="Triathlon">Triathlon</paper-item>
-                                    <paper-item value="Biathlon">Biathlon</paper-item>
-                                    <paper-item value="Marathon">Marathon</paper-item>
-                                    <paper-item value="Charity Run">Charity Run</paper-item>
-                                    <paper-item value="Trail Run">Trail Run</paper-item>
-                                    <paper-item value="Obstacle Run">Obstacle Run</paper-item>
-                                    <paper-item value="other">Other</paper-item>
+                                               selected="{{facilityType}}">
+                                    <paper-item value="Multipurpose Fields">Multipurpose Fields</paper-item>
+                                    <paper-item value="Soccer Field">Soccer Field</paper-item>
+                                    <paper-item value="Basketball Court">Basketball Court</paper-item>
+                                    <paper-item value="Baseball Diamond">Baseball Diamond</paper-item>
+                                    <paper-item value="Football Field">Football Field</paper-item>
+                                    <paper-item value="Track">Track</paper-item>
+                                    <paper-item value="Tennis Court">Tennis Court</paper-item>
+                                    <paper-item value="Volleyball Court">Volleyball Court</paper-item>
+                                    <paper-item value="Ice Rink">Ice Rink</paper-item>
+                                    <paper-item value="Squash Court">Squash Court</paper-item>
+                                    <paper-item value="Yoga Gym">Yoga Gym</paper-item>
+                                    <paper-item value="Pool">Pool</paper-item>
+                                    <paper-item value="Fitness Center">Fitness Center</paper-item>
+                                    <paper-item value="Walking/Running Trails">Walking/Running Trails</paper-item>
+                                    <paper-item value="Hiking Trails">Hiking Trails</paper-item>
+                                    <paper-item value="Mountain Bike Trails">Mountain Bike Trails</paper-item>
+                                    <paper-item value="Mountain Bike Trails">Skatepark</paper-item>
                                 </paper-listbox>
                             </paper-dropdown-menu>
 
@@ -188,7 +183,7 @@
 
                                     </div>
                                 </google-map-marker>
-                                <sportal-info-modal-places signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal-places>
+                                <sportal-info-modal-places signed-in="{{signedIn}}" class="info-modal" info="{{placeInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal-places>
                             </template>
                         </google-map>
                     </div>
@@ -247,16 +242,7 @@
                     type: String,
                     value: "http://localhost:3000/api/Places"
                 },
-                eventType: {
-                    value: ""
-                },
-                sport: {
-                    value: ""
-                },
-                skillLevel: {
-                    value: ""
-                },
-                age: {
+                facilityType: {
                     value: ""
                 },
                 currentLocation: {
@@ -280,7 +266,7 @@
                     notify: true,
                     value: false
                 },
-                eventInfo: {
+                placeInfo: {
                     type: Object
                 },
                 signedIn: {
@@ -319,7 +305,7 @@
 
             _infoModal: function(e) {
 //                console.log(e.model.__data__.item);
-                this.eventInfo = e.model.__data__.item;
+                this.placeInfo = e.model.__data__.item;
 
                 this.infoModalOpened = true;
 //                console.log(this.infoModalOpened);
@@ -343,74 +329,58 @@
                 var baseUrl = "";
                 var withFilter = "";
 
-                var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50";
+
+
+// ONLY REASON THAT FILTER QUERY IS WORKING AT THE MOMENT IS BECAUSE OF DOUBLE ??S IN THE URL-> NO LOCATION SEARCH HAPPENING YET. LOOK INTO THIS
+                var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500";
 
                 if (this.locationData) {
-                    baseUrl = "http://localhost:3000/api/Places";
-                    withFilter = baseUrl + "?";
                     this.latitude = this.locationData.geometry.location.lat();
                     this.longitude = this.locationData.geometry.location.lng();
-                    this.locationSelection = this.latitude + "," + this.longitude;
+                    // this.locationSelection = this.latitude + "," + this.longitude;
+
+                    baseUrl = "//localhost:3000/api/Places??filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500";
+                    withFilter = baseUrl + "&";
+
                 } else {
-                    baseUrl = "http://localhost:3000/api/Places" + currentLocationQuery;
+                    baseUrl = "//localhost:3000/api/Places?" + currentLocationQuery;
                     withFilter = baseUrl + "&";
                 }
 
+
+
                 var count = "";
 
-                var eventTypeFilter = "filter[where][eventType]=" + this.eventType;
-                var sportFilter = "filter[where][sport]=" + this.sport;
-                var skillLevelFilter = "filter[where][skillLevel]=" + this.skillLevel;
-                var ageFilter = "filter[where][age]=" + this.age;
-                var locationSelectFilter = "filter[where][addressGeo][near]=" + this.locationSelection + "&filter[limit]=50";
+                var placeFacilityFilter = "filter[where][facilityType]=" + this.facilityType;
+                // var locationSelectFilter = "filter[where][addressGeo][near]=" + this.locationSelection + "&filter[limit]=50";
 
 
-                if (this.eventType) {
-                    withFilter += eventTypeFilter;
+                if (this.facilityType) {
+                    withFilter += placeFacilityFilter;
                     count += 1;
-                    this.selectionMade = true;
-                }
-                if (this.sport) {
-                    if (count > 0) {
-                        withFilter += "&";
-                    }
-                    withFilter += sportFilter;
-                    count += 1;
-                    this.selectionMade = true;
-                }
-                if (this.skillLevel) {
-                    if (count > 0) {
-                        withFilter += "&";
-                    }
-                    withFilter += skillLevelFilter;
-                    count += 1;
-                    this.selectionMade = true;
-                }
-                if (this.age) {
-                    if (count > 0) {
-                        withFilter += "&";
-                    }
-                    withFilter += ageFilter;
-                    count += 1;
-                    this.selectionMade = true;
-                }
-                if (this.locationSelection) {
-                    if (count > 0) {
-                        withFilter += "&";
-                    }
-                    withFilter += locationSelectFilter;
                     this.selectionMade = true;
                 }
 
-                if (this.eventType || this.sport || this.skillLevel || this.age || this.locationSelection) {
+                // if (this.locationSelection) {
+                //     if (count > 0) {
+                //         withFilter += "&";
+                //     }
+                //     withFilter += locationSelectFilter;
+                //     this.selectionMade = true;
+                // }
+
+                if (this.facilityType) {
                     this.requestUrl = withFilter;
                 } else {
                     this.requestUrl = baseUrl;
                 }
 
-                console.log(this.requestUrl);
+                // this.requestUrl = "//localhost:3000/api/Events?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50"
 
-                this.$.eventGet.generateRequest();
+                console.log(this.requestUrl);
+                this.async(function() {
+                  this.$.placeGet.generateRequest();
+              }, 2000);
             },
 //
 //            _lastResponse: function (data) {
