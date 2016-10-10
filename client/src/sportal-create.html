@@ -182,11 +182,11 @@
                       <paper-item value="Sunday">Sunday</paper-item>
                     </paper-listbox>
                   </paper-dropdown-menu>
-                  <paper-input name="date" required auto-validate="true" value="{{date}}" type="date" label="Starting Date"></paper-input>
+                  <paper-input name="date" required auto-validate="true" value="{{date}}" type="datetime-local" label="Starting Date and Time"></paper-input>
                 </div>
 
                 <div id="reg-date">
-                  <paper-input name="date" required auto-validate="true" value="{{date}}" type="date" label="Date"></paper-input>
+                  <paper-input name="date" required auto-validate="true" value="{{date}}" type="datetime-local" label="Date and Time"></paper-input>
                 </div>
 
                 <paper-dropdown-menu required label="Skill Level">
@@ -247,7 +247,7 @@
                   <paper-input value="{{otherSport}}" name="other" label="Other Sport Name"></paper-input>
                 </div>
 
-                <paper-input required auto-validate="true" value="{{date}}" type="date"  name="date" label="Start Date"></paper-input>
+                <paper-input required auto-validate="true" value="{{date}}" type="date"  name="date" label="League Start Date"></paper-input>
                 <paper-dropdown-menu required  label="Skill Level">
                   <paper-listbox attr-for-selected="value"
                                  class="dropdown-content"
@@ -311,7 +311,7 @@
                   <paper-input value="{{otherSport}}" name="other" label="Other Sport Name"></paper-input>
                 </div>
 
-                <paper-input required auto-validate="true" value="{{date}}" type="date"  name="date" label="Event Date"></paper-input>
+                <paper-input required auto-validate="true" value="{{date}}" type="datetime-local"  name="date" label="Event Date and Time"></paper-input>
                 <paper-dropdown-menu required  label="Skill Level">
                   <paper-listbox attr-for-selected="value"
                                  class="dropdown-content"
