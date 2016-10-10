@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<dom-module id="sportal-info-modal-places">
+<dom-module id="sportal-info-modal-events-mysports">
 
     <template>
 
@@ -53,7 +53,32 @@
                                 <template is="dom-if" if="[[info.image]]">
                                     <img class="info-image" src="[[info.image]]">
                                 </template>
-                                <p class="event-info">Facility Type: [[info.facilityType]]</p>
+                                <p class="event-info">Event Type: [[info.eventType]]</p>
+                                <p class="event-info">Sport: [[info.sport]]</p>
+                                <template is="dom-if" if="[[info.otherSport]]">
+                                    <p class="event-info">Sport Name: [[info.otherSport]]</p>
+                                </template>
+                                <p class="event-info">Skill Level: [[info.skillLevel]]</p>
+                                <p class="event-info">Age: [[info.age]]</p>
+                                <template is="dom-if" if="[[info.recurring]]">
+                                    <p class="event-info">Is this a recurring Event?: Yes</p>
+                                </template>
+                                <template is="dom-if" if="[[!info.recurring]]">
+                                    <p class="event-info">Is this a recurring Event?: No</p>
+                                </template>
+                                <template is="dom-if" if="[[info.recurringDate]]">
+                                    <p class="event-info">Date of the Week: [[info.recurringDate]]</p>
+                                    <p class="event-info">Starting Date: {{date}}</p>
+                                </template>
+                                <template is="dom-if" if="[[!info.recurringDate]]">
+                                    <p class="event-info">Date: {{date}}</p>
+                                </template>
+                                <template is="dom-if" if="[[info.fees]]">
+                                    <p class="event-info">Fees?: Yes</p>
+                                </template>
+                                <template is="dom-if" if="[[!info.fees]]">
+                                    <p class="event-info">Fees?: No</p>
+                                </template>
                                 <template is="dom-if" if="[[info.addressName]]">
                                     <p class="event-info">Address: [[info.addressName]]</p>
                                 </template>
@@ -71,6 +96,7 @@
                                 <template is="dom-if" if="[[info.notes]]">
                                     <p class="event-info">Notes: [[info.notes]]</p>
                                 </template>
+                                <p class="event-info"><a href="mailto:[[info.email]]?subject=[[info.name]]">Contact the Organizer!</a></p>
                         </template>
                     </div>
                 </paper-dialog-scrollable>
@@ -78,7 +104,7 @@
 
                     <template is="dom-if" if="{{signedIn}}">
                         <template is="dom-if" if="{{!following}}">
-                            <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Places</strong></paper-button>
+                            <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Events</strong></paper-button>
                         </template>
                         <template is="dom-if" if="{{following}}">
                             <paper-button raised class="follow" on-Click="_unfollow" autofocus><strong>Unfollow</strong></paper-button>
@@ -125,7 +151,7 @@
 
         Polymer({
 
-            is: 'sportal-info-modal-places',
+            is: 'sportal-info-modal-events-mysports',
 
 //        behaviors: [
 //            Polymer.IronOverlayBehavior
@@ -189,12 +215,12 @@
       },
 
         computeId:function(info) {
-            return "http://localhost:3000/api/Places/" + this.info.id + "/users/" + this.signedIn.id;
+            return "http://localhost:3000/api/Events/" + this.info.id + "/users/" + this.signedIn.id;
         },
 
         _modalClose: function () {
             this.modalOpened = false;
-            // location.reload();
+            location.reload();
         },
 
         patchOverlay: function (e) {
@@ -205,7 +231,7 @@
 
         _follow: function (e) {
 
-            this.userEventPutUrl = "http://localhost:3000/api/Places/" + this.info.id + "/users/rel/" + this.signedIn.id;
+            this.userEventPutUrl = "http://localhost:3000/api/Events/" + this.info.id + "/users/rel/" + this.signedIn.id;
 
             this.$.userEventPut.generateRequest();
 
@@ -214,7 +240,7 @@
 
         _unfollow: function (e) {
 
-            this.userEventDeleteUrl = "http://localhost:3000/api/Places/" + this.info.id + "/users/rel/" + this.signedIn.id;
+            this.userEventDeleteUrl = "http://localhost:3000/api/Events/" + this.info.id + "/users/rel/" + this.signedIn.id;
 
             this.$.userEventDelete.generateRequest();
 

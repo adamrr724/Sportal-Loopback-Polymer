@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
-<dom-module id="sportal-info-modal-places">
+<dom-module id="sportal-info-modal-places-mysports">
 
     <template>
 
@@ -125,7 +125,7 @@
 
         Polymer({
 
-            is: 'sportal-info-modal-places',
+            is: 'sportal-info-modal-places-mysports',
 
 //        behaviors: [
 //            Polymer.IronOverlayBehavior
@@ -194,7 +194,7 @@
 
         _modalClose: function () {
             this.modalOpened = false;
-            // location.reload();
+            location.reload();
         },
 
         patchOverlay: function (e) {
