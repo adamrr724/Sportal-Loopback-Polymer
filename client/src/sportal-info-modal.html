@@ -30,11 +30,12 @@
 
             #scrollable-area {
               overflow: auto;
+              max-width: 450px;
             }
 
             #info-area {
                 min-height:350px;
-                width:450px;
+                max-width:100%;
             }
 
             .info-image {
@@ -94,7 +95,7 @@
                                     <p class="event-info" >Website: <a href="http://[[info.website]]">[[info.website]]</a></p>
                                 </template>
                                 <template is="dom-if" if="[[info.notes]]">
-                                    <p class="event-info">Notes: [[info.notes]]</p>
+                                    <p class="event-info notes">Notes: [[info.notes]]</p>
                                 </template>
                                 <p class="event-info"><a href="mailto:[[info.email]]?subject=[[info.name]]">Contact the Organizer!</a></p>
                         </template>

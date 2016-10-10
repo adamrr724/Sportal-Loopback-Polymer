@@ -48,6 +48,15 @@
                 flex: 5 0 0;
             }
 
+            paper-listbox {
+                width: 125px;
+                padding:0;
+            }
+
+            paper-item {
+                border-bottom: .2px solid lightgrey;
+            }
+
             .filters {
                 width: 90%;
             }
@@ -133,8 +142,8 @@
                                            selected="{{skillLevel}}">
                                 <paper-item value="All Skill Levels">All Skill Levels</paper-item>
                                 <paper-item value="Rookies">Rookies</paper-item>
-                                <paper-item value="Bench Warmers">Bench Warmers</paper-item>
-                                <paper-item value="High School Heroes">High School Heroes</paper-item>
+                                <paper-item value="Bench Warmers (Intermediate)">Bench Warmers (Intermediate)</paper-item>
+                                <paper-item value="High School Heroes (Advanced)">High School Heroes (Advanced)</paper-item>
                             </paper-listbox>
                         </paper-dropdown-menu>
 
@@ -144,7 +153,7 @@
                                            selected="{{age}}">
                                 <paper-item value="All Ages">All Ages</paper-item>
                                 <paper-item value="Glory Days (Under 18)">Glory Days (Under 18)</paper-item>
-                                <paper-item value="Darn Millennials (18-30)">Damn Millennial Generation (18-30)</paper-item>
+                                <paper-item value="Prime of Your Life (18-30)">Prime of Your Life (18-30)</paper-item>
                                 <paper-item value="Seasoned Athletes (30+)">Seasoned Athletes (30+)</paper-item>
                             </paper-listbox>
                         </paper-dropdown-menu>

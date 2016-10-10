@@ -75,6 +75,16 @@
         background-color: var(--background-color);
       }
 
+      .image-note {
+          margin-top:3px;
+          padding:0;
+          font-size: 10px;
+      }
+
+      paper-textarea{
+          max-width: 500px;
+      }
+
       #rec-date {
       display:none;
       }
@@ -196,8 +206,8 @@
                                  selected="{{skillLevel}}">
                     <paper-item value="All Skill Levels">All Skill Levels</paper-item>
                     <paper-item value="Rookies">Rookies</paper-item>
-                    <paper-item value="Bench Warmers">Bench Warmers</paper-item>
-                    <paper-item value="High School Heroes">High School Heroes</paper-item>
+                    <paper-item value="Bench Warmers (Intermediate)">Bench Warmers (Intermediate)</paper-item>
+                    <paper-item value="High School Heroes (Advanced)">High School Heroes (Advanced)</paper-item>
                   </paper-listbox>
                 </paper-dropdown-menu>
                 <paper-dropdown-menu required label="Age">
@@ -207,13 +217,14 @@
                                  selected="{{age}}">
                     <paper-item value="All Ages">All Ages</paper-item>
                     <paper-item value="Glory Days (Under 18)">Glory Days (Under 18)</paper-item>
-                    <paper-item value="Darn Millennials (18-30)">Darn Millennials (18-30)</paper-item>
+                    <paper-item value="Prime of Your Life (18-30)">Prime of Your life (18-30)</paper-item>
                     <paper-item value="Seasoned Athletes (30+)">Seasoned Athletes (30+)</paper-item>
                   </paper-listbox>
                 </paper-dropdown-menu>
                 <sportal-gmap-autocomplete-create location="{{locationData}}"></sportal-gmap-autocomplete-create>
                 <paper-input required auto-validate="true" value="{{email}}" type="email"  name="email" label="Contact Email"></paper-input>
                 <paper-input name="image" value="{{image}}" label="Image Link"></paper-input>
+                <p class="image-note">Please insert an image URL. To do this, right click on an image on the internet and press "Copy image Address", then paste it above!</p>
                 <paper-textarea name="notes" value="{{notes}}" label="Notes"></paper-textarea>
               </div>
             </template>
@@ -282,6 +293,7 @@
                 <sportal-gmap-autocomplete-create location="{{locationData}}"></sportal-gmap-autocomplete-create>
                 <paper-input required auto-validate="true" value="{{email}}" type="email"   name="email" label="Contact Email"></paper-input>
                 <paper-input name="image" value="{{image}}" label="Image Link"></paper-input>
+                <p class="image-note">Please insert an image URL. To do this, right click on an image on the internet and press "Copy image Address", then paste it above!</p>
                 <paper-input name="website" value="{{website}}" label="Website Link URL"></paper-input>
                 <paper-textarea name="notes" value="{{notes}}" label="Notes"></paper-textarea>
               </div>
@@ -346,6 +358,7 @@
                 <sportal-gmap-autocomplete-create location="{{locationData}}"></sportal-gmap-autocomplete-create>
                 <paper-input required auto-validate="true" value="{{email}}" type="email"  name="email" label="Contact Email"></paper-input>
                 <paper-input name="image" value="{{image}}" label="Image Link"></paper-input>
+                <p class="image-note">Please insert an image URL. To do this, right click on an image on the internet and press "Copy image Address", then paste it above!</p>
                 <paper-input name="website" value="{{website}}" label="Website Link URL"></paper-input>
                 <paper-textarea name="notes" value="{{notes}}" label="Notes"></paper-textarea>
               </div>
