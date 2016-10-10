@@ -30,7 +30,7 @@
             }
 
             #scrollable-area {
-              overflow: auto;
+              /*overflow: auto;*/
             }
 
             #create-area {
@@ -74,9 +74,9 @@
 
                           <paper-button raised on-click="_submitForm">Submit</paper-button>
                         </form>
-                         <paper-button raised style="background-color:white; float:right;" class="text-close" on-Click="_modalClose"autofocus><strong>Close</strong></paper-button>
                     </div>
                 </paper-dialog-scrollable>
+                <paper-button raised style="background-color:white; float:right; padding:10px;" class="text-close" on-Click="_modalClose"autofocus><strong>Close</strong></paper-button>
             </paper-dialog>
 
             <iron-ajax id="placePost"
