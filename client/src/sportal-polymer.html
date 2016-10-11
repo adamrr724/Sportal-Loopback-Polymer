@@ -160,23 +160,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
 
-      .image {
-        position: absolute;
-        max-height: 200px;
-        max-width: 200px;
-        top: 50%;
-        left: 50%;
-        width: 120px;
-        height: 120px;
-        margin:-60px 0 0 -60px;
-        -webkit-animation:spin 2s linear infinite;
-        -moz-animation:spin 2s linear infinite;
-        animation:spin 2s linear infinite;
-      }
-        @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-        @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-        @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
-
       #sign-in-container {
         position: absolute;
         bottom: 20px;
@@ -298,6 +281,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <iron-ajax id="userGet"
+               auto
                url="{{getUserUrl}}"
                handle-as="json"
                on-error="_onError"
@@ -393,7 +377,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function () {
-        this.pageReady = true;
+        // if (this.signedIn === false) {
+        //     this.responseBack = true;
+        // }
       },
 
       _signInSuccess: function () {
@@ -449,6 +435,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _onError: function(e) {
         console.log(e);
+        this.responseBack = true;
       },
 
       _routePageChanged: function(page) {

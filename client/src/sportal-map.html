@@ -204,6 +204,10 @@
                 </paper-card>
             </template>
 
+            <template is="dom-if" if="{{!ajaxResponse}}">
+                <img class="load-image" src="../images/sportal-thumbnail.png">
+            </template>
+
 
 
         <!--<iron-ajax id="eventGet"-->

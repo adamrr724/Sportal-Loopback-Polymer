@@ -161,71 +161,77 @@
 
         </style>
 
-        <div class="home-container">
-            <paper-card image="../images/main-image.jpeg" elevation="1" class="highlight-header-card">
-                <div class="highlight-header">
-                    <p id="highlight-text">Find the right sporting events for you. </p>
-                    <p class="highlight-subtext">Find pickup games, leagues, and runs and races in your area.<br>
-                    Don't have what you're looking for? <a href="/create">Create one!</a></p>
-                </div>
+        <template is="dom-if" if="{{pageReady}}">
+
+            <div class="home-container">
+                <paper-card image="../images/main-image.jpeg" elevation="1" class="highlight-header-card">
+                    <div class="highlight-header">
+                        <p id="highlight-text">Find the right sporting events for you. </p>
+                        <p class="highlight-subtext">Find pickup games, leagues, and runs and races in your area.<br>
+                        Don't have what you're looking for? <a href="/create">Create one!</a></p>
+                    </div>
 
 
-                <div class="highlight-container">
-                    <paper-card elevation="3" class="highlight-card highlight-find">
-                        <a class="highlight-link" href="/find">
-                            <div class="highlight">
-                                <p class="highlight-title">Find</p>
-                            </div>
-                        </a>
-                    </paper-card>
-
-                    <paper-card elevation="3" class="highlight-card highlight-create">
-                        <a class="highlight-link" href="/create">
-                            <div class="highlight">
-                                <p class="highlight-title">Create</p>
-                            </div>
-                        </a>
-                    </paper-card>
-                </div>
-
-                <div class="highlight-header">
-                    <p id="highlight-text">Follow, Join, and Connect. </p>
-                    <p class="highlight-subtext">Save all your favorite leagues, pickup games, and runs and races to My Events, to keep track of all of your options. <br>Get the contact information and websites for all of your sports.</p>
-                </div>
-
-                <div class="highlight-container">
-                    <paper-card elevation="3" class="highlight-card highlight-connect">
-                        <a class="highlight-link" href="/find">
-                            <div class="highlight">
-                                <p class="highlight-title">Connect</p>
-                            </div>
-                        </a>
-                    </paper-card>
-
-                    <paper-card elevation="3" class="highlight-card highlight-play">
-                        <a class="highlight-link" href="/find">
-                            <div class="highlight">
-                                <p class="highlight-title">Play</p>
-                            </div>
-                        </a>
-                    </paper-card>
-                </div>
-
-                <div class="highlight-header">
-                    <p id="highlight-text">Find a Place to Play. </p>
-                    <p class="highlight-subtext">Search the area you live in to find the perfect field, hike, gym, studio, court, or trail.</p>
-                </div>
-
-                <a href="/places">
                     <div class="highlight-container">
-                        <paper-card elevation="3" class="highlight-card-places highlight-places">
+                        <paper-card elevation="3" class="highlight-card highlight-find">
+                            <a class="highlight-link" href="/find">
+                                <div class="highlight">
+                                    <p class="highlight-title">Find</p>
+                                </div>
+                            </a>
+                        </paper-card>
+
+                        <paper-card elevation="3" class="highlight-card highlight-create">
+                            <a class="highlight-link" href="/create">
+                                <div class="highlight">
+                                    <p class="highlight-title">Create</p>
+                                </div>
+                            </a>
                         </paper-card>
                     </div>
-                </a>
-            </paper-card>
-        </div>
 
+                    <div class="highlight-header">
+                        <p id="highlight-text">Follow, Join, and Connect. </p>
+                        <p class="highlight-subtext">Save all your favorite leagues, pickup games, and runs and races to My Events, to keep track of all of your options. <br>Get the contact information and websites for all of your sports.</p>
+                    </div>
 
+                    <div class="highlight-container">
+                        <paper-card elevation="3" class="highlight-card highlight-connect">
+                            <a class="highlight-link" href="/find">
+                                <div class="highlight">
+                                    <p class="highlight-title">Connect</p>
+                                </div>
+                            </a>
+                        </paper-card>
+
+                        <paper-card elevation="3" class="highlight-card highlight-play">
+                            <a class="highlight-link" href="/find">
+                                <div class="highlight">
+                                    <p class="highlight-title">Play</p>
+                                </div>
+                            </a>
+                        </paper-card>
+                    </div>
+
+                    <div class="highlight-header">
+                        <p id="highlight-text">Find a Place to Play. </p>
+                        <p class="highlight-subtext">Search the area you live in to find the perfect field, hike, gym, studio, court, or trail.</p>
+                    </div>
+
+                    <a href="/places">
+                        <div class="highlight-container">
+                            <paper-card elevation="3" class="highlight-card-places highlight-places">
+                            </paper-card>
+                        </div>
+                    </a>
+                </paper-card>
+            </div>
+
+        </template>
+
+        <template is="dom-if" if="{{pageReady}}">
+            <img class="load-image" src="../images/sportal-thumbnail.png">
+        </template>
 
     </template>
 
@@ -233,7 +239,19 @@
 
         Polymer({
 
-            is: 'sportal-home'
+            is: 'sportal-home',
+
+            properties: {
+
+              pageReady: {
+                type: Boolean,
+                value: false
+              },
+          },
+
+            ready: function () {
+              this.pageReady = true;
+            },
 
         });
 
