@@ -281,7 +281,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <iron-ajax id="userGet"
-               auto
                url="{{getUserUrl}}"
                handle-as="json"
                on-error="_onError"
@@ -377,9 +376,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function () {
-        // if (this.signedIn === false) {
-        //     this.responseBack = true;
-        // }
+        if (this.signedIn === false) {
+            this.responseBack = true;
+        }
       },
 
       _signInSuccess: function () {
@@ -435,7 +434,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _onError: function(e) {
         console.log(e);
-        this.responseBack = true;
+        // this.responseBack = true;
       },
 
       _routePageChanged: function(page) {
