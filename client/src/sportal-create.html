@@ -187,12 +187,13 @@
                       <paper-item value="Tuesday">Tuesday</paper-item>
                       <paper-item value="Wednesday">Wednesday</paper-item>
                       <paper-item value="Thursday">Thursday</paper-item>
-                      <paper-item value="Fiday">Friday</paper-item>
+                      <paper-item value="Friday">Friday</paper-item>
                       <paper-item value="Saturday">Saturday</paper-item>
                       <paper-item value="Sunday">Sunday</paper-item>
                     </paper-listbox>
                   </paper-dropdown-menu>
-                  <paper-input name="date" required auto-validate="true" value="{{date}}" type="datetime-local" label="Starting Date and Time"></paper-input>
+                  <paper-input name="startDate" required auto-validate="true" value="{{startDate}}" type="datetime-local" label="Starting Date and Time"></paper-input>
+                  <paper-input name="date" required auto-validate="true" value="{{date}}" type="datetime-local" label="Ending Date and Time"></paper-input>
                 </div>
 
                 <div id="reg-date">
@@ -433,6 +434,9 @@
         dayOfWeek: {
           value: ""
         },
+        startDate: {
+          value: ""
+        },
         skillLevel: {
           value: ""
         },
@@ -522,6 +526,7 @@
           "otherSport": this.otherSport,
           "recurring": this.recurringSubmit,
           "date": this.date,
+          "startDate": this.startDate,
           "recurringDate": this.dayOfWeek,
           "notes": this.notes,
           "age": this.age,
@@ -554,7 +559,7 @@
           this.$.eventPost.generateRequest();
 
           alert("Your pickup game has been created!");
-          window.location.reload();
+        //   window.location.reload();
         }
 
       },
