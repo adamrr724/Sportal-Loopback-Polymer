@@ -68,7 +68,8 @@
                                 </template>
                                 <template is="dom-if" if="[[info.recurringDate]]">
                                     <p class="event-info">Date of the Week: [[info.recurringDate]]</p>
-                                    <p class="event-info">Starting Date: {{date}}</p>
+                                    <p class="event-info">Starting Date: {{startingDate}}</p>
+                                    <p class="event-info">Ending Date: {{date}}</p>
                                 </template>
                                 <template is="dom-if" if="[[!info.recurringDate]]">
                                     <p class="event-info">Date: {{date}}</p>
@@ -205,13 +206,22 @@
           date: {
               type: String,
               computed: 'dateFormat(info)'
+          },
+          startingDate: {
+              type: String,
+              computed: 'startingDateFormat(info)'
           }
 
       },
 
+      startingDateFormat: function(info) {
+           console.log(info);
+            return moment(info.startDate).utc().format("dddd, MMMM Do YYYY, h:mm a");
+      },
+
       dateFormat: function(info) {
-            console.log(info.date);
-            return moment(info.date).format('MMMM Do YYYY, h:mm a');
+          console.log(info.date);
+            return moment(info.date).utc().format("dddd, MMMM Do YYYY, h:mm a");
       },
 
         computeId:function(info) {
