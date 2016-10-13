@@ -258,7 +258,7 @@
                 },
                 requestUrl: {
                     type: String,
-                    value: "//localhost:3000/api/Events"
+                    value: "//localhost:3000/api/Events?filter[where][date][gt]=" + moment()
                 },
                 eventType: {
                     value: ""
@@ -366,11 +366,11 @@
                     this.longitude = this.locationData.geometry.location.lng();
                     // this.locationSelection = this.latitude + "," + this.longitude;
 
-                    baseUrl = "//localhost:3000/api/Events??filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500";
+                    baseUrl = "//localhost:3000/api/Events??filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500&filter[where][date][gt]=" + moment();
                     withFilter = baseUrl + "&";
 
                 } else {
-                    baseUrl = "//localhost:3000/api/Events?" + currentLocationQuery;
+                    baseUrl = "//localhost:3000/api/Events?" + currentLocationQuery + "&filter[where][date][gt]=" + moment();;
                     withFilter = baseUrl + "&";
                 }
 
