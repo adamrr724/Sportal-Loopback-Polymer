@@ -9,6 +9,10 @@
                 display: flex;
             }
 
+            .buttons {
+                padding-bottom: 10px;
+            }
+
             google-map {
                 height: 300px;
                 width: 300px;
@@ -30,15 +34,21 @@
 
             #scrollable-area {
               overflow: auto;
+              width: 600px;
+              padding: 0;
+            }
+
+            .info-modal {
+                padding: 0;
             }
 
             #info-area {
                 min-height:350px;
-                width:450px;
+                width:550px;
             }
 
             .info-image {
-                height: 200px;
+                width: 100%;
                 box-shadow: 1px 1px 1px 1px grey;
                 margin-top: 10px;
             }
@@ -49,10 +59,10 @@
                 <paper-dialog-scrollable id="scrollable-area">
                     <div id="info-area">
                         <template is="dom-if" if="{{info}}">
-                                <h1 class="modal-header">[[info.name]]</h1>
                                 <template is="dom-if" if="[[info.image]]">
                                     <img class="info-image" src="[[info.image]]">
                                 </template>
+                                <h1 class="modal-header">[[info.name]]</h1>
                                 <p class="event-info">Event Type: [[info.eventType]]</p>
                                 <p class="event-info">Sport: [[info.sport]]</p>
                                 <template is="dom-if" if="[[info.otherSport]]">
