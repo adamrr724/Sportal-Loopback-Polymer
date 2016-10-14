@@ -20,6 +20,7 @@
                 padding: 25px;
                 min-height: 300px;
                 max-width: 600px;
+                min-width: 500px;
                 text-align: center;
                 /*z-index: 1000;*/
             }
@@ -30,7 +31,7 @@
 
             #scrollable-area {
               overflow: auto;
-              max-width: 450px;
+              max-width: 500px;
             }
 
             #info-area {
@@ -99,6 +100,7 @@
                                     <p class="event-info notes">Notes: [[info.notes]]</p>
                                 </template>
                                 <p class="event-info"><a href="mailto:[[info.email]]?subject=[[info.name]]">Contact the Organizer!</a></p>
+                                <sportal-event-users id="eventUsers" following="[[following]]" event-id="[[info.id]]"></sportal-event-users>
                         </template>
                     </div>
                 </paper-dialog-scrollable>
@@ -216,12 +218,12 @@
       },
 
       startingDateFormat: function(info) {
-           console.log(info);
+        //    console.log(info);
             return moment(info.startDate).utc().format("dddd, MMMM Do YYYY, h:mm a");
       },
 
       dateFormat: function(info) {
-          console.log(info.date);
+        //   console.log(info.date);
             return moment(info.date).utc().format("dddd, MMMM Do YYYY, h:mm a");
       },
 
@@ -351,7 +353,7 @@
         },
 
         _onError: function (e) {
-            console.log(e);
+            // console.log(e);
             if(e.detail.request.__data__.response.error.status === 404) {
                 this.following = false;
             }

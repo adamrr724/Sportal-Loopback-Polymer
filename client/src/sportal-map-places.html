@@ -377,7 +377,7 @@
 
                 // this.requestUrl = "//localhost:3000/api/Events?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50"
 
-                console.log(this.requestUrl);
+                // console.log(this.requestUrl);
                 this.async(function() {
                   this.$.placeGet.generateRequest();
               }, 2000);
@@ -391,7 +391,7 @@
 //            },
 //
            _onError: function (e) {
-                console.log("the location selection is" + this.locationSelection);
+                // console.log("the location selection is" + this.locationSelection);
            }
         });
 
