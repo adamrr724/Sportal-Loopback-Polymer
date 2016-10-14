@@ -190,7 +190,13 @@
         },
 
         following: {
-          type: Boolean
+            type: Boolean,
+            observer: '_followingChange'
+        },
+
+        followChanged: {
+            type: Boolean,
+            value: false
         },
 
           getUserEventById: {
@@ -243,9 +249,20 @@
             return "http://localhost:3000/api/Events/" + this.info.id + "/users/" + this.signedIn.id;
         },
 
-        _modalClose: function () {
-            this.modalOpened = false;
-            location.reload();
+        _followingChange: function() {
+            console.log(this.followChanged);
+            this.followChanged = true;
+        },
+
+        _modalClose: function() {
+            if (this.followChanged == true) {
+                this.modalOpened = false;
+                this.followChanged = false;
+                location.reload();
+            } else {
+                this.modalOpened = false;
+            }
+
         },
 
         patchOverlay: function (e) {
