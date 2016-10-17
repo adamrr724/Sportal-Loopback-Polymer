@@ -2,13 +2,14 @@
 <!doctype html>
 <html lang="en">
 <head>
- <script src="bower_components/platform.js/platform.js"></script>
- <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+ <!-- <script src="bower_components/platform.js/platform.js"></script>
+ <script src="bower_components/webcomponentsjs/webcomponents.js"></script> -->
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
   <title>Sportal</title>
+
 
   <link rel="shortcut icon" sizes="32x32" href="/images/sportal-thumbnail.png">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -30,7 +31,7 @@
       } else {
         // polyfill web components
         var e = document.createElement('script');
-        e.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+        e.src = 'bower_components/webcomponentsjs/webcomponents.js';
         document.head.appendChild(e);
       }
     })();
@@ -44,7 +45,7 @@
 
   </script>
 
-  <link rel="import" href="/src/sportal-polymer.html">
+ <link rel="import" href="/src/elements.html">
 
   <style>
 
