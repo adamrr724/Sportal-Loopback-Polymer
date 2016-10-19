@@ -386,10 +386,18 @@
                handle-as="json"
                body="[[ajaxBody]]"
                on-error="_onError"
+               on-response="_onResponse"
                content-type="application/json"
                method="POST"
               ></iron-ajax>
-  </template>
+
+              <iron-ajax id="userEventPut"
+                         url="{{userEventPutUrl}}"
+                         on-error="_onError"
+                         on-response="_onResponseGet"
+                         method="PUT"
+              ></iron-ajax>
+</template>
 
   <script>
 
@@ -413,8 +421,16 @@
           value: false
         },
 
+        userEventPutUrl: {
+            type: String
+        },
+
         eventType: {
           value: ""
+        },
+        signedIn: {
+            type: Object,
+            notify: true
         },
         eventName: {
           value: ""
@@ -559,9 +575,20 @@
           this.$.eventPost.generateRequest();
 
           alert("Your pickup game has been created!");
-          window.location.reload();
         }
 
+      },
+
+      _onResponse: function(e) {
+
+          console.log(e);
+
+          alert("");
+          this.userEventPutUrl = "http://localhost:3000/api/Events/" + e.detail.response.id + "/users/rel/" + this.signedIn.id;
+
+          this.$.userEventPut.generateRequest();
+
+           window.location.reload();
       },
 
       _onError: function(error) {
