@@ -192,8 +192,11 @@
                       <paper-item value="Sunday">Sunday</paper-item>
                     </paper-listbox>
                   </paper-dropdown-menu>
-                  <paper-input name="startDate" required auto-validate="true" value="{{startDate}}" type="datetime-local" label="Starting Date and Time"></paper-input>
-                  <paper-input name="date" required auto-validate="true" value="{{date}}" type="datetime-local" label="Ending Date and Time"></paper-input>
+
+                  <template is="dom-if" if="{{dayOfWeek}}">
+                      <paper-input name="startDate" value="{{startDate}}" type="datetime-local" label="Starting Date and Time"></paper-input>
+                      <paper-input name="date" value="{{date}}" type="datetime-local" label="Ending Date and Time"></paper-input>
+                  </template>
                 </div>
 
                 <div id="reg-date">
@@ -451,7 +454,7 @@
           value: ""
         },
         startDate: {
-          value: ""
+          type: Date
         },
         skillLevel: {
           value: ""
@@ -592,6 +595,8 @@
       },
 
       _onError: function(error) {
+
+          console.log(error);
       },
 
       _openCreateModal: function() {
