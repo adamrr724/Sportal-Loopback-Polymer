@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head>
+
+  <title>gold-cc-cvc-input tests</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <script src="../../iron-test-helpers/test-helpers.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../gold-cc-cvc-input.html">
+
+</head>
+<body>
+
+  <test-fixture id="basic">
+    <template>
+      <gold-cc-cvc-input></gold-cc-cvc-input>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="amex">
+    <template>
+      <gold-cc-cvc-input card-type="amex" required="" error-message="error"></gold-cc-cvc-input>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="required">
+    <template>
+      <gold-cc-cvc-input auto-validate="" required="" error-message="error"></gold-cc-cvc-input>
+    </template>
+  </test-fixture>
+
+  <script>suite("basic",function(){test("max length for a non-amex cc is 3",function(){var e=fixture("basic");assert.equal(e.inputElement.maxLength,3)}),test("max length for an amex cc is 4",function(){var e=fixture("amex");assert.equal(e.inputElement.maxLength,4)}),test("valid input is ok",function(){var e=fixture("required");e.value="123",forceXIfStamp(e);var t=Polymer.dom(e.root).querySelector("paper-input-container");assert.ok(t,"paper-input-container exists"),assert.isFalse(t.invalid);var r=Polymer.dom(e.root).querySelector("paper-input-error");assert.ok(r,"paper-input-error exists"),assert.equal(getComputedStyle(r).visibility,"hidden","error is visibility:hidden")}),test("invalid input is not ok",function(){var e=fixture("required");e.value="13",forceXIfStamp(e);var t=Polymer.dom(e.root).querySelector("paper-input-container");assert.ok(t,"paper-input-container exists"),assert.isTrue(t.invalid);var r=Polymer.dom(e.root).querySelector("paper-input-error");assert.ok(r,"paper-input-error exists"),assert.notEqual(getComputedStyle(r).visibility,"hidden","error is not visibility:hidden")}),test("empty required input shows error on blur",function(){var e=fixture("required");forceXIfStamp(e);var t=Polymer.dom(e.root).querySelector("paper-input-container");assert.ok(t,"paper-input-container exists"),assert.isFalse(t.invalid);var r=Polymer.dom(e.root).querySelector("paper-input-error");assert.ok(r,"paper-input-error exists"),assert.equal(getComputedStyle(r).visibility,"hidden","error is visibility:hidden"),MockInteractions.focus(e),MockInteractions.blur(e),assert.isTrue(t.invalid),assert.notEqual(getComputedStyle(r).visibility,"hidden","error is not visibility:hidden")}),test("invalid input shows error message after manual validation",function(){var e=fixture("amex");forceXIfStamp(e);var t=Polymer.dom(e.root).querySelector("paper-input-error");assert.ok(t,"paper-input-error exists"),assert.equal(getComputedStyle(t).visibility,"hidden","error is visibility:hidden"),e.validate(),assert.notEqual(getComputedStyle(t).visibility,"hidden","error is not visibility:hidden")})}),suite("a11y",function(){test("has aria-labelledby",function(){var e=fixture("basic");assert.isTrue(e.inputElement.hasAttribute("aria-labelledby")),assert.equal(e.inputElement.getAttribute("aria-labelledby"),Polymer.dom(e.root).querySelector("label").id,"aria-labelledby points to the label")}),test("required and error has aria-labelledby",function(){var e=fixture("required");assert.isTrue(e.inputElement.hasAttribute("aria-labelledby")),assert.equal(e.inputElement.getAttribute("aria-labelledby"),Polymer.dom(e.root).querySelector("label").id,"aria-labelledby points to the label")})});</script>
+
+
+
+</body></html>

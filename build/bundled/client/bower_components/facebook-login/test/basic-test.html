@@ -1,0 +1,19 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    
+    <link rel="import" href="../seed-element.html">
+  </head>
+  <body>
+
+    
+    <seed-element></seed-element>
+
+    <script>var myEl=document.querySelector("seed-element");suite("<seed-element>",function(){test('defines the "author" property',function(){assert.equal(myEl.author.name,"Dimitri Glazkov"),assert.equal(myEl.author.image,"http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg")}),test("says hello",function(){assert.equal(myEl.sayHello(),"seed-element says, Hello World!");var e=myEl.sayHello("greetings Earthlings");assert.equal(e,"seed-element says, greetings Earthlings")}),test("fires lasers",function(e){myEl.addEventListener("seed-element-lasers",function(s){assert.equal(s.detail.sound,"Pew pew!"),e()}),myEl.fireLasers()})});</script>
+
+  
+</body></html>

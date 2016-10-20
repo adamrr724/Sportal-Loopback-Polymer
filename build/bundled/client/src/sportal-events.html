@@ -1,0 +1,92 @@
+<html><head><link rel="import" href="../bower_components/polymer/polymer.html">
+
+</head><body><dom-module id="sportal-events">
+
+    <template>
+
+        <style>:host{display:block;}paper-card{--paper-card-header-image:{max-height:175px;min-height:150px;};}#main-container{width:100%;min-height:100vh;margin-left:auto;margin-right:auto;padding:25px;text-align:center;}.sign-in-error{padding:20px;font-size:20px;font-weight:200;}.my-events{height:375px;width:300px;margin:20px;text-align:center;}.events-container{width:100%;display:flex;flex-wrap:wrap;justify-content:center;}.events-header{font-size:40px;font-weight:400;}.events-subheader{font-size:16px;font-weight:100;}.event-name{font-size:16px;font-weight:400;}.event-info{font-size:14px;font-weight:100;}.info{padding:5px;}h5{margin-top:5px;margin-bottom:5px;}</style>
+        <template is="dom-if" if="{{signedIn}}">
+            <iron-ajax id="userEventGet" auto="" url="{{getUserEventById}}" handle-as="json" on-error="_onError" on-response="_onResponseEvent" content-type="application/json" debounce-duration="300" method="GET" withcredentials=""></iron-ajax>
+
+            <iron-ajax id="userPlaceGet" auto="" url="{{getUserPlaceById}}" handle-as="json" on-error="_onError" on-response="_onResponsePlace" content-type="application/json" debounce-duration="300" method="GET" withcredentials=""></iron-ajax>
+
+            <paper-card id="main-container" elevation="1">
+                <h1 class="events-header">My Sports</h1>
+                <div>
+                    <h3 class="events-subheader">Find all of the pickup games, leagues, and races that you saved.</h3>
+                    <div class="events-container">
+                        <template is="dom-repeat" items="{{userEvents}}">
+                            <template is="dom-if" if="{{item.image}}">
+                                <paper-card image="{{item.image}}" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.sport}}</h5>
+                                        <h5 class="event-info">{{item.eventType}}</h5>
+                                    </div>
+                                    <paper-button style="margin:10px; padding:5px; float: right" raised="" on-click="_eventInfoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
+                            <template is="dom-if" if="{{!item.image}}">
+                                <paper-card image="../images/grey-thumbnail2.jpg" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.sport}}</h5>
+                                        <h5 class="event-info">{{item.eventType}}</h5>
+                                    </div>
+                                    <paper-button style="margin:10px; padding:5px; float: right" raised="" on-click="_eventInfoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
+                            <sportal-info-modal-events-mysports signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{eventInfoModalOpened}}"></sportal-info-modal-events-mysports>
+                        </template>
+                        <template is="dom-if" if="{{!userEvents.0}}">
+                            <p>You don't have any saved events!</p>
+                        </template>
+                    </div>
+                </div>
+                <h1 class="events-header">My Saved Places</h1>
+                <div class="events-container">
+                    <h3 class="events-subheader">All of your favorite saved Places to Play.</h3>
+                    <div class="events-container">
+                        <template is="dom-repeat" items="{{userPlaces}}">
+                            <template is="dom-if" if="{{item.image}}">
+                                <paper-card image="{{item.image}}" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.addressName}}</h5>
+                                    </div>
+                                    <paper-button style="margin:10px; padding:5px; float: right" raised="" on-click="_placeInfoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
+                            <template is="dom-if" if="{{!item.image}}">
+                                <paper-card image="../images/grey-thumbnail2.jpg" class="my-events" elevation="2">
+                                    <div class="info">
+                                        <h4 class="event-name">{{item.name}}</h4>
+                                        <h5 class="event-info">{{item.addressName}}</h5>
+                                    </div>
+                                    <paper-button style="margin:10px; padding:5px; float: right" raised="" on-click="_placeInfoModal">More Info</paper-button>
+                                </paper-card>
+                            </template>
+                            <sportal-info-modal-places-mysports signed-in="{{signedIn}}" class="info-modal" info="{{placeInfo}}" modal-opened="{{placeInfoModalOpened}}"></sportal-info-modal-places-mysports>
+                        </template>
+                        <template is="dom-if" if="{{!userPlaces.0}}">
+                            <p>You don't have any saved places!</p>
+                        </template>
+                    </div>
+                </div>
+            </paper-card>
+        </template>
+
+        <template is="dom-if" if="{{!signedIn}}">
+            <paper-card id="main-container" elevation="1">
+                <paper-card class="sign-in-error" elevation="1">
+                    <h3 class="event-header">Please sign in to see your events!</h3>
+                </paper-card>
+            </paper-card>
+        </template>
+
+    </template>
+
+    <script>Polymer({is:"sportal-events",properties:{signedIn:{type:Object,notify:!0},getUserEventById:{type:String,computed:"computeEvents(signedIn)"},getUserPlaceById:{type:String,computed:"computePlaces(signedIn)"},userEvents:{type:Object,value:null},eventInfo:{type:Object},userPlaces:{type:Object,value:null},placeInfo:{type:Object},placeInfoModalOpened:{type:Boolean,notify:!0,value:!1},eventInfoModalOpened:{type:Boolean,notify:!0,value:!1}},computeEvents:function(e){return"http://localhost:3000/api/Users/"+e.id+"/events"},computePlaces:function(e){return"http://localhost:3000/api/Users/"+e.id+"/places"},_onResponseEvent:function(e){console.log(e.detail.response),this.userEvents=e.detail.response},_onResponsePlace:function(e){console.log(e.detail.response),this.userPlaces=e.detail.response},_placeInfoModal:function(e){this.placeInfo=e.model.__data__.item,this.placeInfoModalOpened=!0},_eventInfoModal:function(e){this.eventInfo=e.model.__data__.item,this.eventInfoModalOpened=!0}});</script>
+
+</dom-module>
+</body></html>

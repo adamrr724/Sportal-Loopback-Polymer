@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head>
+
+  <title>gold-cc-input tests</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <script src="../../iron-test-helpers/test-helpers.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../gold-cc-input.html">
+
+</head>
+<body>
+
+  <test-fixture id="basic">
+    <template>
+      <gold-cc-input></gold-cc-input>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="ErrorWithoutAutoValidate">
+    <template>
+      <gold-cc-input required="" error-message="error"></gold-cc-input>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="required">
+    <template>
+      <gold-cc-input auto-validate="" required="" error-message="error"></gold-cc-input>
+    </template>
+  </test-fixture>
+
+  <script>suite("basic",function(){test("input is spaced out correctly",function(){var e=fixture("basic");e.value="12345678",assert.equal(e.value,"1234 5678")}),test("invalid input is not ok",function(){var e=fixture("required");e.value="1234",forceXIfStamp(e);var t=Polymer.dom(e.root).querySelector("paper-input-container");assert.ok(t,"paper-input-container exists"),assert.isTrue(t.invalid),assert.equal(e.cardType,"");var r=Polymer.dom(e.root).querySelector("paper-input-error");assert.ok(r,"paper-input-error exists"),assert.notEqual(getComputedStyle(r).visibility,"hidden","error is not visibility:hidden")}),test("valid input is ok",function(){var e=fixture("required");e.value="4000000000000002",forceXIfStamp(e);var t=Polymer.dom(e.root).querySelector("paper-input-container");assert.ok(t,"paper-input-container exists"),assert.isFalse(t.invalid),assert.equal(e.cardType,"visa")}),test("empty required input shows error on blur",function(e){var t=fixture("required");forceXIfStamp(t);var r=Polymer.dom(t.root).querySelector("paper-input-error");assert.ok(r,"paper-input-error exists"),assert.equal(getComputedStyle(r).visibility,"hidden","error is visibility:hidden"),t.addEventListener("blur",function(i){assert(!t.focused,"input is blurred"),assert.notEqual(getComputedStyle(r).visibility,"hidden","error is not visibility:hidden"),e()}),MockInteractions.focus(t),MockInteractions.blur(t)}),test("invalid input shows error message after manual validation",function(){var e=fixture("ErrorWithoutAutoValidate");forceXIfStamp(e);var t=Polymer.dom(e.root).querySelector("paper-input-error");assert.ok(t,"paper-input-error exists"),assert.equal(getComputedStyle(t).visibility,"hidden","error is visibility:hidden"),e.validate(),assert.notEqual(getComputedStyle(t).visibility,"hidden","error is not visibility:hidden")}),test("caret position is preserved",function(){var e=fixture("required"),t=Polymer.dom(e.root).querySelector('input[is="iron-input"]');e.value="1111 1111",t.selectionStart=2,t.selectionEnd=2,e._onValueChanged("1122 1111 11","1111 1111"),assert.equal(t.selectionStart,2,"selectionStart is preserved"),assert.equal(t.selectionEnd,2,"selectionEnd is preserved")})}),suite("a11y",function(){test("has aria-labelledby",function(){var e=fixture("basic");assert.isTrue(e.inputElement.hasAttribute("aria-labelledby")),assert.equal(e.inputElement.getAttribute("aria-labelledby"),Polymer.dom(e.root).querySelector("label").id,"aria-labelledby points to the label")}),test("required and error has aria-labelledby",function(){var e=fixture("required");assert.isTrue(e.inputElement.hasAttribute("aria-labelledby")),assert.equal(e.inputElement.getAttribute("aria-labelledby"),Polymer.dom(e.root).querySelector("label").id,"aria-labelledby points to the label")})});</script>
+
+
+
+</body></html>

@@ -1,0 +1,35 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+
+
+
+</head><body><dom-module id="gold-phone-input">
+  <template>
+    <style>:host{display:block;}span{@apply (--paper-font-subhead);@apply (--paper-input-container-input);width:40px;}.country-code{@apply (--gold-phone-input-country-code);}.container{@apply (--layout-horizontal);}label{left:40px !important;}input{@apply (--layout-flex);}</style>
+    <paper-input-container id="container" disabled$="[[disabled]]" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" invalid="[[invalid]]">
+
+      <label hidden$="[[!label]]">[[label]]</label>
+
+      <div class="container">
+         <span class="country-code">+[[countryCode]]</span>
+
+        <input is="iron-input" id="input" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" required$="[[required]]" bind-value="{{value}}" name$="[[name]]" allowed-pattern="[0-9\-]" autocomplete="tel" type="tel" prevent-invalid-input="" disabled$="[[disabled]]" invalid="{{invalid}}" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" maxlength$="[[maxlength]]" size$="[[size]]">
+      </div>
+
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error id="error">[[errorMessage]]</paper-input-error>
+      </template>
+
+    </paper-input-container>
+  </template>
+
+  <script>Polymer({is:"gold-phone-input",behaviors:[Polymer.PaperInputBehavior,Polymer.IronFormElementBehavior],properties:{label:{type:String,value:"Phone number"},countryCode:{type:String,value:"1"},phoneNumberPattern:{type:String,value:"XXX-XXX-XXXX",observer:"_phoneNumberPatternChanged"},value:{type:String,observer:"_onValueChanged"}},observers:["_onFocusedChanged(focused)"],ready:function(){this.value&&this._handleAutoValidate()},_phoneNumberPatternChanged:function(){var e="";e=this.phoneNumberPattern.replace(/\s/g,"\\s"),e=e.replace(/X/gi,"\\d"),e=e.replace(/\+/g,"\\+"),this.$.input.pattern=e},_onValueChanged:function(e,t){if(void 0!=t&&e!==t){e=e?e.toString():"";var n=this.$.input.selectionStart,a=e.substr(0,n).split("-").length-1;e=e.replace(/-/g,"");for(var i=e.length<=this.phoneNumberPattern.replace(/-/g,"").length,r="",o=0,l=0,u=0;u<e.length;u++)o=this.phoneNumberPattern.indexOf("-",o),i&&u==o-l&&(r+="-",o++,l++),r+=e[u];var h=r.substr(0,n).split("-").length-1,s=h-a;this.updateValueAndPreserveCaret(r.trim()),this.$.input.selectionStart=this.$.input.selectionEnd=n+s,this._handleAutoValidate()}},validate:function(){var e=this.$.input.validate();return this.$.container.invalid=!e,this.$.container.updateAddons({inputElement:this.$.input,value:this.value,invalid:!e}),e},_onFocusedChanged:function(e){e||this._handleAutoValidate()}});</script>
+
+</dom-module>
+</body></html>

@@ -1,0 +1,5 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-validator-behavior/iron-validator-behavior.html">
+
+<script>Polymer({is:"date-validator",behaviors:[Polymer.IronValidatorBehavior],validate:function(r){if(!r)return!1;if(r.month>12||r.month<1)return!1;var e=new Date("20"+r.year,r.month),a=new Date;return e>a}});</script>
+</head><body></body></html>

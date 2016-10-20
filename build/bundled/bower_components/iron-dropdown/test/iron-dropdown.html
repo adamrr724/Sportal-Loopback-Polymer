@@ -1,0 +1,110 @@
+<!DOCTYPE html><html><head>
+  <meta charset="UTF-8">
+  <title>iron-dropdown basic tests</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../iron-dropdown.html">
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+
+<style>body{margin:0;padding:0;}.container{display:block;position:relative;width:100px;height:100px;background-color:yellow;}.positioned{position:absolute;top:40px;left:40px;}.dropdown-content{width:50px;height:50px;background-color:orange;}.big{width:3000px;height:3000px;}</style></head>
+
+
+<body>
+
+  <test-fixture id="TrivialDropdown">
+    <template>
+      <iron-dropdown>
+        <div class="dropdown-content"></div>
+      </iron-dropdown>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="NonLockingDropdown">
+    <template>
+      <iron-dropdown allow-outside-scroll="">
+        <div class="dropdown-content">I don't lock scroll!</div>
+      </iron-dropdown>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="AlignedDropdown">
+    <template>
+      <div class="container">
+        <iron-dropdown horizontal-align="right" vertical-align="top">
+          <div class="dropdown-content big"></div>
+        </iron-dropdown>
+      </div>
+    </template>
+  </test-fixture>
+
+  
+  <test-fixture id="OffsetDropdownTopLeft">
+    <template>
+      <div class="container positioned">
+        <iron-dropdown>
+          <div class="dropdown-content"></div>
+        </iron-dropdown>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="OffsetDropdownBottomRight">
+    <template>
+      <div class="container positioned">
+        <iron-dropdown horizontal-align="right" vertical-align="bottom">
+          <div class="dropdown-content"></div>
+        </iron-dropdown>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="FocusableContentDropdown">
+    <template>
+      <iron-dropdown>
+        <div class="dropdown-content" tabindex="0">
+          <div class="subcontent" tabindex="0"></div>
+        </div>
+      </iron-dropdown>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="RTLDropdownLeft">
+    <template>
+      <div dir="rtl" class="container">
+        <iron-dropdown>
+          <div class="dropdown-content"></div>
+        </iron-dropdown>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="RTLDropdownRight">
+    <template>
+      <div dir="rtl" class="container">
+        <iron-dropdown horizontal-align="right">
+          <div class="dropdown-content"></div>
+        </iron-dropdown>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="sizingTarget">
+    <template>
+      <iron-dropdown>
+        <div class="dropdown-content">
+          <div class="subcontent"></div>
+        </div>
+      </iron-dropdown>
+    </template>
+  </test-fixture>
+
+  <script>function elementIsVisible(e){var t=e.getBoundingClientRect(),o=window.getComputedStyle(e);return"none"!==o.display&&t.width>0&&t.height>0}function runAfterOpen(e,t){e.addEventListener("iron-overlay-opened",t),e.open()}function fireWheel(e,t,o){var n=new CustomEvent("wheel",{cancelable:!0,bubbles:!0});return n.deltaX=t,n.deltaY=o,e.dispatchEvent(n),n}function dispatchScroll(e,t,o){e.scrollLeft=t,e.scrollTop=o,e.dispatchEvent(new CustomEvent("scroll",{bubbles:!0}))}suite("<iron-dropdown>",function(){var e,t;suite("basic",function(){setup(function(){e=fixture("TrivialDropdown"),t=Polymer.dom(e).querySelector(".dropdown-content")}),test("effectively hides the dropdown content",function(){expect(elementIsVisible(t)).to.be.equal(!1)}),test("shows dropdown content when opened",function(o){runAfterOpen(e,function(){expect(elementIsVisible(t)).to.be.equal(!0),o()})}),test("hides dropdown content when outside is clicked",function(o){runAfterOpen(e,function(){expect(elementIsVisible(t)).to.be.equal(!0),e.addEventListener("iron-overlay-closed",function(){expect(elementIsVisible(t)).to.be.equal(!1),o()}),MockInteractions.tap(e.parentNode)})}),suite("when content is focusable",function(){setup(function(){e=fixture("FocusableContentDropdown"),t=Polymer.dom(e).querySelector(".dropdown-content")}),test("focuses the content when opened",function(o){runAfterOpen(e,function(){expect(document.activeElement).to.be.equal(t),o()})}),test("focuses a configured focus target",function(o){var n=Polymer.dom(t).querySelector("div[tabindex]");e.focusTarget=n,runAfterOpen(e,function(){expect(document.activeElement).to.not.be.equal(t),expect(document.activeElement).to.be.equal(n),o()})})})}),suite("locking scroll",function(){var t,o;suiteSetup(function(){t=document.createElement("div"),t.classList.add("big"),document.body.appendChild(t),document.documentElement.scrollTop=1,1===document.documentElement.scrollTop?(document.documentElement.scrollTop=0,o=document.documentElement):o=document.body}),suiteTeardown(function(){document.body.removeChild(t)}),setup(function(){e=fixture("TrivialDropdown")}),teardown(function(){dispatchScroll(o,0,0)}),test("should lock, only once",function(t){var o=0;runAfterOpen(e,function(){expect(Polymer.IronDropdownScrollManager._lockingElements.length).to.be.equal(1),expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(document.body)).to.be.equal(!0),expect(fireWheel(document.body,0,10).defaultPrevented).to.be.equal(!0),0===o?(e.close(),e.open()):t(),o++})}),test("should lock scroll",function(t){runAfterOpen(e,function(){dispatchScroll(o,10,10),assert.equal(o.scrollTop,0,"scrollTop ok"),assert.equal(o.scrollLeft,0,"scrollLeft ok"),t()})}),test("can be disabled with `allowOutsideScroll`",function(t){e.allowOutsideScroll=!0,runAfterOpen(e,function(){dispatchScroll(o,10,10),assert.equal(o.scrollTop,10,"scrollTop ok"),assert.equal(o.scrollLeft,10,"scrollLeft ok"),t()})})}),suite("non locking scroll",function(){setup(function(){e=fixture("NonLockingDropdown")}),test("can be disabled with `allowOutsideScroll`",function(t){runAfterOpen(e,function(){expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(document.body)).to.be.equal(!1),expect(fireWheel(document.body,0,10).defaultPrevented).to.be.equal(!1),t()})})}),suite("aligned dropdown",function(){var t,o,n;setup(function(){t=fixture("AlignedDropdown"),e=t.querySelector("iron-dropdown"),o=t.getBoundingClientRect()}),test("can be re-aligned to the right and the top",function(t){runAfterOpen(e,function(){n=e.getBoundingClientRect(),assert.equal(n.top,o.top,"top ok"),assert.equal(n.left,0,"left ok"),assert.equal(n.bottom,window.innerHeight,"bottom ok"),assert.equal(n.right,o.right,"right ok"),t()})}),test("can be re-aligned to the bottom",function(t){e.verticalAlign="bottom",runAfterOpen(e,function(){n=e.getBoundingClientRect(),assert.equal(n.top,0,"top ok"),assert.equal(n.left,0,"left ok"),assert.equal(n.bottom,o.bottom,"bottom ok"),assert.equal(n.right,o.right,"right ok"),t()})}),test("handles parent's stacking context",function(i){t.style.transform="translateZ(0)",runAfterOpen(e,function(){n=e.getBoundingClientRect(),assert.equal(n.top,o.top,"top ok"),assert.equal(n.left,0,"left ok"),assert.equal(n.bottom,window.innerHeight,"bottom ok"),assert.equal(n.right,o.right,"right ok"),i()})})}),suite("when align is left/top, with an offset",function(){var t,o;setup(function(){var t=fixture("OffsetDropdownTopLeft");e=t.querySelector("iron-dropdown")}),test("can be offset towards the bottom right",function(n){runAfterOpen(e,function(){t=e.getBoundingClientRect(),e.verticalOffset=10,e.horizontalOffset=10,e.refit(),o=e.getBoundingClientRect(),assert.equal(t.top+10,o.top,"top ok"),assert.equal(t.left+10,o.left,"left ok"),n()})}),test("can be offset towards the top left",function(n){runAfterOpen(e,function(){t=e.getBoundingClientRect(),e.verticalOffset=-10,e.horizontalOffset=-10,e.refit(),o=e.getBoundingClientRect(),assert.equal(t.top-10,o.top,"top ok"),assert.equal(t.left-10,o.left,"left ok"),n()})})}),suite("when align is right/bottom, with an offset",function(){var t,o;setup(function(){var t=fixture("OffsetDropdownBottomRight");e=t.querySelector("iron-dropdown")}),test("can be offset towards the top left",function(n){runAfterOpen(e,function(){t=e.getBoundingClientRect(),e.verticalOffset=10,e.horizontalOffset=10,e.refit(),o=e.getBoundingClientRect(),assert.equal(t.bottom-10,o.bottom,"bottom ok"),assert.equal(t.right-10,o.right,"right ok"),n()})}),test("can be offset towards the bottom right",function(n){runAfterOpen(e,function(){t=e.getBoundingClientRect(),e.verticalOffset=-10,e.horizontalOffset=-10,e.refit(),o=e.getBoundingClientRect(),assert.equal(t.bottom+10,o.bottom,"bottom ok"),assert.equal(t.right+10,o.right,"right ok"),n()})})}),suite("RTL",function(){var t;test("with horizontalAlign=left",function(o){var n=fixture("RTLDropdownLeft");e=n.querySelector("iron-dropdown"),runAfterOpen(e,function(){t=e.getBoundingClientRect(),expect(t.top).to.be.equal(0),expect(t.right).to.be.equal(100),o()})}),test("with horizontalAlign=right",function(o){var n=fixture("RTLDropdownRight");e=n.querySelector("iron-dropdown"),runAfterOpen(e,function(){t=e.getBoundingClientRect(),expect(t.top).to.be.equal(0),expect(t.left).to.be.equal(0),o()})})}),suite("sizing target",function(){setup(function(){e=fixture("sizingTarget"),t=Polymer.dom(e).querySelector(".dropdown-content")}),test("sizingTarget is the content element by default",function(o){runAfterOpen(e,function(){expect(e.sizingTarget).to.be.equal(t),expect(t.style.maxHeight).to.be.not.empty,expect(t.style.maxWidth).to.be.not.empty,o()})}),test("sizingTarget can be set to a child element",function(t){var o=Polymer.dom(e).querySelector(".subcontent");e.sizingTarget=o,runAfterOpen(e,function(){expect(e.sizingTarget).to.be.equal(o),expect(o.style.maxHeight).to.be.not.empty,expect(o.style.maxWidth).to.be.not.empty,t()})})})});</script>
+
+
+
+</body></html>

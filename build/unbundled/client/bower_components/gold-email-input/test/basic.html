@@ -1,0 +1,43 @@
+<!DOCTYPE html><html><head>
+
+  <title>gold-email-input tests</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <script src="../../iron-test-helpers/test-helpers.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../gold-email-input.html">
+
+</head>
+<body>
+
+  <test-fixture id="basic">
+    <template>
+      <gold-email-input auto-validate="" required="" error-message="error"></gold-email-input>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="custom-regex">
+    <template>
+      <gold-email-input auto-validate="" required="" regex=".*cat" error-message="error"></gold-email-input>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="no-regex">
+    <template>
+      <gold-email-input auto-validate="" required="" regex="" error-message="error"></gold-email-input>
+    </template>
+  </test-fixture>
+
+  <script>function testEmail(t,i,e){var a=fixture(t);forceXIfStamp(a);var s=Polymer.dom(a.root).querySelector("paper-input-container");assert.ok(s,"paper-input-container exists"),a.value=i;var n=i+" should be "+(e?"valid":"invalid");assert.equal(s.invalid,!e,n)}suite("basic",function(){test("invalid input shows error",function(){var t=fixture("basic");t.value="1234",forceXIfStamp(t);var i=Polymer.dom(t.root).querySelector("paper-input-container");assert.ok(i,"paper-input-container exists"),assert.isTrue(i.invalid);var e=Polymer.dom(t.root).querySelector("paper-input-error");assert.ok(e,"paper-input-error exists"),assert.notEqual(getComputedStyle(e).display,"none","error is not display:none")}),test("valid input does not show error",function(){var t=fixture("basic");t.value="batman@gotham.org",forceXIfStamp(t);var i=Polymer.dom(t.root).querySelector("paper-input-container");assert.ok(i,"paper-input-container exists"),assert.isFalse(i.invalid);var e=Polymer.dom(t.root).querySelector("paper-input-error");assert.ok(e,"paper-input-error exists"),assert.equal(getComputedStyle(e).visibility,"hidden","error is visibility:hidden")}),test("empty required input shows error on blur",function(t){var i=fixture("basic");forceXIfStamp(i);var e=Polymer.dom(i.root).querySelector("paper-input-error");assert.ok(e,"paper-input-error exists"),assert.equal(getComputedStyle(e).visibility,"hidden","error is visibility:hidden"),i.addEventListener("blur",function(a){assert(!i.focused,"input is blurred"),assert.notEqual(getComputedStyle(e).visibility,"hidden","error is not visibility:hidden"),t()}),MockInteractions.focus(i),MockInteractions.blur(i)})}),suite("a11y",function(){test("has aria-labelledby",function(){var t=fixture("basic");assert.isTrue(t.inputElement.hasAttribute("aria-labelledby")),assert.equal(t.inputElement.getAttribute("aria-labelledby"),Polymer.dom(t.root).querySelector("label").id,"aria-labelledby points to the label")})}),suite("valid email address validation",function(){test("valid email",function(){testEmail("basic","email@domain.com",!0)}),test("email with a dot in the address field",function(){testEmail("basic","firstname.lastname@domain.com",!0)}),test("email with a subdomain",function(){testEmail("basic","email@subdomain.domain.com",!0)}),test("weird tlds",function(){testEmail("basic","testing+contact@subdomain.domain.pizza",!0)}),test("plus sign is ok",function(){testEmail("basic","firstname+lastname@domain.com",!0)}),test("domain is valid ip",function(){testEmail("basic","email@123.123.123.123",!0)}),test("digits in address",function(){testEmail("basic","1234567890@domain.com",!0)}),test("dash in domain name",function(){testEmail("basic","email@domain-one.com",!0)}),test("dash in address field",function(){testEmail("basic","firstname-lastname@domain.com",!0)}),test("underscore in address field",function(){testEmail("basic","_______@domain-one.com",!0)}),test("dot in tld",function(){testEmail("basic","email@domain.co.jp",!0)})}),suite("invalid email address validation",function(){test("missing @ and domain",function(){testEmail("basic","plainaddress",!1)}),test("missing @",function(){testEmail("basic","email.domain.com",!1)}),test("garbage",function(){testEmail("basic","#@%^%#$@#$@#.com",!1)}),test("missing username",function(){testEmail("basic","@domain.com",!1)}),test("has spaces",function(){testEmail("basic","firstname lastname@domain.com",!1)}),test("encoded html",function(){testEmail("basic","Joe Smith <email@domain.com>",!1)}),test("two @ signs",function(){testEmail("basic","email@domain@domain.com",!1)}),test("unicode in address",function(){testEmail("basic","あいうえお@domain.com",!1)}),test("text after address",function(){testEmail("basic","email@domain.com (Joe Smith)",!1)}),test("multiple dots in domain",function(){testEmail("basic","email@domain..com",!1)})}),suite("custom email address validation",function(){test("invalid email",function(){testEmail("custom-regex","batman",!1)}),test("valid email",function(){testEmail("custom-regex","cat",!0)}),test("valid complex email",function(){testEmail("custom-regex","supercat",!0)})}),suite("empty regex means no validation",function(){test("empty string is valid",function(){testEmail("no-regex","",!0)}),test("random string is valid",function(){testEmail("no-regex","batman",!0)})});</script>
+
+
+
+</body></html>

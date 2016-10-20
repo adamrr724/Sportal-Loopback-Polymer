@@ -1,0 +1,49 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="google-signin-aware.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../font-roboto/roboto.html">
+<link rel="import" href="../google-apis/google-js-api.html">
+<link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="google-icons.html">
+
+</head><body><dom-module id="google-signin">
+  <link rel="import" type="css" href="google-signin.css">
+  <template>
+    <style is="custom-style" include="iron-positioning"></style>
+
+    <google-signin-aware id="aware" app-package-name="{{appPackageName}}" client-id="{{clientId}}" cookie-policy="{{cookiePolicy}}" request-visible-actions="{{requestVisibleActions}}" hosted-domain="{{hostedDomain}}" offline="{{offline}}" offline-always-prompt="{{offlineAlwaysPrompt}}" scopes="{{scopes}}" openid-prompt="{{openidPrompt}}" signed-in="{{signedIn}}" is-authorized="{{isAuthorized}}" need-additional-auth="{{needAdditionalAuth}}" has-plus-scopes="{{hasPlusScopes}}"></google-signin-aware>
+    <template is="dom-if" if="{{raised}}">
+      <paper-material id="shadow" class="fit" elevation="2" animated=""></paper-material>
+    </template>
+    <div id="button" class$="[[_computeButtonClass(height, width, theme, signedIn, _brand, needAdditionalAuth)]]">
+
+      <paper-ripple id="ripple" class="fit"></paper-ripple>
+      
+      <div>
+        <template is="dom-if" if="{{_computeButtonIsSignIn(signedIn, needAdditionalAuth)}}">
+          <div class="button-content signIn" tabindex="0" on-click="signIn" on-keydown="_signInKeyPress">
+            <span class="icon"><iron-icon icon="[[_brandIcon]]"></iron-icon></span>
+            <span class="buttonText">{{_labelSignin}}</span>
+          </div>
+        </template>
+        <template is="dom-if" if="{{_computeButtonIsSignOut(signedIn, needAdditionalAuth) }}">
+          <div class="button-content signOut" tabindex="0" on-click="signOut" on-keydown="_signOutKeyPress">
+            <span class="icon"><iron-icon icon="[[_brandIcon]]"></iron-icon></span>
+            <span class="buttonText">{{labelSignout}}</span>
+          </div>
+        </template>
+        <template is="dom-if" if="{{_computeButtonIsSignOutAddl(signedIn, needAdditionalAuth) }}">
+          <div class="button-content signIn" tabindex="0" on-click="signIn" on-keydown="_signInKeyPress">
+            <span class="icon"><iron-icon icon="[[_brandIcon]]"></iron-icon></span>
+            <span class="buttonText">{{labelAdditional}}</span>
+          </div>
+        </template>
+      </div>
+
+    </div>
+  </template>
+</dom-module>
+<script>!function(){var e={GOOGLE:"google",PLUS:"google-plus"},n={STANDARD:"Sign in",WIDE:"Sign in with Google",WIDE_PLUS:"Sign in with Google+"},t={ICON_ONLY:"iconOnly",STANDARD:"standard",WIDE:"wide"};Polymer({is:"google-signin",properties:{appPackageName:{type:String,value:""},brand:{type:String,value:""},_brand:{type:String,computed:"_computeBrand(brand, hasPlusScopes)"},clientId:{type:String,value:""},cookiePolicy:{type:String,value:""},height:{type:String,value:"standard"},fill:{type:Boolean,value:!0},labelAdditional:{type:String,value:"Additional permissions required"},labelSignin:{type:String,value:""},_labelSignin:{type:String,computed:"_computeSigninLabel(labelSignin, width, _brand)"},labelSignout:{type:String,value:"Sign out"},raised:{type:Boolean,value:!1},requestVisibleActions:{type:String,value:""},hostedDomain:{type:String,value:""},offline:{type:Boolean,value:!1},offlineAlwaysPrompt:{type:Boolean,value:!1},scopes:{type:String,value:""},openidPrompt:{type:String,value:""},theme:{type:String,value:"light"},width:{type:String,value:"standard"},_brandIcon:{type:String,computed:"_computeIcon(_brand)"},hasPlusScopes:{type:Boolean,notify:!0,value:!1},needAdditionalAuth:{type:Boolean,notify:!0,value:!1},signedIn:{type:Boolean,notify:!0,value:!1,observer:"_observeSignedIn"},isAuthorized:{type:Boolean,notify:!0,value:!1}},_computeButtonClass:function(e,n,t,i,o,u){return"height-"+e+" width-"+n+" theme-"+t+" signedIn-"+i+" brand-"+o+"  additionalAuth-"+u},_computeIcon:function(e){return"google:"+e},_computeButtonIsSignIn:function(e,n){return!e},_computeButtonIsSignOut:function(e,n){return e&&!n},_computeButtonIsSignOutAddl:function(e,n){return e&&n},_computeBrand:function(n,t){var i;return i=n?n:t?e.PLUS:e.GOOGLE},_observeSignedIn:function(e,n){e?(this.needAdditionalAuth&&this.fire("google-signin-necessary"),this.fire("google-signin-success")):this.fire("google-signed-out")},_computeSigninLabel:function(i,o,u){if(i)return i;switch(o){case t.WIDE:return u==e.PLUS?n.WIDE_PLUS:n.WIDE;case t.STANDARD:return n.STANDARD;case t.ICON_ONLY:return"";default:return console.warn("bad width value: ",o),n.STANDARD}},signIn:function(){this.$.aware.signIn()},_signInKeyPress:function(e){13!=e.which&&13!=e.keyCode&&32!=e.which&&32!=e.keyCode||(e.preventDefault(),this.signIn())},signOut:function(){this.fire("google-signout-attempted"),this.$.aware.signOut()},_signOutKeyPress:function(e){13!=e.which&&13!=e.keyCode&&32!=e.which&&32!=e.keyCode||(e.preventDefault(),this.signOut())}})}();</script>
+</body></html>

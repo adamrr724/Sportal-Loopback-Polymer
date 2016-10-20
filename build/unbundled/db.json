@@ -1,0 +1,10 @@
+{
+  "ids": {
+    "user": 2
+  },
+  "models": {
+    "user": {
+      "1": "{\"completed\":false,\"email\":\"foo@bar.com\",\"password\":\"bar\",\"id\":\"1\"}"
+    }
+  }
+}

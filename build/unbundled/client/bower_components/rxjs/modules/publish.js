@@ -1,0 +1,1 @@
+for(var fs=require("fs"),execSync=require("child_process").execSync,files=fs.readdirSync(process.cwd()),i=0;i<files.length;i++){var file=files[i],stat=fs.statSync(file);stat.isDirectory()&&(console.log("publishing %s",file),execSync("npm publish "+file),console.log("published %s",file))}

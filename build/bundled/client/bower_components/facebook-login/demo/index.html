@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+    <title>facebook-login Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../dist/facebook-login.html">
+    <link rel="import" href="../../polymer/polymer.html">
+    <style>facebook-login{margin:20px 0;}</style>
+  </head>
+  <body unresolved="">
+
+  <p>An example of using <code>&lt;facebook-login&gt;</code>:</p>
+
+  <template is="dom-bind">
+
+    <facebook-login appid="373038132822841" button-size="large" friends="" logout-link="" graph-url="me?fields=first_name,last_name,email,picture.type(normal),birthday" scope="public_profile email user_birthday" graph-response="{{resp}}" auto-api-call=""></facebook-login>
+
+    <template is="dom-if" if="{{!resp.id}}">
+      <div>Sign into your Facebook account to see your info!</div>
+    </template>
+
+    <div style="margin-top: 20px">
+      <div>[[resp.first_name]] [[resp.last_name]]</div>
+      <div>[[resp.email]]</div>
+      <div>[[resp.birthday]]</div>
+    </div>
+
+  </template>
+
+
+
+</body></html>

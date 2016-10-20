@@ -1,0 +1,1 @@
+!function(){var e={delimiters:{thousands:" ",decimal:","},abbreviations:{thousand:"k",million:"m",billion:"b",trillion:"t"},ordinal:function(e){return"."},currency:{symbol:"€"}};"undefined"!=typeof module&&module.exports&&(module.exports=e),"undefined"!=typeof window&&this.numeral&&this.numeral.language&&this.numeral.language("de",e)}();

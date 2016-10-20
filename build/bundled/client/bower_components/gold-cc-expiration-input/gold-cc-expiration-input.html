@@ -1,0 +1,34 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+
+<link rel="import" href="date-input.html">
+
+
+
+</head><body><dom-module id="gold-cc-expiration-input">
+
+  <template>
+    <style>:host{display:block;}</style>
+
+    <paper-input-container id="container" no-label-float="[[noLabelFloat]]" always-float-label="[[alwaysFloatLabel]]" attr-for-value="date" disabled$="[[disabled]]" invalid="[[invalid]]">
+
+      <label hidden$="[[!label]]">[[label]]</label>
+
+      <date-input class="paper-input-input" id="input" aria-label-prefix="[[_ariaLabelledBy]]" required$="[[required]]" month="[[_computeMonth(value)]]" year="[[_computeYear(value)]]" autocomplete$="[[autocomplete]]" disabled$="[[disabled]]" invalid="{{invalid}}" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]">
+      </date-input>
+
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error>[[errorMessage]]</paper-input-error>
+      </template>
+
+    </paper-input-container>
+  </template>
+
+  <script>!function(){Polymer({is:"gold-cc-expiration-input",hostAttributes:{tabindex:-1},behaviors:[Polymer.PaperInputBehavior,Polymer.IronFormElementBehavior],properties:{label:{type:String,value:"Expiration Date"},value:{type:String,value:"",observer:"_onValueChanged"}},listeners:{dateChanged:"_dateChanged"},observers:["_onFocusedChanged(focused)"],ready:function(){this.value&&this._handleAutoValidate()},_onValueChanged:function(e,t){void 0!=t&&this._handleAutoValidate()},_dateChanged:function(e){e.detail.month&&e.detail.year&&(this.value=e.detail.month+"/"+e.detail.year)},_computeMonth:function(e){return e.split("/")[0]},_computeYear:function(e){return e.split("/")[1]},validate:function(){return this.$.input.validate()},_onFocusedChanged:function(e){e||this._handleAutoValidate()}})}();</script>
+
+</dom-module>
+</body></html>

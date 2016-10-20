@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head>
+  <meta charset="UTF-8">
+  <title>iron-dropdown-scroll-manager tests</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../iron-dropdown-scroll-manager.html">
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+  <link rel="import" href="x-scrollable-element.html">
+</head>
+
+<body>
+
+  <test-fixture id="DOMSubtree">
+    <template>
+      <x-scrollable-element id="Parent"></x-scrollable-element>
+    </template>
+  </test-fixture>
+  <script>suite("IronDropdownScrollManager",function(){var e,o,t,n,l,c;setup(function(){e=fixture("DOMSubtree"),o=e.$$("#ChildOne"),t=e.$$("#ChildTwo"),n=e.$$("#GrandchildOne"),l=e.$$("#GrandchildTwo"),c=document.body}),suite("constraining scroll in the DOM",function(){setup(function(){Polymer.IronDropdownScrollManager.pushScrollLock(o)}),teardown(function(){Polymer.IronDropdownScrollManager.removeScrollLock(o)}),test("recognizes sibling as locked",function(){expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(t)).to.be.equal(!0)}),test("recognizes neice as locked",function(){expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(l)).to.be.equal(!0)}),test("recognizes parent as locked",function(){expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(e)).to.be.equal(!0)}),test("recognizes ancestor as locked",function(){expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(c)).to.be.equal(!0)}),test("recognizes locking child as unlocked",function(){expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(o)).to.be.equal(!1)}),test("recognizes descendant of locking child as unlocked",function(){expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(n)).to.be.equal(!1)}),test("unlocks locked elements when there are no locking elements",function(){Polymer.IronDropdownScrollManager.removeScrollLock(o),expect(Polymer.IronDropdownScrollManager.elementIsScrollLocked(e)).to.be.equal(!1)}),suite("various scroll events",function(){var e,l;setup(function(){e=["wheel","mousewheel","DOMMouseScroll","touchmove"],l=e.map(function(e){var o=new CustomEvent(e,{bubbles:!0,cancelable:!0});return o.deltaX=0,o.deltaY=10,o})}),test("prevents wheel events from locked elements",function(){l.forEach(function(e){t.dispatchEvent(e),expect(e.defaultPrevented).to.be.eql(!0)})}),test("allows wheel events when there are no locking elements",function(){Polymer.IronDropdownScrollManager.removeScrollLock(o),l.forEach(function(e){t.dispatchEvent(e),expect(e.defaultPrevented).to.be.eql(!1)})}),test("allows wheel events from unlocked elements",function(){l.forEach(function(e){o.dispatchEvent(e),expect(e.defaultPrevented).to.be.eql(!1)})}),test("touchstart is prevented if dispatched by an element outside the locking element",function(){var e=new CustomEvent("touchstart",{bubbles:!0,cancelable:!0});t.dispatchEvent(e),expect(e.defaultPrevented).to.be.eql(!0)}),test("touchstart is not prevented if dispatched by an element inside the locking element",function(){var e=new CustomEvent("touchstart",{bubbles:!0,cancelable:!0});n.dispatchEvent(e),expect(e.defaultPrevented).to.be.eql(!1)}),test("arrow keyboard events not prevented by manager",function(){var e=MockInteractions.keyboardEventFor("keydown",37),o=MockInteractions.keyboardEventFor("keydown",38),t=MockInteractions.keyboardEventFor("keydown",39),l=MockInteractions.keyboardEventFor("keydown",40);n.dispatchEvent(e),n.dispatchEvent(o),n.dispatchEvent(t),n.dispatchEvent(l),expect(e.defaultPrevented).to.be.eql(!1),expect(o.defaultPrevented).to.be.eql(!1),expect(t.defaultPrevented).to.be.eql(!1),expect(l.defaultPrevented).to.be.eql(!1)})})})});</script>
+
+
+
+</body></html>

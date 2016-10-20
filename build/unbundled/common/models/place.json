@@ -1,0 +1,54 @@
+{
+  "name": "Place",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "sportaldb": {
+      "schema": "LOOPBACK",
+      "table": "Place"
+    }
+  },
+  "properties": {
+    "facilityType": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+  },
+    "notes": {
+      "type": "string",
+      "required": false
+    },
+    "image": {
+      "type": "string",
+      "required": false
+    },
+    "addressGeo": {
+      "type": "geopoint",
+      "required": true
+    },
+    "addressName": {
+      "type": "string",
+      "required": true
+    },
+    "organization": {
+      "type": "string",
+      "required": false
+    },
+    "website": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "users": {
+      "type": "hasAndBelongsToMany",
+      "model": "User"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,30 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-styles/default-theme.html">
+<link rel="import" href="../paper-styles/typography.html">
+
+<link rel="import" href="date-validator.html">
+
+</head><body><dom-module id="date-input">
+  <template>
+    <style>span{@apply (--paper-input-container-font);opacity:0.33;text-align:center;}input[is="iron-input"]{position:relative;outline:none;box-shadow:none;padding:0;width:100%;background:transparent;border:none;color:var(--paper-input-container-input-color, --primary-text-color);text-align:center;@apply (--layout-flex);@apply (--paper-font-subhead);@apply (--paper-input-container-input);}.container{@apply (--layout-horizontal);}</style>
+
+    <date-validator id="validator"></date-validator>
+
+    <span aria-hidden="" id="monthLabel" hidden="">Month</span>
+    <span aria-hidden="" id="yearLabel" hidden="">Year</span>
+
+    <div class="container">
+      <input is="iron-input" id="expirationMonth" aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'monthLabel')]]" required$="[[required]]" maxlength="2" bind-value="{{month}}" placeholder="MM" allowed-pattern="[0-9]" prevent-invalid-input="" autocomplete="cc-exp-month" type="tel" disabled$="[[disabled]]" invalid="{{invalid}}" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" readonly$="[[readonly]]">
+      <span>/</span>
+      <input is="iron-input" id="expirationYear" aria-labelledby$="[[_computeAriaLabel(ariaLabelPrefix,'yearLabel')]]" required$="[[required]]" maxlength="2" bind-value="{{year}}" placeholder="YY" allowed-pattern="[0-9]" prevent-invalid-input="" autocomplete="cc-exp-year" type="tel" disabled$="[[disabled]]" invalid="{{invalid}}" inputmode$="[[inputmode]]" readonly$="[[readonly]]">
+    </div>
+  </template>
+
+</dom-module>
+
+<script>Polymer({is:"date-input",behaviors:[Polymer.IronValidatableBehavior],properties:{required:{type:Boolean,value:!1},month:{type:String},year:{type:String},date:{notify:!0,type:Object},validator:{type:String,value:"date-validator"},ariaLabelPrefix:{type:String},disabled:{type:Boolean,value:!1},autofocus:{type:Boolean},inputmode:{type:String},readonly:{type:Boolean,value:!1}},observers:["_computeDate(month,year)"],_computeDate:function(e,t){this.date={month:e,year:t},this.fire("dateChanged",this.date),2===e.length&&this.$.expirationYear.focus()},validate:function(){return this.required||""!=this.month||""!=this.year?(this.invalid=!this.$.validator.validate(this.date),this.fire("iron-input-validate"),!this.invalid):!0},_computeAriaLabel:function(e,t){return e+" "+t}});</script>
+</body></html>

@@ -1,0 +1,25 @@
+{
+  "name": "userEvent",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "sportaldb": {
+      "schema": "LOOPBACK",
+      "table": "userEvent"
+    }
+  },
+  "properties": {
+    "userId": {
+      "type": "number",
+      "required": true
+    },
+    "eventId": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,1 @@
+module.exports=function(o){var e=o.get("restApiRoot");o.use(e,o.loopback.rest())};

@@ -1,0 +1,1 @@
+self.CavalryLogger&&CavalryLogger.start_js(["UhtKZ"]),__d("PasswordReauthBarrierDialog",["Arbiter"],function(r,a,i,e,o,s){a.__markCompiled&&a.__markCompiled();var l={subscribe:function(r){var i=!1;r.subscribe(["confirm","hide"],function(r){"confirm"==r?i=!0:i||a("Arbiter").inform("PasswordReauthDialogCancelClick")})}};o.exports=l},null);

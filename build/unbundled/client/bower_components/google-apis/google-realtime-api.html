@@ -1,0 +1,6 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-jsonp-library/iron-jsonp-library.html">
+
+
+<script>Polymer({is:"google-realtime-api",behaviors:[Polymer.IronJsonpLibraryBehavior],properties:{libraryUrl:{type:String,value:"https://apis.google.com/js/drive-realtime.js?onload=%%callback%%"},notifyEvent:{type:String,value:"api-load"}},get api(){return gapi.drive.realtime}});</script>
+</head><body></body></html>

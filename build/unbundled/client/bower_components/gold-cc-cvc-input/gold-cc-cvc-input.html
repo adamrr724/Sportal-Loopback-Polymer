@@ -1,0 +1,36 @@
+<html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+
+
+
+</head><body><dom-module id="gold-cc-cvc-input">
+  <template>
+    <style>:host{display:block;}iron-icon{margin-left:10px;}iron-icon[hidden]{display:none !important;}.container{@apply (--layout-horizontal);}input{@apply (--layout-flex);}</style>
+
+    <paper-input-container id="container" disabled$="[[disabled]]" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" invalid="[[invalid]]">
+
+      <label hidden$="[[!label]]">[[label]]</label>
+
+      <div class="container">
+        <input is="iron-input" id="input" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" bind-value="{{value}}" prevent-invalid-input="" allowed-pattern="[0-9]" required$="[[required]]" type="tel" maxlength$="[[_requiredLength]]" autocomplete="cc-csc" name$="[[name]]" disabled$="[[disabled]]" invalid="{{invalid}}" autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]" size$="[[size]]">
+
+        <iron-icon id="icon" src="cvc_hint.png" hidden$="[[_amex]]" alt="cvc"></iron-icon>
+        <iron-icon id="amexIcon" hidden$="[[!_amex]]" src="cvc_hint_amex.png" alt="amex cvc"></iron-icon>
+      </div>
+
+      <template is="dom-if" if="[[errorMessage]]">
+        <paper-input-error>[[errorMessage]]</paper-input-error>
+      </template>
+
+    </paper-input-container>
+  </template>
+
+  <script>!function(){Polymer({is:"gold-cc-cvc-input",properties:{label:{type:String,value:"CVC"},cardType:{type:String,value:""},_requiredLength:{type:Number,computed:"_computeRequiredLength(cardType)"},_amex:{type:Boolean,computed:"_computeIsAmex(cardType)"},value:{type:String,observer:"_onValueChanged"}},behaviors:[Polymer.PaperInputBehavior,Polymer.IronFormElementBehavior],observers:["_onFocusedChanged(focused)"],ready:function(){this.value&&this._handleAutoValidate()},_onValueChanged:function(e,t){void 0!=t&&this._handleAutoValidate()},_computeRequiredLength:function(e){return this._computeIsAmex(e)?4:3},_computeIsAmex:function(e){return"amex"==e.toLowerCase()},validate:function(){var e=this.$.input.validate()&&this.value.length==this._requiredLength||!this.required&&""==this.value;return this.$.container.invalid=!e,this.$.container.updateAddons({inputElement:this.$.input,value:this.value,invalid:!e}),e},_onFocusedChanged:function(e){e||this._handleAutoValidate()}})}();</script>
+</dom-module>
+</body></html>

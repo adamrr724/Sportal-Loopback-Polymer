@@ -1,0 +1,1 @@
+var path=require("path"),ret={suites:["client/test"],webserver:{pathMappings:[]}},mapping={},rootPath=__dirname.split(path.sep).slice(-1)[0];mapping["/components/"+rootPath+"/client/bower_components"]="bower_components",ret.webserver.pathMappings.push(mapping),module.exports=ret;
