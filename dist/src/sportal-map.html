@@ -1,0 +1,290 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"><link rel="import" href="../bower_components/google-map/google-map.html"><link rel="import" href="../bower_components/google-map/google-map-search.html"><link rel="import" href="../bower_components/google-map/google-map-marker.html"><link rel="import" href="../bower_components/geo-location/geo-location.html"><link rel="import" href="../src/elements.html"><dom-module id="sportal-map"><template><style>
+            :host {
+                display: block;
+                /*padding: 10px;*/
+            }
+
+            google-map {
+               height: 90vh;
+               width: 100%;
+
+            }
+
+            paper-button {
+                background-color: var(--sportal-blue);
+                margin: 10px;
+            }
+
+            #map-container {
+                display: flex;
+                flex-direction: row;
+            }
+
+            #search-bar {
+                display: flex;
+                justify-content: center;
+                height: 10%;
+            }
+
+            #filter-container {
+                flex: 1 0 0;
+                z-index: 1;
+                padding-left: 10px;
+                height: 100vh;
+            }
+
+            #map-area {
+                flex: 5 0 0;
+            }
+
+            paper-listbox {
+                width: 125px;
+                padding:0;
+            }
+
+            paper-item {
+                border-bottom: .2px solid lightgrey;
+            }
+
+            .filters {
+                width: 90%;
+            }
+
+            .event-type {
+                font-size: 16px;
+                font-weight: bold;
+                float: right;
+            }
+
+            .info-modal {
+                margin-right: auto;
+                margin-left:auto;
+            }
+
+
+        </style><iron-ajax id="eventGet" auto="" url="{{requestUrl}}" handle-as="json" on-error="_onError" on-response="_onResponse" content-type="application/json" method="GET" withcredentials=""></iron-ajax><geo-location latitude="{{latitude}}" longitude="{{longitude}}"></geo-location><template is="dom-if" if="{{ajaxResponse}}"><paper-card id="map-container"><div id="filter-container"><div class="filters"><h4>Filters:</h4><paper-dropdown-menu label="Event Type"><paper-listbox attr-for-selected="name" class="dropdown-content" selected="{{eventType}}"><paper-item name="Pickup">Pickup Game</paper-item><paper-item name="League">League</paper-item><paper-item name="Run or Race">Run or Race</paper-item></paper-listbox></paper-dropdown-menu><paper-dropdown-menu label="Sport"><paper-listbox attr-for-selected="value" class="dropdown-content" fallback-selection="" selected="{{sport}}"><paper-item value="Baseball">Baseball</paper-item><paper-item value="Basketball">Basketball</paper-item><paper-item value="Field Hockey">Field Hockey</paper-item><paper-item value="Football">Football</paper-item><paper-item value="Futsal">Futsal</paper-item><paper-item value="Ice Hockey">Ice Hockey</paper-item><paper-item value="Kickball">Kickball</paper-item><paper-item value="Lacrosse">Lacrosse</paper-item><paper-item value="Soccer">Soccer</paper-item><paper-item value="Softball">Softball</paper-item><paper-item value="Ultimate Frisbee">Ultimate Frisbee</paper-item><paper-item value="Tennis">Tennis</paper-item><paper-item value="Volleyball">Volleyball</paper-item><paper-item value="Road Bike Race">Road Bike Race</paper-item><paper-item value="Mountain Bike Race">Mountain Bike Race</paper-item><paper-item value="Triathlon">Triathlon</paper-item><paper-item value="Biathlon">Biathlon</paper-item><paper-item value="Marathon">Marathon</paper-item><paper-item value="Charity Run">Charity Run</paper-item><paper-item value="Trail Run">Trail Run</paper-item><paper-item value="Obstacle Run">Obstacle Run</paper-item><paper-item value="other">Other</paper-item></paper-listbox></paper-dropdown-menu><paper-dropdown-menu label="Skill Level"><paper-listbox attr-for-selected="value" class="dropdown-content" selected="{{skillLevel}}"><paper-item value="All Skill Levels">All Skill Levels</paper-item><paper-item value="Rookies">Rookies</paper-item><paper-item value="Bench Warmers (Intermediate)">Bench Warmers (Intermediate)</paper-item><paper-item value="High School Heroes (Advanced)">High School Heroes (Advanced)</paper-item></paper-listbox></paper-dropdown-menu><paper-dropdown-menu required="" label="Age"><paper-listbox attr-for-selected="value" class="dropdown-content" selected="{{age}}"><paper-item value="All Ages">All Ages</paper-item><paper-item value="Glory Days (Under 18)">Glory Days (Under 18)</paper-item><paper-item value="Prime of Your Life (18-30)">Prime of Your Life (18-30)</paper-item><paper-item value="Seasoned Athletes (30+)">Seasoned Athletes (30+)</paper-item></paper-listbox></paper-dropdown-menu></div></div><div id="map-area"><paper-card elevation="0" id="search-bar"><iron-form is="iron-form" id="form"><sportal-gmap-autocomplete location="{{locationData}}"></sportal-gmap-autocomplete><paper-button raised="" on-click="_selectedFilter">Submit</paper-button></iron-form></paper-card><google-map id="pageMap" map="{{map}}" api-key="AIzaSyD0Oog2e-DQ167WD0Az9gfwaXxYvgrjdNg" single-info-window="true" zoom="10" latitude="[[latitude]]" longitude="[[longitude]]"><template is="dom-repeat" items="[[ajaxResponse]]"><google-map-marker map="{{map}}" latitude="[[item.addressGeo.lat]]" longitude="[[item.addressGeo.lng]]"><div class="marker-container"><paper-card class="marker-card" elevation="1"><h3 style="text-align:center;color:#2d6876;" class="marker-headers">[[item.name]]</h3><p style="text-align:center;" class="event-type"><strong>[[item.eventType]]</strong></p><hr><p class="marker-info">Sport: [[item.sport]]</p><p class="marker-info">Skill Level: [[item.skillLevel]]</p><p class="marker-info">Age: [[item.age]]</p><p class="marker-info">Address: [[item.addressName]]</p><paper-button style="margin:3px; padding:8px; float: right;" raised="" on-click="_infoModal">More Info</paper-button></paper-card></div></google-map-marker><sportal-info-modal signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal></template></google-map></div></paper-card></template><template is="dom-if" if="{{!ajaxResponse}}"><img class="load-image" src="../images/sportal-thumbnail.png"></template></template><script>
+
+        Polymer({
+
+            is: 'sportal-map',
+
+            behaviors: [
+                Polymer.IronMenuBehavior,
+                Polymer.IronFormElementBehavior,
+                Polymer.IronA11yKeysBehavior,
+                Polymer.PaperInputBehavior,
+                Polymer.IronSelectableBehavior,
+                Polymer.IronControlState
+            ],
+
+            listeners: {
+                "iron-select" : "_selectedFilter"
+            },
+
+
+            properties: {
+
+                route: Object,
+
+                ajaxResponse: {
+                    type: Object
+                },
+                latitude: {
+                    value: "45.512794"
+                },
+                longitude: {
+                    value: "-122.679565"
+                },
+                requestUrl: {
+                    type: String,
+                    value: "//localhost:3000/api/Events?filter[where][date][gt]=" + moment()
+                },
+                eventType: {
+                    value: ""
+                },
+                sport: {
+                    value: ""
+                },
+                skillLevel: {
+                    value: ""
+                },
+                age: {
+                    value: ""
+                },
+                currentLocation: {
+                    value: ""
+                },
+                locationSelection: {
+                    value: ""
+                },
+                searchResults: {
+                    type: Array
+                },
+                locationInput: {
+                    type: String,
+                    value: ""
+                },
+                locationData: {
+                    type: Object
+                },
+                infoModalOpened: {
+                    type:Boolean,
+                    notify: true,
+                    value: false
+                },
+                eventInfo: {
+                    type: Object
+                },
+                signedIn: {
+                    type: Object,
+                    notify: true
+                }
+
+            },
+
+            ready: function() {
+
+            //    this.currentLocation = new GeoPoint({lat: this.latitude, lng: this.longitude});
+            },
+//
+            attached: function () {
+
+            },
+
+            _onResponse: function (e) {
+                this.ajaxResponse = e.detail.response;
+
+                console.log(this.ajaxResponse);
+
+//                map.addEventListener('dom-change', function() {
+//                    console.log("dom has changed");
+//                });
+            },
+
+            _inputChange: function() {
+//                console.log(this.location);
+            },
+
+            _submitForm: function() {
+//                console.log(this.locationData);
+            },
+
+            _infoModal: function(e) {
+//                console.log(e.model.__data__.item);
+                this.eventInfo = e.model.__data__.item;
+
+                this.infoModalOpened = true;
+//                console.log(this.infoModalOpened);
+            },
+
+
+            _selectedFilter: function(e) {
+
+                if(e.detail != 1) {
+                    if (e.detail.item.localName === "google-map-marker") {
+                        return;
+                    } else {
+                        this._queryGet();
+                    }
+                } else {
+                    this._queryGet();
+                }
+            },
+
+            _queryGet: function() {
+                var baseUrl = "";
+                var withFilter = "";
+
+
+
+// ONLY REASON THAT FILTER QUERY IS WORKING AT THE MOMENT IS BECAUSE OF DOUBLE ??S IN THE URL-> NO LOCATION SEARCH HAPPENING YET. LOOK INTO THIS
+                var currentLocationQuery = "?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500";
+
+                if (this.locationData) {
+                    this.latitude = this.locationData.geometry.location.lat();
+                    this.longitude = this.locationData.geometry.location.lng();
+                    // this.locationSelection = this.latitude + "," + this.longitude;
+
+                    baseUrl = "//localhost:3000/api/Events??filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=500&filter[where][date][gt]=" + moment();
+                    withFilter = baseUrl + "&";
+
+                } else {
+                    baseUrl = "//localhost:3000/api/Events?" + currentLocationQuery + "&filter[where][date][gt]=" + moment();;
+                    withFilter = baseUrl + "&";
+                }
+
+
+
+                var count = "";
+
+                var eventTypeFilter = "filter[where][eventType]=" + this.eventType;
+                var sportFilter = "filter[where][sport]=" + this.sport;
+                var skillLevelFilter = "filter[where][skillLevel]=" + this.skillLevel;
+                var ageFilter = "filter[where][age]=" + this.age;
+                // var locationSelectFilter = "filter[where][addressGeo][near]=" + this.locationSelection + "&filter[limit]=50";
+
+
+                if (this.eventType) {
+                    withFilter += eventTypeFilter;
+                    count += 1;
+                    this.selectionMade = true;
+                }
+                if (this.sport) {
+                    if (count > 0) {
+                        withFilter += "&";
+                    }
+                    withFilter += sportFilter;
+                    count += 1;
+                    this.selectionMade = true;
+                }
+                if (this.skillLevel) {
+                    if (count > 0) {
+                        withFilter += "&";
+                    }
+                    withFilter += skillLevelFilter;
+                    count += 1;
+                    this.selectionMade = true;
+                }
+                if (this.age) {
+                    if (count > 0) {
+                        withFilter += "&";
+                    }
+                    withFilter += ageFilter;
+                    count += 1;
+                    this.selectionMade = true;
+                }
+                // if (this.locationSelection) {
+                //     if (count > 0) {
+                //         withFilter += "&";
+                //     }
+                //     withFilter += locationSelectFilter;
+                //     this.selectionMade = true;
+                // }
+
+                if (this.eventType || this.sport || this.skillLevel || this.age) {
+                    this.requestUrl = withFilter;
+                } else {
+                    this.requestUrl = baseUrl;
+                }
+
+                // this.requestUrl = "//localhost:3000/api/Events?filter[where][addressGeo][near]=" + this.latitude + "," + this.longitude + "&filter[limit]=50"
+
+                console.log(this.requestUrl);
+                this.async(function() {
+                  this.$.eventGet.generateRequest();
+              }, 2000);
+            },
+//
+//            _lastResponse: function (data) {
+//                this.ajax = data.detail.response;
+//
+//                console.log(data);
+//
+//            },
+//
+           _onError: function (e) {
+           }
+        });
+
+
+    </script></dom-module>

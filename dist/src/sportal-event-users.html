@@ -1,0 +1,114 @@
+<link rel="import" href="../bower_components/polymer/polymer.html"><dom-module id="sportal-event-users"><template><style>
+            :host {
+                display: flex;
+            }
+
+            .profile-image {
+              border-radius: 50px;
+              height: 50px;
+              width:50px;
+              box-shadow: 1px 0 8px 0 grey;
+              margin: 4px;
+            }
+
+            .count {
+                font-size: 25px;
+                color: var(--sportal-green);
+                margin:5px;
+            }
+
+            .user-text {
+                font-size: 10px;
+                margin: 0px;
+            }
+
+            .header-users {
+                font-size: 16px;
+            }
+
+            .user-container {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                width: 80px;
+                align-items: center;
+            }
+
+            .event-users-container {
+                display: block;
+            }
+
+            .profiles-container {
+                display: flex;
+                flex-direction: row;
+            }
+
+        </style><template is="dom-if" if="[[ajaxResponse]]"><div class="event-users-container"><p class="header-users">How many atheletes signed up for this event? <strong class="count">[[count]]</strong></p><div class="profiles-container"><template is="dom-repeat" items="[[ajaxResponse]]"><div class="user-container"><img class="profile-image" src="[[item.image]]"><p class="user-text">[[item.username]]</p></div></template></div></div></template><template is="dom-if" if="[[!ajaxResponse]]"><p class="header-users">No one has joined this event yet! Be the first one to join!</p></template><iron-ajax id="eventUserGet" auto="" url="{{getEventUsersById}}" handle-as="json" on-error="_onError" on-response="_onResponse" content-type="application/json" debounce-duration="300" method="GET" withcredentials=""></iron-ajax></template><script>
+
+        Polymer({
+
+            is: 'sportal-event-users',
+
+//        behaviors: [
+//            Polymer.IronOverlayBehavior
+//        ],
+//
+//        listeners: {
+//            "iron-overlay-opened" : "_windowOpen"
+//        },
+
+      properties: {
+
+          getEventUsersById: {
+              type: String,
+              computed: 'computeId(eventId)'
+          },
+
+          following: {
+              type: Boolean,
+              observer: '_followingChange'
+          },
+
+          ajaxResponse: {
+              type: Object
+          },
+          eventId: {
+              value:""
+          },
+
+         count: {
+              type: String,
+              computed: 'computeCount(ajaxResponse)'
+          },
+
+
+      },
+
+
+        computeId:function(eventId) {
+            return "http://localhost:3000/api/Events/" + eventId + "/users";
+        },
+
+        computeCount:function(ajaxResponse) {
+            return ajaxResponse.length;
+        },
+
+        _followingChange: function() {
+            this.async(function() {
+              this.$.eventUserGet.generateRequest();
+          }, 2000);
+        },
+
+
+      _onResponse: function (e) {
+          this.ajaxResponse = e.detail.__data__.response;
+
+      },
+
+        _onError: function (e) {
+
+        }
+
+        });
+
+    </script></dom-module>
