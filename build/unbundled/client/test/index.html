@@ -1,11 +1,18 @@
 <!DOCTYPE html><html><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
-  <title>Tests</title>
-  <script src="../bower_components/web-component-tester/browser.js"></script>
-</head>
-<body>
-  <script>WCT.loadSuites(["my-view1.html?dom=shady","my-view1.html?dom=shadow"]);</script>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+    <title>Elements Test Runner</title>
+    <meta charset="UTF-8">
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+  </head>
+
+  <body>
+
+    <script>WCT.loadSuites(["my-greeting-basic.html","my-greeting-basic.html?dom=shadow","my-list-basic.html","my-list-basic.html?dom=shadow"]);</script>
+
+
+  
 
 
 </body></html>

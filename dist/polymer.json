@@ -1,14 +1,14 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/sportal-polymer.html",
+  "shell": "elements/sportal-polymer.html",
   "fragments": [
-    "src/sportal-home.html",
-    "src/sportal-find.html",
-    "src/sportal-create.html",
-    "src/sportal-events.html",
-    "src/sportal-about.html",
-    "src/sportal-map.html",
-    "src/sportal-places.html",
+    "elements/sportal-home.html",
+    "elements/sportal-find.html",
+    "elements/sportal-create.html",
+    "elements/sportal-events.html",
+    "elements/sportal-about.html",
+    "elements/sportal-map.html",
+    "elements/sportal-places.html",
 
   ]
 }

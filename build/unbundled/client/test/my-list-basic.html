@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
+  <title>my-list-basic</title>
+
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="../bower_components/web-component-tester/browser.js"></script>
+
+  
+  <link rel="import" href="../elements/my-list/my-list.html">
+
+</head>
+<body>
+
+  <test-fixture id="basic">
+    <template>
+       <my-list></my-list>
+    </template>
+  </test-fixture>
+
+  <script>suite("my-list tests",function(){var e,t;setup(function(){e=fixture("basic")}),test("Item lengths should be equalled",function(n){e.items=["Responsive Web App boilerplate","Iron Elements and Paper Elements","End-to-end Build Tooling (including Vulcanize)","Unit testing with Web Component Tester","Routing with Page.js","Offline support with the Platinum Service Worker Elements"],flush(function(){t=Polymer.dom(e.root).querySelectorAll("li"),assert.equal(e.items.length,t.length),n()})})});</script>
+
+
+
+</body></html>

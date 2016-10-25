@@ -1,14 +1,15 @@
 {
   "private": true,
   "dependencies": {
-      "loopback": "^2.0.0",
-      "loopback-boot": "^2.0.0",
-      "loopback-datasource-juggler": "^2.0.0",
-      "loopback-explorer": "^1.2.4",
-      "compression": "^1.0.9",
-      "proquint": "0.0.1",
-      "cors": "^2.5.2",
-      "errorhandler": "^1.1.1"
+    "compression": "^1.0.9",
+    "cors": "^2.5.2",
+    "errorhandler": "^1.1.1",
+    "loopback": "^2.0.0",
+    "loopback-boot": "^2.0.0",
+    "loopback-connector-mysql": "^2.4.0",
+    "loopback-datasource-juggler": "^2.0.0",
+    "loopback-explorer": "^1.2.4",
+    "proquint": "0.0.1"
   },
   "devDependencies": {
     "loopback-testing": "^1.0.4",

@@ -202,7 +202,7 @@ module.exports = function(registry) {
       this._runWhenAttachedToApp(function(app) {
         var remotes = app.remotes();
         remotes.before(className + '.' + name, function(ctx, next) {
-          fn(ctx, ctx.result, next);
+          return fn(ctx, ctx.result, next);
         });
       });
     };
@@ -213,7 +213,7 @@ module.exports = function(registry) {
       this._runWhenAttachedToApp(function(app) {
         var remotes = app.remotes();
         remotes.after(className + '.' + name, function(ctx, next) {
-          fn(ctx, ctx.result, next);
+          return fn(ctx, ctx.result, next);
         });
       });
     };
@@ -441,7 +441,20 @@ module.exports = function(registry) {
    */
 
   Model.disableRemoteMethod = function(name, isStatic) {
-    this.sharedClass.disableMethod(name, isStatic || false);
+    var key = this.sharedClass.getKeyFromMethodNameAndTarget(name, isStatic);
+    this.sharedClass.disableMethodByName(key);
+    this.emit('remoteMethodDisabled', this.sharedClass, key);
+  };
+
+  /**
+   * Disable remote invocation for the method with the given name.
+   *
+   * @param {String} name The name of the method (include "prototype." if the method is defined on the prototype).
+   *
+   */
+
+  Model.disableRemoteMethodByName = function(name) {
+    this.sharedClass.disableMethodByName(name);
     this.emit('remoteMethodDisabled', this.sharedClass, name);
   };
 
