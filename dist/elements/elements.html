@@ -47448,12 +47448,16 @@ event and do your own custom submission:
             .event-type {
                 font-size: 16px;
                 font-weight: bold;
-                float: right;
+                /*float: right;*/
             }
 
             .info-modal {
                 margin-right: auto;
                 margin-left:auto;
+            }
+
+            .info-header {
+                text-align: center;
             }
 
 
@@ -47542,8 +47546,12 @@ event and do your own custom submission:
                                 <google-map-marker map="{{map}}" latitude="[[item.addressGeo.lat]]" longitude="[[item.addressGeo.lng]]">
                                     <div class="marker-container">
                                         <paper-card class="marker-card" elevation="1">
+                                            <div class="info-header">
+
                                             <h3 style="text-align:center;color:#2d6876;" class="marker-headers">[[item.name]]</h3>
                                             <p style="text-align:center;" class="event-type"><strong>[[item.eventType]]</strong></p>
+
+                                            </div>
                                                 <hr>
                                             <p class="marker-info">Sport: [[item.sport]]</p>
                                             <p class="marker-info">Skill Level: [[item.skillLevel]]</p>
@@ -47858,7 +47866,7 @@ event and do your own custom submission:
             .event-type {
                 font-size: 16px;
                 font-weight: bold;
-                float: right;
+                /*float: right;*/
             }
 
             .info-modal {
