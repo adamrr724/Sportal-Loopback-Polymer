@@ -6,9 +6,9 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Sportal">
-  <title>Sportal</title>
+  <title>Site</title>
 
-  <link rel="shortcut icon" sizes="32x32" href="/images/sportal-thumbnail.png">
+  <link rel="shortcut icon" sizes="32x32" href="/images/site-thumbnail.png">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
   <!-- Place favicon.ico in the `app/` directory -->
@@ -74,9 +74,9 @@
 
   <template is="dom-bind" id="app">
 
-    <h1>HELLO</h1>
+    <!-- <h1>HELLO</H2> -->
 
-    <sportal-polymer></sportal-polymer>
+    <application-polymer></application-polymer>
 
   </template>
 
