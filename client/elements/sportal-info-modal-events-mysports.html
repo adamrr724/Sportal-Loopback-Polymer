@@ -114,6 +114,10 @@
                 </paper-dialog-scrollable>
                 <div class="buttons">
 
+                    <template is="dom-if" if="{{myEvent}}">
+                        <paper-button raised class="text-close" on-Click="_delete" autofocus><strong>Delete</strong></paper-button>
+                    </template>
+
                     <template is="dom-if" if="{{signedIn}}">
                         <template is="dom-if" if="{{!following}}">
                             <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Events</strong></paper-button>
@@ -227,6 +231,10 @@
           date: {
               type: String,
               computed: 'dateFormat(info)'
+          },
+          myEvent: {
+            type: Boolean,
+            value: false
           },
           startingDate: {
               type: String,
@@ -353,6 +361,10 @@
 
       _onResponse: function (e) {
           this.following = true;
+
+          if (this.info.userId == this.signedIn.id) {
+              this.myEvent = true;
+          }
 
 //          if (e) {
 

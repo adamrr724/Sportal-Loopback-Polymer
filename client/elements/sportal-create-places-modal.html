@@ -111,6 +111,10 @@
 
       properties: {
 
+        signedIn: {
+            type: Object,
+            notify: true
+        },
         modalOpened: {
           type: Boolean,
           notify: true
@@ -180,7 +184,9 @@
           },
           "addressName": this.addressName,
           "organization": this.organization,
-          "website": this.website
+          "website": this.website,
+          "userId": this.signedIn.id
+
         };
 
       var form = Polymer.dom(event).localTarget.parentElement;

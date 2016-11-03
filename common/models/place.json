@@ -40,6 +40,10 @@
     "website": {
       "type": "string",
       "required": false
+    },
+    "userId": {
+      "type": "string",
+      "required": true
     }
   },
   "validations": [],

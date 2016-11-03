@@ -170,9 +170,9 @@
                   </paper-listbox>
                 </paper-dropdown-menu>
 
-                <div class="other-input">
+                <template is="dom-if" if="{{otherSportBoolean}}">
                   <paper-input value="{{otherSport}}" name="other" label="Other Sport Name"></paper-input>
-                </div>
+                </template>
 
                 <paper-dropdown-menu required     style="min-width: 250px"  label="Will this be a recurring event?">
                   <paper-listbox attr-for-selected="value"
@@ -183,7 +183,7 @@
                   </paper-listbox>
                 </paper-dropdown-menu>
 
-                <div id="rec-date">
+                <template is="dom-if" if="{{reccurringDateBoolean}}">
                   <paper-dropdown-menu style="min-width: 250px" label="Recurring Day of the Week">
                     <paper-listbox attr-for-selected="value"
                                    class="dropdown-content"
@@ -202,11 +202,11 @@
                       <paper-input name="startDate" value="{{startDate}}" type="datetime-local" label="Starting Date and Time"></paper-input>
                       <paper-input name="date" value="{{date}}" type="datetime-local" label="Ending Date and Time"></paper-input>
                   </template>
-                </div>
+              </template>
 
-                <div id="reg-date">
+                <template is="dom-if" if="{{!reccurringDateBoolean}}">
                   <paper-input name="date" required auto-validate="true" value="{{date}}" type="datetime-local" label="Date and Time"></paper-input>
-                </div>
+                </template>
 
                 <paper-dropdown-menu required label="Skill Level">
                   <paper-listbox attr-for-selected="value"
@@ -263,9 +263,9 @@
                   </paper-listbox>
                 </paper-dropdown-menu>
 
-                <div class="other-input">
+                <template is="dom-if" if="{{otherSportBoolean}}">
                   <paper-input value="{{otherSport}}" name="other" label="Other Sport Name"></paper-input>
-                </div>
+                </template>
 
                 <paper-input required auto-validate="true" value="{{date}}" type="date"  name="date" label="League Start Date"></paper-input>
                 <paper-dropdown-menu required  label="Skill Level">
@@ -328,9 +328,9 @@
                   </paper-listbox>
                 </paper-dropdown-menu>
 
-                <div class="other-input">
+                <template is="dom-if" if="{{otherSportBoolean}}">
                   <paper-input value="{{otherSport}}" name="other" label="Other Sport Name"></paper-input>
-                </div>
+                </template>
 
                 <paper-input required auto-validate="true" value="{{date}}" type="datetime-local"  name="date" label="Event Date and Time"></paper-input>
                 <paper-dropdown-menu required  label="Skill Level">
@@ -425,6 +425,16 @@
       properties: {
 
         valueSelected: {
+          type: Boolean,
+          value: false
+        },
+
+        otherSportBoolean: {
+          type: Boolean,
+          value: false
+        },
+
+        reccurringDateBoolean: {
           type: Boolean,
           value: false
         },
@@ -564,7 +574,8 @@
           "addressName": this.addressName,
           "organization": this.organization,
           "email": this.email,
-          "website": this.website
+          "website": this.website,
+          "userId": this.signedIn.id
         };
 
       var form = Polymer.dom(event).localTarget.parentElement;
@@ -627,18 +638,16 @@
         }
 
         if (this.recurring === "recurring-no") {
-          this.shadowRoot.querySelector('#rec-date').style.display = 'none';
-          this.shadowRoot.querySelector('#reg-date').style.display = 'block';
+          this.reccurringDateBoolean = false;
         } else if (this.recurring === "recurring-yes") {
-          this.shadowRoot.querySelector('#rec-date').style.display = 'block';
-          this.shadowRoot.querySelector('#reg-date').style.display = 'none';
+          this.reccurringDateBoolean = true;
         }
 
 
         if (this.sport === "other") {
-          this.shadowRoot.querySelector('.other-input').style.display = 'block';
-        } else {
-          this.shadowRoot.querySelector('.other-input').style.display = 'none';
+          this.otherSportBoolean = true;
+        } else if (this.sport != "other") {
+            this.otherSportBoolean = false;
         }
       },
 

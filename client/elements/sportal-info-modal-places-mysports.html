@@ -85,6 +85,10 @@
                 </paper-dialog-scrollable>
                 <div class="buttons">
 
+                    <template is="dom-if" if="{{myEvent}}">
+                        <paper-button raised class="text-close" on-Click="_delete" autofocus><strong>Delete</strong></paper-button>
+                    </template>
+
                     <template is="dom-if" if="{{signedIn}}">
                         <template is="dom-if" if="{{!following}}">
                             <paper-button raised class="follow" on-Click="_follow" autofocus><strong>Add to my Places</strong></paper-button>
@@ -165,6 +169,11 @@
               computed: 'computeId(info)'
           },
 
+          myEvent: {
+              type: Boolean,
+              value: false
+          },
+
           ajaxResponse: {
               type: Object
           },
@@ -193,7 +202,6 @@
       },
 
       dateFormat: function(info) {
-            console.log(info.date);
             return moment(info.date).format('MMMM Do YYYY, h:mm a');
       },
 
@@ -294,6 +302,10 @@
 
       _onResponse: function (e) {
           this.following = true;
+
+          if (this.info.userId == this.signedIn.id) {
+              this.myEvent = true;
+          }
 
 //          if (e) {
 
