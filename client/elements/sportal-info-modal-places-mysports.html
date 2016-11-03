@@ -131,6 +131,16 @@
                        withCredentials
             ></iron-ajax>
 
+            <iron-ajax id="eventDelete"
+                       url="{{eventDeleteUrl}}"
+                       handle-as="json"
+                       on-error="_onError"
+                       content-type="application/json"
+                       debounce-duration="300"
+                       method="DELETE"
+                       withCredentials
+            ></iron-ajax>
+
 
     </template>
 
@@ -191,6 +201,9 @@
           userEventDeleteUrl: {
               type: String
           },
+          eventDeleteUrl: {
+              type: String
+          },
           userEventPutUrl: {
               type: String
           },
@@ -236,6 +249,18 @@
             this.$.userEventDelete.generateRequest();
 
             this.following = false;
+        },
+
+        _delete: function (e) {
+
+            alert("Are you sure you want to delete this place?");
+
+            this.eventDeleteUrl = "http://localhost:3000/api/Places/" + this.info.id;
+
+            this.$.eventDelete.generateRequest();
+
+            location.reload();
+
         },
 
 //        _updateFollow: function() {
