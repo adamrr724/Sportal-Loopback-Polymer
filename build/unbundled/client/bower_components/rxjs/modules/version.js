@@ -1,1 +1,0 @@
-for(var fs=require("fs"),execSync=require("child_process").execSync,files=fs.readdirSync(process.cwd()),i=0;i<files.length;i++){var file=files[i],stat=fs.statSync(file);stat.isDirectory()&&(console.log("versioning %s",file),execSync("cd "+file+" && npm version "+process.argv[2]+" && cd .."),console.log("versioned %s",file))}

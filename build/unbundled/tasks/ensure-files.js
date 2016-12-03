@@ -1,1 +1,0 @@
-function ensureFiles(e,r){var i=e.reduce(function(e,r){var i=!1;try{i=fs.statSync(r).isFile()}catch(n){}return i||e.push(r+" Not Found"),e},[]);if(i.length)var n=new Error("Missing Required Files\n"+i.join("\n"));if(r)r(n);else if(n)throw n}var fs=require("fs");module.exports=ensureFiles;

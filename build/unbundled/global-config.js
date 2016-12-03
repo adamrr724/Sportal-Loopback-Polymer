@@ -1,1 +1,0 @@
-var url=require("url"),conf={hostname:"localhost",port:3e3,restApiRoot:"/api",legacyExplorer:!1};conf.restApiUrl=url.format({protocol:"http",slashes:!0,hostname:conf.hostname,port:conf.port,pathname:conf.restApiRoot}),module.exports=conf;
