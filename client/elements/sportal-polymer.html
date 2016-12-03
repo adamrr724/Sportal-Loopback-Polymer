@@ -64,6 +64,7 @@
       }
       .drawer-list a {
         display: block;
+        font-weight: 400;
         padding: 0 16px;
         line-height: 40px;
         text-decoration: none;
@@ -428,6 +429,9 @@
       },
 
       _routePageChanged: function(page) {
+          if (this.page === 'Sportal-Loopback-Polymer') {
+              this.page = 'home'
+          }
         this.page = page || 'home';
       },
 
