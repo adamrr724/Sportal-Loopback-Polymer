@@ -1,11 +1,52 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="description" content=""><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Sportal"><title>Sportal</title><link rel="shortcut icon" sizes="32x32" href="/images/sportal-thumbnail.png"><link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"><meta name="theme-color" content="#fff"><link rel="manifest" href="manifest.json"><meta name="msapplication-TileColor" content="#3372DF"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="PSK"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="apple-mobile-web-app-title" content="Polymer Starter Kit"><meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png"><link rel="stylesheet" href="styles/main.css"><script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script><script src="scripts/bundle.js"></script><link rel="import" href="elements/elements.html"><style is="custom-style" include="shared-styles"></style><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes"><title>Sportal</title><link rel="shortcut icon" sizes="32x32" href="/images/sportal-thumbnail.png"><link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#3f51b5"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="Sportal"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="My App"><link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/manifest/icon-72x72.png"><link rel="apple-touch-icon" sizes="96x96" href="/images/manifest/icon-96x96.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/manifest/icon-144x144.png"><link rel="apple-touch-icon" sizes="192x192" href="/images/manifest/icon-192x192.png"><meta name="msapplication-TileImage" content="/images/manifest/icon-144x144.png"><meta name="msapplication-TileColor" content="#3f51b5"><meta name="msapplication-tap-highlight" content="no"><script>
+      // Setup Polymer options
+      window.Polymer = {
+        dom: 'shadow',
+        lazyRegister: true
+      };
 
-      body {
-        margin: 0;
-        font-family: 'Open Sans', sans-serif;
-        line-height: 1.5;
-        min-height: 100vh;
-        background-color: #eee;
+      // Load webcomponentsjs polyfill if browser does not support native Web Components
+      (function() {
+        'use strict';
+        var onload = function() {
+          // For native Imports, manually fire WebComponentsReady so user code
+          // can use the same code path for native and polyfill'd imports.
+          if (!window.HTMLImports) {
+            document.dispatchEvent(
+              new CustomEvent('WebComponentsReady', {bubbles: true})
+            );
+          }
+        };
+
+        var webComponentsSupported = (
+          'registerElement' in document
+          && 'import' in document.createElement('link')
+          && 'content' in document.createElement('template')
+        );
+
+        if (!webComponentsSupported) {
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
+          script.onload = onload;
+          document.head.appendChild(script);
+        } else {
+          onload();
+        }
+      })();
+
+      // Load pre-caching Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
       }
-
-    </style></head><body unresolved=""><template is="dom-bind" id="app"><sportal-polymer></sportal-polymer></template><script src="scripts/app.js"></script></body></html>
+    </script><link rel="import" href="/elements/elements.html"><style>
+        body {
+          margin: 0;
+          font-family: 'Open Sans', sans-serif;
+          line-height: 1.5;
+          min-height: 100vh;
+          background-color: #eee;
+        }
+    </style></head><body><sportal-polymer></sportal-polymer></body></html>
