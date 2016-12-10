@@ -1,0 +1,20 @@
+<html><head><meta charset="UTF-8"><link rel="import" href="sportal-polymer.html"></head><body><dom-module id="sportal-find">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+    </style>
+
+    <sportal-map signed-in="{{signedIn}}" location-data="{{locationData}}"></sportal-map>
+
+
+  </template>
+
+  <script>Polymer({is:"sportal-find",properties:{signedIn:{type:Object,notify:!0}}});</script>
+
+</dom-module>
+</body></html>

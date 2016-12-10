@@ -1,0 +1,205 @@
+<html><head><link rel="import" href="../bower_components/polymer/polymer.html">
+
+</head><body><dom-module id="sportal-map">
+
+    <template>
+
+        <style>
+            :host {
+                display: block;
+                /*padding: 10px;*/
+            }
+
+            google-map {
+               height: 90vh;
+               width: 100%;
+
+            }
+
+            paper-button {
+                background-color: var(--sportal-blue);
+                margin: 10px;
+            }
+
+            #map-container {
+                display: flex;
+                flex-direction: row;
+            }
+
+            #search-bar {
+                display: flex;
+                justify-content: center;
+                height: 10%;
+            }
+
+            #filter-container {
+                flex: 1 0 0;
+                z-index: 1;
+                padding-left: 10px;
+                height: 100vh;
+            }
+
+            #map-area {
+                flex: 5 0 0;
+            }
+
+            paper-listbox {
+                width: 125px;
+                padding:0;
+            }
+
+            paper-item {
+                border-bottom: .2px solid lightgrey;
+            }
+
+            .filters {
+                width: 90%;
+            }
+
+            .event-type {
+                font-size: 16px;
+                font-weight: bold;
+                /*float: right;*/
+            }
+
+            .info-modal {
+                margin-right: auto;
+                margin-left:auto;
+            }
+
+            .info-header {
+                text-align: center;
+            }
+
+
+        </style>
+
+        <iron-ajax id="eventGet" auto="" url="{{requestUrl}}" handle-as="json" on-error="_onError" on-response="_onResponse" content-type="application/json" method="GET" withcredentials=""></iron-ajax>
+
+
+        <geo-location latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
+
+
+            <template is="dom-if" if="{{ajaxResponse}}">
+                <paper-card id="map-container">
+                    <div id="filter-container">
+                        <div class="filters">
+                        <h4>Filters:</h4>
+                        <paper-dropdown-menu label="Event Type">
+                            <paper-listbox attr-for-selected="name" class="dropdown-content" selected="{{eventType}}">
+                                <paper-item name="Pickup">Pickup Game</paper-item>
+                                <paper-item name="League">League</paper-item>
+                                <paper-item name="Run or Race">Run or Race</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <paper-dropdown-menu label="Sport">
+                            <paper-listbox attr-for-selected="value" class="dropdown-content" fallback-selection="" selected="{{sport}}">
+                                <paper-item value="Baseball">Baseball</paper-item>
+                                <paper-item value="Basketball">Basketball</paper-item>
+                                <paper-item value="Field Hockey">Field Hockey</paper-item>
+                                <paper-item value="Football">Football</paper-item>
+                                <paper-item value="Futsal">Futsal</paper-item>
+                                <paper-item value="Ice Hockey">Ice Hockey</paper-item>
+                                <paper-item value="Kickball">Kickball</paper-item>
+                                <paper-item value="Lacrosse">Lacrosse</paper-item>
+                                <paper-item value="Soccer">Soccer</paper-item>
+                                <paper-item value="Softball">Softball</paper-item>
+                                <paper-item value="Ultimate Frisbee">Ultimate Frisbee</paper-item>
+                                <paper-item value="Tennis">Tennis</paper-item>
+                                <paper-item value="Volleyball">Volleyball</paper-item>
+                                <paper-item value="Road Bike Race">Road Bike Race</paper-item>
+                                <paper-item value="Mountain Bike Race">Mountain Bike Race</paper-item>
+                                <paper-item value="Triathlon">Triathlon</paper-item>
+                                <paper-item value="Biathlon">Biathlon</paper-item>
+                                <paper-item value="Marathon">Marathon</paper-item>
+                                <paper-item value="Charity Run">Charity Run</paper-item>
+                                <paper-item value="Trail Run">Trail Run</paper-item>
+                                <paper-item value="Obstacle Run">Obstacle Run</paper-item>
+                                <paper-item value="other">Other</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <paper-dropdown-menu label="Skill Level">
+                            <paper-listbox attr-for-selected="value" class="dropdown-content" selected="{{skillLevel}}">
+                                <paper-item value="All Skill Levels">All Skill Levels</paper-item>
+                                <paper-item value="Rookies">Rookies</paper-item>
+                                <paper-item value="Bench Warmers (Intermediate)">Bench Warmers (Intermediate)</paper-item>
+                                <paper-item value="High School Heroes (Advanced)">High School Heroes (Advanced)</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        <paper-dropdown-menu required="" label="Age">
+                            <paper-listbox attr-for-selected="value" class="dropdown-content" selected="{{age}}">
+                                <paper-item value="All Ages">All Ages</paper-item>
+                                <paper-item value="Glory Days (Under 18)">Glory Days (Under 18)</paper-item>
+                                <paper-item value="Prime of Your Life (18-30)">Prime of Your Life (18-30)</paper-item>
+                                <paper-item value="Seasoned Athletes (30+)">Seasoned Athletes (30+)</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+
+                        
+                        </div>
+                        
+                            
+                        
+                    </div>
+                    <div id="map-area">
+                        <paper-card elevation="0" id="search-bar">
+                            <iron-form is="iron-form" id="form">
+                                <sportal-gmap-autocomplete location="{{locationData}}"></sportal-gmap-autocomplete>
+                                <paper-button raised="" on-click="_selectedFilter">Submit</paper-button>
+                            </iron-form>
+                        </paper-card>
+                        
+                        <google-map id="pageMap" map="{{map}}" api-key="AIzaSyD0Oog2e-DQ167WD0Az9gfwaXxYvgrjdNg" single-info-window="true" zoom="10" latitude="[[latitude]]" longitude="[[longitude]]">
+                            <template is="dom-repeat" items="[[ajaxResponse]]">
+                                <google-map-marker map="{{map}}" latitude="[[item.addressGeo.lat]]" longitude="[[item.addressGeo.lng]]">
+                                    <div class="marker-container">
+                                        <paper-card class="marker-card" elevation="1">
+                                            <div class="info-header">
+
+                                            <h3 style="text-align:center;color:#2d6876" class="marker-headers">[[item.name]]</h3>
+                                            <p style="text-align:center" class="event-type"><strong>[[item.eventType]]</strong></p>
+
+                                            </div>
+                                                <hr>
+                                            <p class="marker-info">Sport: [[item.sport]]</p>
+                                            <p class="marker-info">Skill Level: [[item.skillLevel]]</p>
+                                            <p class="marker-info">Age: [[item.age]]</p>
+                                            <p class="marker-info">Address: [[item.addressName]]</p>
+                                            <paper-button style="margin:3px; padding:8px; float: right" raised="" on-click="_infoModal">More Info</paper-button>
+                                        </paper-card>
+
+                                    </div>
+                                </google-map-marker>
+                                <sportal-info-modal signed-in="{{signedIn}}" class="info-modal" info="{{eventInfo}}" modal-opened="{{infoModalOpened}}"></sportal-info-modal>
+                            </template>
+                        </google-map>
+                    </div>
+                </paper-card>
+            </template>
+
+            <template is="dom-if" if="{{!ajaxResponse}}">
+                <img class="load-image" src="../images/sportal-thumbnail.png">
+            </template>
+
+
+
+        
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+        
+
+    </template>
+
+    <script>Polymer({is:"sportal-map",behaviors:[Polymer.IronMenuBehavior,Polymer.IronFormElementBehavior,Polymer.IronA11yKeysBehavior,Polymer.PaperInputBehavior,Polymer.IronSelectableBehavior,Polymer.IronControlState],listeners:{"iron-select":"_selectedFilter"},properties:{route:Object,ajaxResponse:{type:Object},latitude:{value:"45.512794"},longitude:{value:"-122.679565"},requestUrl:{type:String,value:"//localhost:3000/api/Events?filter[where][date][gt]="+moment()},eventType:{value:""},sport:{value:""},skillLevel:{value:""},age:{value:""},currentLocation:{value:""},locationSelection:{value:""},searchResults:{type:Array},locationInput:{type:String,value:""},locationData:{type:Object},infoModalOpened:{type:Boolean,notify:!0,value:!1},eventInfo:{type:Object},signedIn:{type:Object,notify:!0}},ready:function(){},attached:function(){},_onResponse:function(e){this.ajaxResponse=e.detail.response,console.log(this.ajaxResponse)},_inputChange:function(){},_submitForm:function(){},_infoModal:function(e){this.eventInfo=e.model.__data__.item,this.infoModalOpened=!0},_selectedFilter:function(e){if(1!=e.detail){if("google-map-marker"===e.detail.item.localName)return;this._queryGet()}else this._queryGet()},_queryGet:function(){var e="",t="",i="?filter[where][addressGeo][near]="+this.latitude+","+this.longitude+"&filter[limit]=500";this.locationData?(this.latitude=this.locationData.geometry.location.lat(),this.longitude=this.locationData.geometry.location.lng(),e="//localhost:3000/api/Events??filter[where][addressGeo][near]="+this.latitude+","+this.longitude+"&filter[limit]=500&filter[where][date][gt]="+moment(),t=e+"&"):(e="//localhost:3000/api/Events?"+i+"&filter[where][date][gt]="+moment(),t=e+"&");var o="",l="filter[where][eventType]="+this.eventType,n="filter[where][sport]="+this.sport,a="filter[where][skillLevel]="+this.skillLevel,s="filter[where][age]="+this.age;this.eventType&&(t+=l,o+=1,this.selectionMade=!0),this.sport&&(o>0&&(t+="&"),t+=n,o+=1,this.selectionMade=!0),this.skillLevel&&(o>0&&(t+="&"),t+=a,o+=1,this.selectionMade=!0),this.age&&(o>0&&(t+="&"),t+=s,o+=1,this.selectionMade=!0),this.eventType||this.sport||this.skillLevel||this.age?this.requestUrl=t:this.requestUrl=e,console.log(this.requestUrl),this.async(function(){this.$.eventGet.generateRequest()},2e3)},_onError:function(e){}});</script>
+
+</dom-module>
+</body></html>

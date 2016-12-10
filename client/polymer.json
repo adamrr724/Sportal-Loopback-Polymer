@@ -8,7 +8,6 @@
     "elements/sportal-events.html",
     "elements/sportal-about.html",
     "elements/sportal-map.html",
-    "elements/sportal-places.html",
-
+    "elements/sportal-places.html"
   ]
 }

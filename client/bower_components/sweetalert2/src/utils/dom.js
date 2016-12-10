@@ -36,11 +36,13 @@ export var init = function () {
     sweetAlert.resetValidationError()
   }
 
-  input.onkeyup = function (event) {
-    event.stopPropagation()
-    if (event.keyCode === 13) {
-      sweetAlert.clickConfirm()
-    }
+  input.onkeydown = function (event) {
+    setTimeout(function () {
+      if (event.keyCode === 13) {
+        event.stopPropagation()
+        sweetAlert.clickConfirm()
+      }
+    }, 0)
   }
 
   file.onchange = function () {
