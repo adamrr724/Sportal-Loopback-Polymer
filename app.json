@@ -1,0 +1,16 @@
+{
+  "name": "Sportal-Loopback-Polymer",
+  "description": "Sportal, recreational sports finding website.",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
