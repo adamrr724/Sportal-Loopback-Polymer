@@ -1,5 +1,3 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-
 <dom-module id="sportal-map">
 
     <template>
@@ -195,7 +193,7 @@
                                             <p class="marker-info">Skill Level: [[item.skillLevel]]</p>
                                             <p class="marker-info">Age: [[item.age]]</p>
                                             <p class="marker-info">Address: [[item.addressName]]</p>
-                                            <paper-button style="margin:3px; padding:8px; float: right;" raised on-click="_infoModal">More Info</paper-button>
+                                            <paper-button style="margin:10px; padding:5px; float: right;" raised on-click="_infoModal">More Info</paper-button>
                                         </paper-card>
 
                                     </div>
@@ -334,7 +332,8 @@
             },
 
             _infoModal: function(e) {
-//                console.log(e.model.__data__.item);
+                alert("hey!");
+               console.log(e.model.__data__.item);
                 this.eventInfo = e.model.__data__.item;
 
                 this.infoModalOpened = true;

@@ -1,5 +1,3 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
-
 <dom-module id="sportal-polymer">
 
   <template>
@@ -412,7 +410,7 @@
       _onResponse: function(e) {
 
         this.responseBack = true;
-        console.log(this.responseBack);
+        // console.log(this.responseBack);
 
         if (e.detail.response.length === 0) {
           this.$.userPost.generateRequest();

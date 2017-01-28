@@ -9,8 +9,6 @@
     "loopback-connector-mysql": "^2.4.0",
     "loopback-datasource-juggler": "^2.0.0",
     "loopback-explorer": "^1.2.4",
-    "polymer": "^0.5.0",
-    "polymer-cli": "^0.17.0",
     "proquint": "0.0.1",
     "webcomponents.js": "^0.7.23"
   },
@@ -50,6 +48,6 @@
     "start": "gulp serve"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=5.0.0"
   }
 }
